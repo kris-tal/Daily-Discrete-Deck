@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.shape.Rectangle?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="viewandmodels.set.Board"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <!-- Plansza do gry w szachy -->
+    <GridPane fx:id="chessBoard" prefWidth="400" prefHeight="400">
+        <!-- Kolumny -->
+        <columnConstraints>
+            <ColumnConstraints percentWidth="12.5" />
+            <ColumnConstraints percentWidth="12.5" />
+            <ColumnConstraints percentWidth="12.5" />
+            <ColumnConstraints percentWidth="12.5" />
+            <ColumnConstraints percentWidth="12.5" />
+            <ColumnConstraints percentWidth="12.5" />
+            <ColumnConstraints percentWidth="12.5" />
+            <ColumnConstraints percentWidth="12.5" />
+        </columnConstraints>
+        <!-- Rzędy -->
+        <rowConstraints>
+            <RowConstraints percentHeight="12.5" />
+            <RowConstraints percentHeight="12.5" />
+            <RowConstraints percentHeight="12.5" />
+            <RowConstraints percentHeight="12.5" />
+            <RowConstraints percentHeight="12.5" />
+            <RowConstraints percentHeight="12.5" />
+            <RowConstraints percentHeight="12.5" />
+            <RowConstraints percentHeight="12.5" />
+        </rowConstraints>
+
+        <!-- Wstawianie pól planszy -->
+        <!-- Elementy planszy muszą być umieszczone w tagu <children> -->
+
+        <children>
+            <!-- Na przykład: -->
+            <Rectangle GridPane.columnIndex="0" GridPane.rowIndex="0" width="50" height="50" fill="WHITE" />
+            <Rectangle GridPane.columnIndex="1" GridPane.rowIndex="0" width="50" height="50" fill="BLACK" />
+            <!-- itd. -->
+        </children>
+
+    </GridPane>
+</AnchorPane>

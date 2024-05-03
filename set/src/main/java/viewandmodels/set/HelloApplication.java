@@ -9,15 +9,23 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage primaryStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         FXMLLoader fxmlLoader2 = new FXMLLoader(HelloApplication.class.getResource("bye.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+
+        Scene scene1 = new Scene(fxmlLoader.load(), 320, 240);
         Scene scene2 = new Scene(fxmlLoader2.load(), 320, 240);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.setScene(scene2);
-        stage.show();
+
+        Stage secondStage = new Stage();
+
+        primaryStage.setTitle("Hello!");
+        primaryStage.setScene(scene1);
+
+        secondStage.setTitle("Bye!");
+        secondStage.setScene(scene2);
+
+        primaryStage.show();
+        secondStage.show();
     }
 
     public static void main(String[] args) {

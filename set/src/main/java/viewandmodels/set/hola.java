@@ -1,9 +1,9 @@
-package org.example.demo;
+package viewandmodels.set;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class hello {
+public class hola {
     @FXML
     private Label welcomeText;
 

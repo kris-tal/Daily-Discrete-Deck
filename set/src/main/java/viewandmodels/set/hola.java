@@ -1,14 +1,15 @@
 package viewandmodels.set;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class hola {
     @FXML
-    private Label welcomeText;
+    private Label byeText;
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    protected void onByebyeButtonClick() {
+        byeText.setText("Bye bye to JavaFX Application!");
     }
 }

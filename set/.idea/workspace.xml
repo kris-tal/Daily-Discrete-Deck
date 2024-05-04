@@ -6,10 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="12792faf-e17a-4636-881d-507484ba98ce" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/Set.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/Set.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Calendar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Calendar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Profile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Profile.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +17,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -90,7 +89,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1714775288544</updated>
-      <workItem from="1714775289578" duration="5731000" />
+      <workItem from="1714775289578" duration="7338000" />
     </task>
     <servers />
   </component>

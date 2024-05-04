@@ -1,5 +1,6 @@
 package dailydescretedeck.set;
 
+import dailydescretedeck.set.views.BoardView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -22,7 +23,7 @@ public class Set extends Application {
         Scene scene = new Scene(root, Color.LIGHTSLATEGRAY);
         stage.setWidth(1080);
         stage.setHeight(720);
-        stage.setResizable(false);
+        stage.setResizable(true);
         try {
             Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/icon.png")));             //laze mi dac not null inaczej warning
             stage.getIcons().add(icon);
@@ -36,6 +37,7 @@ public class Set extends Application {
 
     static public void main(String[] args) {
         System.out.println("Daily Descrete Deck");
+        BoardView bv = new BoardView();
         launch(args);   //Application.launch()
     }
 }

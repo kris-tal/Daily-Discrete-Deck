@@ -3,11 +3,11 @@ import java.util.List;
 import dailydescretedeck.set.modules.Board;
 import dailydescretedeck.set.modules.Card;
 
-public class addnewcards {
+public class AddNewCards {
     private Board board;
     private List<Card> tableCards;
     
-    public addnewcards(Board b, List<Card> cards) {
+    public AddNewCards(Board b, List<Card> cards) {
         this.board = b;
         this.tableCards = cards;
     }

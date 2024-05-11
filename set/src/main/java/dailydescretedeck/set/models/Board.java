@@ -1,6 +1,5 @@
-package dailydescretedeck.set.modules;
+package dailydescretedeck.set.models;
 
-import dailydescretedeck.set.modules.Card;
 import java.util.ArrayList;
 import java.util.List;
 

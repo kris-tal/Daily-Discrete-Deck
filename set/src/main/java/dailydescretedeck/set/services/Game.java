@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import dailydescretedeck.set.modules.Board;
-import dailydescretedeck.set.modules.Deck;
-import dailydescretedeck.set.modules.Card;
+import dailydescretedeck.set.models.Board;
+import dailydescretedeck.set.models.Deck;
+import dailydescretedeck.set.models.Card;
 
 public class Game {
     private Deck deck;

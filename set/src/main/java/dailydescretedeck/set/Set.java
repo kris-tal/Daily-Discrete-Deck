@@ -18,9 +18,8 @@ public class Set<I extends Number> extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));      //???? boje sie usuwac nie wiem co to
         Group root = new Group();
-        Scene scene = new Scene(root, Color.LIGHTSLATEGRAY);
+        Scene scene = new Scene(root, Color.THISTLE);
         stage.setWidth(1080);
         stage.setHeight(720);
         stage.setResizable(true);

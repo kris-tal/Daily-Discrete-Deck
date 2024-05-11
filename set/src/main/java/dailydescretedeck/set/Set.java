@@ -14,7 +14,7 @@ import java.util.Objects;
 
 import static javafx.application.Application.launch;
 
-public class Set extends Application {
+public class Set<I extends Number> extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {

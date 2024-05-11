@@ -50,7 +50,7 @@
   &quot;keyToString&quot;: {
     &quot;Application.Set.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;kristal&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Ania&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/kris/Documents/Sem-II/PO/PROJECT/set/src/main/resources/dailydescretedeck/set/images&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -100,6 +100,8 @@
       <option name="presentableId" value="Default" />
       <updated>1714775288544</updated>
       <workItem from="1714775289578" duration="11859000" />
+      <workItem from="1715427996123" duration="60000" />
+      <workItem from="1715431813902" duration="182000" />
     </task>
     <servers />
   </component>

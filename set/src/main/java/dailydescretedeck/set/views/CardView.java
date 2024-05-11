@@ -1,6 +1,6 @@
 package dailydescretedeck.set.views;
 
-import dailydescretedeck.set.modules.Card;
+import dailydescretedeck.set.models.Card;
 
 public class CardView {
     private final Card card;

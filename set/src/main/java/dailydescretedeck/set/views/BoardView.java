@@ -1,6 +1,6 @@
 package dailydescretedeck.set.views;
 
-import dailydescretedeck.set.modules.Board;
+import dailydescretedeck.set.models.Board;
 
 public class BoardView {
     Board board;

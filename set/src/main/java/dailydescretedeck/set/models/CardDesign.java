@@ -1,4 +1,4 @@
-package dailydescretedeck.set.modules;
+package dailydescretedeck.set.models;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;

@@ -13,16 +13,10 @@ public class Card {
         this.design = new DefaultCardDesign();
     }
 
-    public ArrayList<Integer> getFields(int field) {
+    public ArrayList<Integer> getFields() {
         return this.fields;
     }
-
-//    public Color getColor(int idx) {
-//        return design.getColor(idx);
-//    }
-//
-//    public Shape getShape(int idx) {
-//        return design.getShape(idx);
-//    }
-
+    public CardDesign getDesign() {
+        return this.design;
+    }
 }

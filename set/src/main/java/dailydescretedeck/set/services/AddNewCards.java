@@ -1,7 +1,7 @@
 package dailydescretedeck.set.services;
 import java.util.List;
-import dailydescretedeck.set.modules.Board;
-import dailydescretedeck.set.modules.Card;
+import dailydescretedeck.set.models.Board;
+import dailydescretedeck.set.models.Card;
 
 public class AddNewCards {
     private Board board;

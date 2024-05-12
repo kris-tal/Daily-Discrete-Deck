@@ -1,6 +1,6 @@
 package dailydescretedeck.set.views;
 
-import dailydescretedeck.set.modules.Card;
+import dailydescretedeck.set.models.Card;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;

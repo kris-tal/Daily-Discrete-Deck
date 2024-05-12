@@ -1,4 +1,4 @@
-package dailydescretedeck.set.modules;
+package dailydescretedeck.set.models;
 
 import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
 

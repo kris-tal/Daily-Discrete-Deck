@@ -1,6 +1,6 @@
 package dailydescretedeck.set.views.carddesignes;
 
-import dailydescretedeck.set.modules.CardDesign;
+import dailydescretedeck.set.models.CardDesign;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;

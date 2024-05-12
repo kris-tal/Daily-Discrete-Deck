@@ -5,12 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12792faf-e17a-4636-881d-507484ba98ce" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/BoardState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/Set.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/Set.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/CardDesign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/CardDesign.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Deck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/BoardState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/CardDesign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/CardDesign.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/Deck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/modules/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/services/AddNewCards.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/services/AddNewCards.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/services/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/services/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/BoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/BoardView.java" afterDir="false" />
@@ -49,23 +52,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Set.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.dailydescretedeck.set.views.mycolors in set.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;kristal&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/kris/Documents/Sem-II/PO/PROJECT/set/src/main/resources/dailydescretedeck/set/images&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Set.executor": "Run",
+    "JUnit.dailydescretedeck.set.views.mycolors in set.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Merging kristal",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/kris/Documents/Sem-II/PO/PROJECT/set/src/main/resources/dailydescretedeck/set/images",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/dailydescretedeck/set/images" />

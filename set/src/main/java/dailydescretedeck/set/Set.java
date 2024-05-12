@@ -1,10 +1,8 @@
 package dailydescretedeck.set;
 
-import dailydescretedeck.set.modules.Card;
-//import dailydescretedeck.set.views.BoardView;
+import dailydescretedeck.set.models.Card;
 import dailydescretedeck.set.views.CardView;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 
@@ -13,7 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import static javafx.application.Application.launch;

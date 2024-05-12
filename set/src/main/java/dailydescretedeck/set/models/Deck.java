@@ -7,27 +7,27 @@ import java.util.List;
 public class Deck {
     private List<Card> cards;
 
-    private void wypelnij(List<List<Integer>> list, List<Integer> tempList, List<Integer> numbers, int start) {
-        if (!tempList.isEmpty()) {
-            list.add(new ArrayList<>(tempList));
+    private void wypelnij(List<List<Color>> list, List<Color> temp, List<Color> colors, int start) {
+        if (!temp.isEmpty()) {
+            list.add(new ArrayList<>(temp));
         }
-        for (int i = start; i < numbers.size(); i++) {
-            tempList.add(numbers.get(i));
-            wypelnij(list, tempList, numbers, i + 1);
-            tempList.remove(tempList.size() - 1);
+        for (int i = start; i < colors.size(); i++) {
+            temp.add(colors.get(i));
+            wypelnij(list, temp, colors, i + 1);
+            temp.remove(temp.size() - 1);
         }
     }
 
     public Deck() {
         cards = new ArrayList<>();
-        List<List<Integer>> everything = new ArrayList<>();
-        List<Integer> numbers = new ArrayList<>();
-        for (int i = 1; i <= 6; i++) {
-            numbers.add(i);
+        List<List<Color>> everything = new ArrayList<>();
+        List<Color> colors = new ArrayList<>();
+        for (Color color : Color.values()) {
+            colors.add(color);
         }
-        wypelnij(everything, new ArrayList<>(), numbers, 0);
-        for (List<Integer> list : everything) {
-            cards.add(new Card());
+        wypelnij(everything, new ArrayList<>(), colors, 0);
+        for (List<Color> list : everything) {
+            cards.add(new Card(list));
         }
     }
 

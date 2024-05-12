@@ -21,6 +21,7 @@ public class Game {
     public void startGame() {
         deck = new Deck();
         board = new Board();
+        deck.shuffle();
         board.drawCardFromDeck(deck);
     }
 

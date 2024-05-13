@@ -9,7 +9,7 @@ public class Card {
     private final ArrayList<Integer> fields;
     private final CardDesign design;
 
-    public Card(List<Integer> list) {
+    public Card(ArrayList<Integer> list) {
         this.fields = list;
         this.design = new DefaultCardDesign();
     }

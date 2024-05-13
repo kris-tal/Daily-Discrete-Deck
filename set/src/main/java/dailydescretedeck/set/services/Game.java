@@ -7,67 +7,54 @@ import java.util.List;
 import java.util.Map;
 
 import dailydescretedeck.set.models.Board;
+import dailydescretedeck.set.models.BoardState;
 import dailydescretedeck.set.models.Deck;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import dailydescretedeck.set.models.Card;
+import dailydescretedeck.set.models.Dots;
+import dailydescretedeck.set.models.SimpleBoardState;
 
 public class Game {
-    private Deck deck;
-    private Board board;
+    private BoardState boardState;
+    private List<Card> selectedCards;
 
     public Game() {
-        deck = new Deck();
-        board = new Board();
+        boardState = new SimpleBoardState(new Deck(), new Board());
+        selectedCards = new ArrayList<>();
     }
+    
     public void startGame() {
+<<<<<<< HEAD
         deck = new Deck();
         board = new Board();
         board.drawCardFromDeck(deck);
+=======
+        boardState.clear();
+    }
+    
+    public boolean checkWinConditions(List<Card> cards) {
+        return boardState.isSetOk(cards);
+>>>>>>> d8f95d3 (the big merge)
     }
 
-    public  Map<Integer, Integer> preparationToCount(List<Card> cards)
-    {
-        Map<Integer, Integer> map = new HashMap<>();
-        for (Card card : cards) {
-            for (int i = 0; i < card.getFields().size(); i++) {
-                if (map.containsKey(card.getFields().get(i))) {
-                    map.put(card.getFields().get(i), map.get(card.getFields().get(i)) + 1);
-                } else {
-                    map.put(card.getFields().get(i), 1);
-                }
+    public void connectCardToGui(Card card, ImageView cardImageView) {
+        cardImageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                selectedCards.add(card);
             }
-        }
-        return map;
+        });
     }
-    public boolean isSetOk(List<Card> cards) {
-        Map<Integer, Integer> map = preparationToCount(cards);
-
-        for (Integer value : map.values()) {
-            if (value % 2 != 0) {
-                return false;
+    public void Confirm(Button confirmButton) {
+        confirmButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Move();
             }
-        }
-        return true;
-    }
-    public Card Xor(List<Card> cards)
-    {
-        Map<Integer, Integer> map = preparationToCount(cards);
-        List<Integer> numbers = new ArrayList<>();
-        for(Map.Entry<Integer, Integer> entry : map.entrySet())
-        {
-            if(entry.getValue() % 2 != 0)
-            {
-                numbers.add(entry.getKey());
-            }
-        }
-        return new Card(numbers);
-    }
-
-    public void FoundSet(List<Card> cards)
-    {
-        for(Card card : cards)
-        {
-            board.removeCard(card);
-        }
-        board.drawCardFromDeck(deck);
+        });
     }
 }

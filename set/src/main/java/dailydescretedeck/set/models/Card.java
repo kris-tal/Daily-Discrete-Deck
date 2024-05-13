@@ -3,13 +3,14 @@ package dailydescretedeck.set.models;
 import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Card {
     private final ArrayList<Integer> fields;
     private final CardDesign design;
 
-    public Card(ArrayList<Integer> existingFields) {
-        this.fields = existingFields;
+    public Card(List<Integer> list) {
+        this.fields = list;
         this.design = new DefaultCardDesign();
     }
 

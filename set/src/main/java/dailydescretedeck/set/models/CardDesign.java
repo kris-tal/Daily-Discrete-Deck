@@ -7,4 +7,5 @@ public interface CardDesign {
     public Color getColor(int idx);
     public Shape getShape();
     public Color getBackgroundColor();
+
 }

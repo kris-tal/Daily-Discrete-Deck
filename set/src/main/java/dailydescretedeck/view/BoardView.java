@@ -28,10 +28,12 @@ public class BoardView extends Pane {
     private List<Card> selectedCards = new ArrayList<>();
     private boolean confirm = false;
     private Map<Card, CardView> cardViews = new HashMap<>();
+    private boolean xorClicked;
 
     public BoardView(Board board) {
         this.board = board;
         redrawBoard();
+        xorClicked = false;
 
         widthProperty().addListener((observable, oldValue, newValue) -> redrawBoard());
         heightProperty().addListener((observable, oldValue, newValue) -> redrawBoard());
@@ -192,7 +194,7 @@ public class BoardView extends Pane {
 
         button4.setOnAction(event -> {
             System.out.println("Kliknięto w przycisk XOR");
-
+            xorClicked = true;
             Card card = board.Xor((ArrayList<Card>) selectedCards);
             CardView cardView = new CardView(card, 0, 0, square/(2 * 60));
             cardView.disableThisCard();

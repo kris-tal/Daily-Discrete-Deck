@@ -19,7 +19,7 @@ public class CardView extends Pane {
     private double height;
     private boolean clicked;
     static private boolean disabled = false;
-    static private boolean thiscarddisabled;
+    private boolean thiscarddisabled;
 
     public final Rectangle cardBackground;
     private final ArrayList<Shape> fields;

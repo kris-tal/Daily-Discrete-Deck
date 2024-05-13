@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Deck {
-    private List<Card> cards;
+    private List<SimpleCard> cards;
 
     public void fill(List<List<Dots>> list, List<Dots> temp, List<Dots> colors, int start) {
         list.add(new ArrayList<>(temp));
@@ -37,7 +37,7 @@ public class Deck {
         return cards.size();
     }
 
-    public Card drawCard() {
+    public SimpleCard drawCard() {
         if (!cards.isEmpty()) {
             return cards.remove(cards.size() - 1);
         } else {

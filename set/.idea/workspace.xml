@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="12792faf-e17a-4636-881d-507484ba98ce" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/HelloApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/HelloController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/Set.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/Set.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/BoardState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/BoardState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/Card.java" afterDir="false" />

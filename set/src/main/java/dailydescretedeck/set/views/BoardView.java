@@ -1,8 +1,10 @@
-package dailydescretedeck.set.views;
+package dailydescretedeck.view;
+
 
 import dailydescretedeck.set.models.Board;
 import dailydescretedeck.set.models.Card;
 import dailydescretedeck.set.views.CardView;
+
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;

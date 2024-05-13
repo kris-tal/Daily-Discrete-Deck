@@ -9,6 +9,7 @@ public class DefaultCardDesign implements CardDesign {
     private static final Color []colors = {
             Color.CORAL, Color.RED, Color.GOLD, Color.YELLOWGREEN, Color.DEEPSKYBLUE, Color.MEDIUMORCHID
     };
+
     private static final Color backgroundColor = Color.WHITE;
 
     public Color getColor(int idx) {

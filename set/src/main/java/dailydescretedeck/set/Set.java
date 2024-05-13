@@ -20,7 +20,6 @@ public class Set<I extends Number> extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Group root = new Group();
-        root.setAccessibleHelp("true");
         Scene scene = new Scene(root, Color.THISTLE);
         stage.setWidth(1080);
         stage.setHeight(720);

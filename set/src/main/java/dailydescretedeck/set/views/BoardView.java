@@ -132,7 +132,7 @@ public class BoardView extends Pane {
         buttonsPane.setLayoutX(bigRectX);
         buttonsPane.setLayoutY(bigRectY + bigRectHeight + gap);
 
-        double buttonWidth = (bigRectWidth - 80) / 3;
+        double buttonWidth = (bigRectWidth - 40) / 3;
         double buttonHeight = bigRectHeight / 10;
 
         button1.setLayoutX(10);
@@ -160,7 +160,7 @@ public class BoardView extends Pane {
         button4.setLayoutY(gap);
         button4.setPrefWidth(buttonWidth / 2);
         button4.setPrefHeight(buttonHeight);
-        button4.setFont(Font.font("System", gap * 1.8));
+        button4.setFont(Font.font("System", gap * 1.6));
         button4.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
         button1.setOnAction(event -> {

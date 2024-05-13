@@ -212,9 +212,9 @@ public class BoardView extends Pane {
 
         button4.setOnAction(event -> {
             System.out.println("Kliknięto w przycisk XOR");
-
             Card card = board.Xor((ArrayList<Card>) selectedCards);
             CardView cardView = new CardView(card, 0, 0, square/(2 * 60));
+            cardView.disableThisCard();
             StackPane cardPane = new StackPane();
             cardPane.getChildren().add(cardView);
             cardPane.setLayoutX(paneWidth - buttonWidth / 2 - gap);

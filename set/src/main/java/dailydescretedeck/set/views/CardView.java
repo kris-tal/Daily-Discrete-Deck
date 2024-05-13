@@ -19,12 +19,14 @@ public class CardView extends Pane {
     private double height;
     private boolean clicked;
     static private boolean disabled = false;
+    private boolean thiscarddisabled;
 
     public final Rectangle cardBackground;
     private final ArrayList<Shape> fields;
 
     public CardView(Card card, double X, double Y, double sq) {
         this.card = card;
+        thiscarddisabled = false;
         this.group = new Group();
         this.width = 120 * sq;
         this.height = 180 * sq;
@@ -88,6 +90,7 @@ public class CardView extends Pane {
     public void clicked() {
         System.out.println("clicked");
         if(disabled) return;
+        if(thiscarddisabled) return;
         if(!this.clicked) {
             this.cardBackground.setStrokeWidth(3.0);
             this.cardBackground.setStroke(Color.rgb(116, 97, 116));
@@ -99,7 +102,7 @@ public class CardView extends Pane {
         }
     }
 
-    public void selectNotSelected() {
+    public void select() {
         this.cardBackground.setFill(((Color)this.cardBackground.getFill()).darker());
         for(Shape field : fields) {
             field.setFill(((Color)field.getFill()).darker());
@@ -118,6 +121,9 @@ public class CardView extends Pane {
     static public void enableCards() {
         disabled = false;
     }
+    public void disableThisCard() {
+        thiscarddisabled = true;
+    }
 
     @Override
     public ObservableList<Node> getChildren() {
@@ -125,5 +131,11 @@ public class CardView extends Pane {
         list.add(cardBackground);
         list.addAll(fields);
         return super.getChildren();
+    }
+    public void selectNotSelected() {
+        this.cardBackground.setFill(((Color)this.cardBackground.getFill()).darker());
+        for(Shape field : fields) {
+            field.setFill(((Color)field.getFill()).darker());
+        }
     }
 }

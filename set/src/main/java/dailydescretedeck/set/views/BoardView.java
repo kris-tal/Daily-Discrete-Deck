@@ -77,7 +77,7 @@ public class BoardView extends Pane {
 
                 Card card = board.getCards().get(cardIndex++);
 
-                CardView cardView = new CardView(card, 0, 0, square);
+                CardView cardView = new CardView(card, 0, 0, square / 60);
                 cardViews.put(card, cardView);
                 Card Card = (Card) card;
                 cardView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -127,7 +127,7 @@ public class BoardView extends Pane {
         button3.setLayoutY(0);
         button3.setPrefWidth(buttonWidth);
         button3.setPrefHeight(buttonHeight);
-        button3.setStyle("-fx-background-color: #EBE3EB; -fx-text-fill: #746174; -fx-font-weight: bold;");
+        button3.setStyle("-fx-background-color: #EBE3EB; -fx-text-fill: #746174; -fx-font-weight: bold; -fx-background-radius: 40;");
 
         button4.setLayoutX(paneWidth - buttonWidth / 2 - gap);
         button4.setLayoutY(gap);
@@ -183,7 +183,7 @@ public class BoardView extends Pane {
             System.out.println("Kliknięto w przycisk XOR");
 
             Card card = board.Xor((ArrayList<Card>) selectedCards);
-            CardView cardView = new CardView(card, 0, 0, square/2);
+            CardView cardView = new CardView(card, 0, 0, square/(2 * 60));
             StackPane cardPane = new StackPane();
             cardPane.getChildren().add(cardView);
             cardPane.setLayoutX(paneWidth - buttonWidth / 2 - gap);

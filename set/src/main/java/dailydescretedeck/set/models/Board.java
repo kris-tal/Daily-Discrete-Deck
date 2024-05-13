@@ -26,14 +26,18 @@ public class Board {
 
     public Card addCard(){
         Card card = deck.drawCard();
-        cards.add((Card) card);
+        if(card.getFields().size() != 0) cards.add((Card) card);
+        else {
+            card = deck.drawCard();
+            cards.add(card);
+        }
         return card;
     }
     public void drawCardFromDeck() {
         while(cards.size() < 7 && deck.size() > 0){
             Card card = deck.drawCard();
-            cards.add(card);
-        } 
+            if(card.getFields().size() != 0) cards.add(card);
+        }
     }
 
     public Map<Dots, Integer> preparationToCount(List<Card> cards) {
@@ -74,7 +78,11 @@ public class Board {
                 cards.remove(c);
                 Card newCard = deck.drawCard();
                 if (newCard != null) {
-                    cards.add(index, newCard);
+                    if(newCard.getFields().size() != 0) cards.add(index, newCard);
+                    else {
+                        newCard = deck.drawCard();
+                        cards.add(index, newCard);
+                    }
                 }
             }
         }
@@ -103,7 +111,7 @@ public class Board {
             temp.remove(temp.size() - 1);
         }
     }
-    
+
     public List<Card> getSet() {
         List<List<Card>> everything = new ArrayList<>();
         fill(everything, new ArrayList<>(), cards, 0);

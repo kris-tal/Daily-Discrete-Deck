@@ -4,13 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 public interface BoardState {
-    void addCards(List<Card> card);
-    void removeCards(List<Card> card);
-    Iterable<Card> getCards();
-    void clear();
-    void refresh();
+
+    void reset();
+    void update();
+    void addCard(Card card);
+    void removeCard(Card card);
+
     Board getBoard();
-    public Card Xor(List<Card> cards);
-    public boolean isSetOk(List<Card> cards);
-    public Map<Dots, Integer> preparationToCount(List<Card> cards);
 }

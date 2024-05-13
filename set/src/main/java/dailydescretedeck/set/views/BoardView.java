@@ -5,6 +5,7 @@ import dailydescretedeck.set.models.Board;
 import dailydescretedeck.set.models.Card;
 import dailydescretedeck.set.views.CardView;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 
 import static java.lang.Double.min;
 
@@ -149,6 +151,13 @@ public class BoardView extends Pane {
                 cardView.select();
             }
             CardView.disableCards();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Koniec gry");
+            alert.setHeaderText(null);
+            alert.setContentText("Przegrałeś!");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
         });
 
         button2.setOnAction(event -> {

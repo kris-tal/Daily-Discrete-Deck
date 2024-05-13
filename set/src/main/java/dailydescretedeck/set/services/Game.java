@@ -34,21 +34,4 @@ public class Game {
     public boolean checkWinConditions(List<Card> cards) {
         return boardState.isSetOk(cards);
     }
-
-    public void connectCardToGui(Card card, ImageView cardImageView) {
-        cardImageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                selectedCards.add(card);
-            }
-        });
-    }
-    public void Confirm(Button confirmButton) {
-        confirmButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Move(); //??
-            }
-        });
-    }
 }

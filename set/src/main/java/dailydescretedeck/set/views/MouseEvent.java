@@ -1,6 +1,6 @@
 package dailydescretedeck.set.views;
 
-mport javafx.event.EventType;
+import javafx.event.EventType;
 
 public class MouseEvent {
 

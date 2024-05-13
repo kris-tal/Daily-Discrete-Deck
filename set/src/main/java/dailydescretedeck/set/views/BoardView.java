@@ -97,9 +97,9 @@ public class BoardView extends Pane {
             }
         }
 
-        Button button1 = new Button("Surrender");
-        Button button2 = new Button("Confirm");
-        Button button3 = new Button("Cancel");
+        Button button1 = new Button("surrender");
+        Button button2 = new Button("confirm");
+        Button button3 = new Button("cancel");
         Button button4 = new Button("XOR");
 
         Pane buttonsPane = new Pane();
@@ -115,19 +115,19 @@ public class BoardView extends Pane {
         button1.setLayoutY(0);
         button1.setPrefWidth(buttonWidth);
         button1.setPrefHeight(buttonHeight);
-        button1.setStyle("-fx-background-color: #21cdf3; -fx-text-fill: white; -fx-font-weight: bold;");
+        button1.setStyle("-fx-background-color: #EBE3EB; -fx-text-fill: #746174; -fx-font-weight: bold;");
 
         button2.setLayoutX(20 + buttonWidth);
         button2.setLayoutY(0);
         button2.setPrefWidth(buttonWidth);
         button2.setPrefHeight(buttonHeight);
-        button2.setStyle("-fx-background-color: #5cf79a; -fx-text-fill: white; -fx-font-weight: bold;");
+        button2.setStyle("-fx-background-color: #EBE3EB; -fx-text-fill: BLACK; -fx-font-weight: bold;");
 
         button3.setLayoutX(30 + 2 * buttonWidth);
         button3.setLayoutY(0);
         button3.setPrefWidth(buttonWidth);
         button3.setPrefHeight(buttonHeight);
-        button3.setStyle("-fx-background-color: #ff70d7; -fx-text-fill: white; -fx-font-weight: bold;");
+        button3.setStyle("-fx-background-color: #EBE3EB; -fx-text-fill: #746174; -fx-font-weight: bold;");
 
         button4.setLayoutX(paneWidth - buttonWidth / 2 - gap);
         button4.setLayoutY(gap);

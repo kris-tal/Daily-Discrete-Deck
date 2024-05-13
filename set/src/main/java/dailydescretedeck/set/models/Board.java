@@ -121,6 +121,7 @@ public class Board {
                 return false;
             }
         }
+        
         sets++;
         return true;
     }

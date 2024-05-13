@@ -1,0 +1,5 @@
+Po wzięciu pod uwagę Pańskich uwag i poznaniu lepiej możliwości
+JavaFX, postanowiłyśmy wykorzystać go do projektu. 
+
+Jeśli chodzi o poziom skomplikowania,
+program jest pisany pod dodanie sklepu w grze. Jeśli zdążymy zostanie zaimplementowany.

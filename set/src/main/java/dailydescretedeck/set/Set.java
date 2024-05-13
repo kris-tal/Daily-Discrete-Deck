@@ -12,7 +12,6 @@ public class Set extends Application {
     public void start(Stage stage) throws Exception {
         BoardState boardState = new SimpleBoardState(7);
         PlayView playView = new PlayView(boardState);
-
         Scene scene = new Scene(playView,1000, 800);
         scene.getRoot().setStyle("-fx-background-color: thistle;");
         stage.setScene(scene);

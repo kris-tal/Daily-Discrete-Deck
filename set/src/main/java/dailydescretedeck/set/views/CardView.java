@@ -102,13 +102,6 @@ public class CardView extends Pane {
         }
     }
 
-    public void select() {
-        this.cardBackground.setFill(((Color)this.cardBackground.getFill()).darker());
-        for(Shape field : fields) {
-            field.setFill(((Color)field.getFill()).darker());
-        }
-    }
-
     public void unclick() {
         this.cardBackground.setStrokeWidth(0);
         this.clicked = false;

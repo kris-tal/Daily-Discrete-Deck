@@ -131,4 +131,11 @@ public class Board {
         }
         return null;
     }
+
+    public List<Card> getNotSet() {
+        List<Card> everythingGood = getSet();
+        List<Card> everything = new ArrayList<>(cards);
+        everything.removeAll(everythingGood);
+        return everything;
+    }
 }

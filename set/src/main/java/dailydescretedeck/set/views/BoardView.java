@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 
 import static java.lang.Double.min;
@@ -27,6 +28,7 @@ public class BoardView extends Pane {
     private List<Card> selectedCards = new ArrayList<>();
     private boolean confirm = false;
     private Map<Card, CardView> cardViews = new HashMap<>();
+
 
     public BoardView(Board board) {
         this.board = board;
@@ -116,34 +118,34 @@ public class BoardView extends Pane {
         button1.setLayoutY(0);
         button1.setPrefWidth(buttonWidth);
         button1.setPrefHeight(buttonHeight);
-        button1.setStyle("-fx-font-size:25; -fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        button1.setFont(new Font("System", gap * 1.8));
+        button1.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
         button2.setLayoutX(20 + buttonWidth);
         button2.setLayoutY(0);
         button2.setPrefWidth(buttonWidth);
         button2.setPrefHeight(buttonHeight);
-        button2.setStyle("-fx-font-size:25; -fx-background-color: #E6D4E6; -fx-text-fill: #493C49; -fx-background-radius: 40;");
+        button2.setFont(new Font("System", gap * 1.8));
+        button2.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #493C49; -fx-background-radius: 40;");
 
         button3.setLayoutX(30 + 2 * buttonWidth);
         button3.setLayoutY(0);
         button3.setPrefWidth(buttonWidth);
         button3.setPrefHeight(buttonHeight);
-        button3.setStyle("-fx-font-size:25; -fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        button3.setFont(new Font("System", gap * 1.8));
+        button3.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
         button4.setLayoutX(paneWidth - buttonWidth / 2 - gap);
         button4.setLayoutY(gap);
         button4.setPrefWidth(buttonWidth / 2);
         button4.setPrefHeight(buttonHeight);
-        button4.setStyle("-fx-font-size:25; -fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        button4.setFont(new Font("System", gap * 1.8));
+        button4.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
         button1.setOnAction(event -> {
             System.out.println("Kliknięto w przycisk Surrender");
-            /*BoardView newBoardView = new BoardView(board);
-            StackPane parent = (StackPane) getParent();
-            parent.getChildren().remove(this);
-            parent.getChildren().add(newBoardView);*/
             selectedCards.clear();
-            selectedCards = board.getSet();
+            selectedCards = board.getNotSet();
 
             for(Card card : selectedCards) {
                 CardView cardView = cardViews.get(card);

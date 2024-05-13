@@ -166,6 +166,12 @@ public class BoardView extends Pane {
             }
             else {
                 System.out.println("Nie znaleziono SET");
+                for(Card card : board.getCards()) {
+                    CardView cardView = cardViews.get(card);
+                    cardView.unclick();
+                }
+                CardView.enableCards();
+                selectedCards.clear();
             }
         });
 

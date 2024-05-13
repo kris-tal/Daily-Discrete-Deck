@@ -10,11 +10,11 @@ public class Deck {
     private List<Card> cards;
 
     public void fill(List<List<Dots>> list, List<Dots> temp, List<Dots> colors, int start) {
-        list.add(new ArrayList<>(temp));
+        if(!temp.isEmpty()) list.add(new ArrayList<>(temp));
         for (int i = start; i < colors.size(); i++) {
             temp.add(colors.get(i));
             fill(list, temp, colors, i + 1);
-            temp.remove(temp.size() - 1);
+            temp.removeLast();
         }
     }
 
@@ -26,6 +26,9 @@ public class Deck {
         for (List<Dots> list : everything) {
             cards.add(new Card((ArrayList<Dots>)list));
         }
+        //cards.remove(new Card(new ArrayList<>()));
+
+        System.out.println(cards.contains(new Card(new ArrayList<>())));
         shuffle();
     }
 

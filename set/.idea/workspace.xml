@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12792faf-e17a-4636-881d-507484ba98ce" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/BoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/BoardView.java" afterDir="false" />
-    </list>
+    <list default="true" id="12792faf-e17a-4636-881d-507484ba98ce" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,7 +42,7 @@
     &quot;Application.Set.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.dailydescretedeck.set.views.mycolors in set.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;kristal&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;gabi&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/kris/Documents/Sem-II/PO/PROJECT/set/src/main/resources/dailydescretedeck/set/images&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,

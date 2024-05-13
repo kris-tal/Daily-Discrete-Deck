@@ -12,9 +12,11 @@ import java.util.Map;
 public class Board {
     private List<Card> cards = new ArrayList<>();
     private Deck deck;
+    private Integer sets;
 
     public Board(int n) {
         this.deck = new Deck();
+        sets = 0;
         for(int i = 0; i < n; i++) {
             ArrayList<Dots> list = new ArrayList<>();
             list.addAll(deck.drawCard().getFields());
@@ -41,6 +43,14 @@ public class Board {
             Card card = deck.drawCard();
             if(card.getFields().size() != 0) cards.add(card);
         }
+    }
+
+    public List<Card> getDeck() {
+        return deck.getRemainingCards();
+    }
+
+    public Integer getnNumberSets() {
+        return sets;
     }
 
     public Map<Dots, Integer> preparationToCount(List<Card> cards) {

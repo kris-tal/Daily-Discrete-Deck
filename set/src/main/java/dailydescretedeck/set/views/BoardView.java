@@ -1,4 +1,5 @@
 package dailydescretedeck.set.views;
+
 import dailydescretedeck.set.models.Board;
 import dailydescretedeck.set.models.Card;
 import dailydescretedeck.set.models.Deck;
@@ -6,6 +7,7 @@ import dailydescretedeck.set.views.CardView;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -66,6 +68,24 @@ public class BoardView extends Pane {
 
         double startX = bigRectX + gap;
         double startY = bigRectY + gap / 2;
+
+        int numberCards = board.getDeck().size() + board.getCards().size();
+        Font font = new Font("Comic Sans MS", gap * 2);
+
+        Label label1 = new Label("Cards left: " + numberCards + "/63");
+        label1.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
+        label1.setFont(font);
+        label1.setLayoutX(gap);
+        label1.setLayoutY(gap);
+        getChildren().add(label1);
+
+
+        Label label2 = new Label("Collected SETs: " + board.getnNumberSets());
+        label2.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
+        label2.setFont(font);
+        label2.setLayoutX(gap);
+        label2.setLayoutY(gap * 4);
+        getChildren().add(label2);
 
         int cardIndex = 0;
 

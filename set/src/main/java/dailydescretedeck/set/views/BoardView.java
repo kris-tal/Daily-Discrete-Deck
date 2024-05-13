@@ -137,10 +137,6 @@ public class BoardView extends Pane {
 
         button1.setOnAction(event -> {
             System.out.println("Kliknięto w przycisk Surrender");
-            /*BoardView newBoardView = new BoardView(board);
-            StackPane parent = (StackPane) getParent();
-            parent.getChildren().remove(this);
-            parent.getChildren().add(newBoardView);*/
             selectedCards.clear();
             selectedCards = board.getSet();
 

@@ -1,8 +1,8 @@
 package dailydescretedeck.set.views;
 
-
 import dailydescretedeck.set.models.Board;
 import dailydescretedeck.set.models.Card;
+import dailydescretedeck.set.models.Deck;
 import dailydescretedeck.set.views.CardView;
 
 import javafx.scene.control.Alert;
@@ -30,6 +30,7 @@ public class BoardView extends Pane {
     private List<Card> selectedCards = new ArrayList<>();
     private boolean confirm = false;
     private Map<Card, CardView> cardViews = new HashMap<>();
+
 
     public BoardView(Board board) {
         this.board = board;
@@ -60,7 +61,7 @@ public class BoardView extends Pane {
         bigRect.setFill(Color.THISTLE);
         getChildren().add(bigRect);
 
-        gap = square/5;
+        gap = square / 5;
 
         double cardWidth = square * 2;
         double cardHeight = square * 3;
@@ -144,45 +145,45 @@ public class BoardView extends Pane {
         buttonsPane.setLayoutX(bigRectX);
         buttonsPane.setLayoutY(bigRectY + bigRectHeight + gap);
 
-        double buttonWidth = (bigRectWidth - 40) / 3;
-        double buttonHeight = bigRectHeight/12;
+        double buttonWidth = (bigRectWidth - 80) / 3;
+        double buttonHeight = bigRectHeight / 10;
 
         button1.setLayoutX(10);
         button1.setLayoutY(0);
         button1.setPrefWidth(buttonWidth);
         button1.setPrefHeight(buttonHeight);
-        button1.setStyle("-fx-background-color: #EBE3EB; -fx-text-fill: #746174; -fx-font-weight: bold;");
+        button1.setFont(new Font("System", gap * 1.8));
+        button1.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
         button2.setLayoutX(20 + buttonWidth);
         button2.setLayoutY(0);
         button2.setPrefWidth(buttonWidth);
         button2.setPrefHeight(buttonHeight);
-        button2.setStyle("-fx-background-color: #EBE3EB; -fx-text-fill: BLACK; -fx-font-weight: bold;");
+        button2.setFont(new Font("System", gap * 1.8));
+        button2.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #493C49; -fx-background-radius: 40;");
 
         button3.setLayoutX(30 + 2 * buttonWidth);
         button3.setLayoutY(0);
         button3.setPrefWidth(buttonWidth);
         button3.setPrefHeight(buttonHeight);
-        button3.setStyle("-fx-background-color: #EBE3EB; -fx-text-fill: #746174; -fx-font-weight: bold; -fx-background-radius: 40;");
+        button3.setFont(new Font("System", gap * 1.8));
+        button3.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
         button4.setLayoutX(paneWidth - buttonWidth / 2 - gap);
         button4.setLayoutY(gap);
         button4.setPrefWidth(buttonWidth / 2);
         button4.setPrefHeight(buttonHeight);
-        button4.setStyle("-fx-background-color: #b06bff; -fx-text-fill: white; -fx-font-weight: bold;");
+        button4.setFont(new Font("System", gap * 1.8));
+        button4.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
         button1.setOnAction(event -> {
             System.out.println("Kliknięto w przycisk Surrender");
-            /*BoardView newBoardView = new BoardView(board);
-            StackPane parent = (StackPane) getParent();
-            parent.getChildren().remove(this);
-            parent.getChildren().add(newBoardView);*/
             selectedCards.clear();
-            selectedCards = board.getSet();
+            selectedCards = board.getNotSet();
 
             for(Card card : selectedCards) {
                 CardView cardView = cardViews.get(card);
-                cardView.select();
+                cardView.selectNotSelected();
             }
             CardView.disableCards();
 

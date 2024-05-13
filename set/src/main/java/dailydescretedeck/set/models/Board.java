@@ -1,5 +1,8 @@
 package dailydescretedeck.set.models;
 
+import javafx.scene.control.Alert;
+import javafx.stage.Modality;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -85,6 +88,14 @@ public class Board {
                     }
                 }
             }
+        }
+        if(cards.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Koniec gry");
+            alert.setHeaderText(null);
+            alert.setContentText("Wygrałeś!");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.showAndWait();
         }
     }
 

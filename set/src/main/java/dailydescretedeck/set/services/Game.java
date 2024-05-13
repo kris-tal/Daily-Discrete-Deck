@@ -28,17 +28,11 @@ public class Game {
     }
     
     public void startGame() {
-<<<<<<< HEAD
-        deck = new Deck();
-        board = new Board();
-        board.drawCardFromDeck(deck);
-=======
         boardState.clear();
     }
     
     public boolean checkWinConditions(List<Card> cards) {
         return boardState.isSetOk(cards);
->>>>>>> d8f95d3 (the big merge)
     }
 
     public void connectCardToGui(Card card, ImageView cardImageView) {
@@ -53,7 +47,7 @@ public class Game {
         confirmButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Move();
+                Move(); //??
             }
         });
     }

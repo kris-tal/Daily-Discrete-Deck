@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12792faf-e17a-4636-881d-507484ba98ce" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/Set.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/Set.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/BoardState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/BoardState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/Deck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/CardDesign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/CardDesign.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/services/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/services/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/BoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/BoardView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/CardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/CardView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/carddesignes/DefaultCardDesign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/carddesignes/DefaultCardDesign.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

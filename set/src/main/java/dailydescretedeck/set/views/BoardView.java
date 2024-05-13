@@ -1,13 +1,13 @@
-package dailydescretedeck.view;
+package dailydescretedeck.set.views;
 
+import dailydescretedeck.set.models.Board;
+import dailydescretedeck.set.models.Card;
+import dailydescretedeck.set.views.CardView;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import dailydescretedeck.model.Board;
-import dailydescretedeck.model.Card;
-import dailydescretedeck.model.Card;
 
 import java.util.ArrayList;
 import java.util.HashMap;

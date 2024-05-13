@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Card {
-    private final ArrayList<Integer> fields;
-    private final CardDesign design;
+    private ArrayList<Dots> fields;
+    private CardDesign design;
 
-    public Card(ArrayList<Integer> list) {
-        this.fields = list;
+    public Card(ArrayList<Dots> existingFields) {
+        this.fields = existingFields;
         this.design = new DefaultCardDesign();
     }
 
-    public ArrayList<Integer> getFields() {
+    public ArrayList<Dots> getFields() {
         return this.fields;
     }
     public CardDesign getDesign() {

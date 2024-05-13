@@ -38,9 +38,9 @@ public class Set<I extends Number> extends Application {
         list.add(4);
         list.add(5);
         list.add(6);
-        Card card = new Card(list);
-        CardView cardView = new CardView(card, 100, 100);
-        root.getChildren().add(cardView);
+        //Card card = new Card(list);
+        //CardView cardView = new CardView(card, 100, 100);
+        //root.getChildren().add(cardView);
         stage.setScene(scene);
         stage.show();
     }

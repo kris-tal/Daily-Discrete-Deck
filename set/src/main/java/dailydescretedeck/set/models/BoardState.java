@@ -6,7 +6,7 @@ import java.util.Map;
 public interface BoardState {
     void addCards(List<Card> card);
     void removeCards(List<Card> card);
-    Iterable<CardState> getCards();
+    Iterable<Card> getCards();
     void clear();
     void refresh();
     Board getBoard();

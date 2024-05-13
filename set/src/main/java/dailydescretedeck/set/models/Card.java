@@ -17,13 +17,4 @@ public class Card {
     public ArrayList<Integer> getFields(int field) {
         return this.fields;
     }
-
-//    public Color getColor(int idx) {
-//        return design.getColor(idx);
-//    }
-//
-//    public Shape getShape(int idx) {
-//        return design.getShape(idx);
-//    }
-
 }

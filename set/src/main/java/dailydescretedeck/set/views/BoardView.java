@@ -72,34 +72,20 @@ public class BoardView extends Pane {
         int numberCards = board.getDeck().size() + board.getCards().size();
         Font font = new Font("Comic Sans MS", gap * 2);
 
-        Label label11 = new Label("Cards left: " + numberCards + "/63");
-        label11.setStyle("-fx-strikethrough: true; -fx-text-fill: White;");
-        label11.setFont(font);
-        label11.setLayoutX(gap);
-        label11.setLayoutY(gap);
-        getChildren().add(label11);
-
-        Label label12 = new Label("Cards left: " + numberCards + "/63");
-        label12.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
-        label12.setFont(font);
-        label12.setLayoutX(gap + 1);
-        label12.setLayoutY(gap + 1);
-        getChildren().add(label12);
+        Label label1 = new Label("Cards left: " + numberCards + "/63");
+        label1.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
+        label1.setFont(font);
+        label1.setLayoutX(gap);
+        label1.setLayoutY(gap);
+        getChildren().add(label1);
 
 
-        Label label21 = new Label("Collected SETs: " + board.getnNumberSets());
-        label21.setStyle("-fx-strikethrough: true; -fx-text-fill: White;");
-        label21.setFont(font);
-        label21.setLayoutX(gap);
-        label21.setLayoutY(gap * 4);
-        getChildren().add(label21);
-
-        Label label22 = new Label("Collected SETs: " + board.getnNumberSets());
-        label22.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
-        label22.setFont(font);
-        label22.setLayoutX(gap + 1);
-        label22.setLayoutY(gap * 4 + 1);
-        getChildren().add(label22);
+        Label label2 = new Label("Collected SETs: " + board.getnNumberSets());
+        label2.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
+        label2.setFont(font);
+        label2.setLayoutX(gap);
+        label2.setLayoutY(gap * 4);
+        getChildren().add(label2);
 
         int cardIndex = 0;
 

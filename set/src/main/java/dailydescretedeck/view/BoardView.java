@@ -140,7 +140,7 @@ public class BoardView extends Pane {
         button1.setOnAction(event -> {
             System.out.println("Kliknięto w przycisk Surrender");
             selectedCards.clear();
-            selectedCards = board.getSet();
+            selectedCards = board.getnotSet();
 
             for(Card card : selectedCards) {
                 CardView cardView = cardViews.get(card);
@@ -195,6 +195,7 @@ public class BoardView extends Pane {
 
             Card card = board.Xor((ArrayList<Card>) selectedCards);
             CardView cardView = new CardView(card, 0, 0, square/(2 * 60));
+            cardView.disableThisCard();
             StackPane cardPane = new StackPane();
             cardPane.getChildren().add(cardView);
             cardPane.setLayoutX(paneWidth - buttonWidth / 2 - gap);

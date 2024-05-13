@@ -99,7 +99,7 @@ public class CardView extends Pane {
         }
     }
 
-    public void select() {
+    public void selectNotSelected() {
         this.cardBackground.setFill(((Color)this.cardBackground.getFill()).darker());
         for(Shape field : fields) {
             field.setFill(((Color)field.getFill()).darker());
@@ -126,8 +126,4 @@ public class CardView extends Pane {
         list.addAll(fields);
         return super.getChildren();
     }
-
-    //obsluga interakcji
-
-    //zaznaczenie
 }

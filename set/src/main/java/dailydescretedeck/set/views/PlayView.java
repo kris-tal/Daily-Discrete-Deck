@@ -10,11 +10,11 @@ import javafx.scene.layout.VBox;
 
 public class PlayView extends StackPane {
     private final BoardState boardState;
-    private final dailydescretedeck.view.BoardView boardView;
+    private final dailydescretedeck.set.views.BoardView boardView;
 
     public PlayView(BoardState bs) {
         this.boardState = bs;
-        this.boardView = new dailydescretedeck.view.BoardView(bs.getBoard());
+        this.boardView = new dailydescretedeck.set.views.BoardView(bs.getBoard());
 
         setAlignment(Pos.CENTER);
 

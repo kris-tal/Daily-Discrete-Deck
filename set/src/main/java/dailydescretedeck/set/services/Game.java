@@ -47,7 +47,7 @@ public class Game {
         confirmButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Move();
+                Move(); //??
             }
         });
     }

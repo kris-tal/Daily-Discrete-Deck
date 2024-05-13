@@ -15,8 +15,9 @@ public class DefaultCardDesign implements CardDesign {
     public Color getColor(int idx) {
         return colors[idx - 1];
     }
-    public Shape getShape() {
-        return new Circle(15);
+    
+    public Shape getShape(double sq) {
+        return new Circle(15 * sq);
     }
     public Color getBackgroundColor() {
         return backgroundColor;

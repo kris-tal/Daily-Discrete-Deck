@@ -1,6 +1,7 @@
 package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.Card;
+import dailydescretedeck.set.models.Dots;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -17,62 +18,63 @@ public class CardView extends Pane {
     private double width;
     private double height;
     private boolean clicked;
+    static private boolean disabled = false;
 
-    private final Rectangle cardBackground;
+    public final Rectangle cardBackground;
     private final ArrayList<Shape> fields;
 
-    public CardView(Card card, double X, double Y) {
+    public CardView(Card card, double X, double Y, double sq) {
         this.card = card;
         this.group = new Group();
-        this.width = 120;
-        this.height = 180;
+        this.width = 120 * sq;
+        this.height = 180 * sq;
         this.clicked = false;
         this.cardBackground = new Rectangle(width, height);
         this.cardBackground.setFill(card.getDesign().getBackgroundColor());
-        this.cardBackground.setArcHeight(35);
-        this.cardBackground.setArcWidth(35);
+        this.cardBackground.setArcHeight(35 * sq);
+        this.cardBackground.setArcWidth(35 * sq);
         this.cardBackground.setX(X);
         this.cardBackground.setY(Y);
         this.cardBackground.setStrokeWidth(0);
         this.cardBackground.setStroke(Color.rgb(116, 97, 116));
         this.group.getChildren().add(cardBackground);
         this.fields = new ArrayList<>();
-        for(Integer field : card.getFields()) {
-            Shape shape = card.getDesign().getShape();
-            if(field == 1) {
+        for(Dots field : card.getFields()) {
+            Shape shape = card.getDesign().getShape(sq);
+            if(field == Dots.A1) {
                 shape.setLayoutX(X + this.width / 120 * 34);
                 shape.setLayoutY(Y + this.height / 180 * 36);
-                shape.setFill(card.getDesign().getColor(field));
+                shape.setFill(card.getDesign().getColor(1));
                 this.fields.add(shape);
             }
-            else if(field == 2) {
+            else if(field == Dots.A2) {
                 shape.setLayoutX(X + this.width / 120 * 86);
                 shape.setLayoutY(Y + this.height / 180 * 36);
-                shape.setFill(card.getDesign().getColor(field));
+                shape.setFill(card.getDesign().getColor(2));
                 this.fields.add(shape);
             }
-            else if(field == 3) {
+            else if(field == Dots.B1) {
                 shape.setLayoutX(X + this.width / 120 * 34);
                 shape.setLayoutY(Y + this.height / 180 * 90);
-                shape.setFill(card.getDesign().getColor(field));
+                shape.setFill(card.getDesign().getColor(3));
                 this.fields.add(shape);
             }
-            else if(field == 4) {
+            else if(field == Dots.B2) {
                 shape.setLayoutX(X + this.width / 120 * 86);
                 shape.setLayoutY(Y + this.height / 180 * 90);
-                shape.setFill(card.getDesign().getColor(field));
+                shape.setFill(card.getDesign().getColor(4));
                 this.fields.add(shape);
             }
-            else if(field == 5) {
+            else if(field == Dots.C1) {
                 shape.setLayoutX(X + this.width / 120 * 34);
                 shape.setLayoutY(Y + this.height / 180 * 144);
-                shape.setFill(card.getDesign().getColor(field));
+                shape.setFill(card.getDesign().getColor(5));
                 this.fields.add(shape);
             }
-            else if(field == 6) {
+            else if(field == Dots.C2) {
                 shape.setLayoutX(X + this.width / 120 * 86);
                 shape.setLayoutY(Y + this.height / 180 * 144);
-                shape.setFill(card.getDesign().getColor(field));
+                shape.setFill(card.getDesign().getColor(6));
                 this.fields.add(shape);
             }
 
@@ -83,8 +85,9 @@ public class CardView extends Pane {
         setOnMouseClicked(event -> clicked());
     }
 
-    private void clicked() {
+    public void clicked() {
         System.out.println("clicked");
+        if(disabled) return;
         if(!this.clicked) {
             this.cardBackground.setStrokeWidth(3.0);
             this.cardBackground.setStroke(Color.rgb(116, 97, 116));
@@ -94,7 +97,26 @@ public class CardView extends Pane {
             this.cardBackground.setStrokeWidth(0);
             this.clicked = false;
         }
+    }
 
+    public void select() {
+        this.cardBackground.setFill(((Color)this.cardBackground.getFill()).darker());
+        for(Shape field : fields) {
+            field.setFill(((Color)field.getFill()).darker());
+        }
+    }
+
+    public void unclick() {
+        this.cardBackground.setStrokeWidth(0);
+        this.clicked = false;
+    }
+
+    static public void disableCards() {
+        disabled = true;
+    }
+
+    static public void enableCards() {
+        disabled = false;
     }
 
     @Override

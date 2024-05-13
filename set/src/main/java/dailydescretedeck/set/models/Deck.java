@@ -29,6 +29,10 @@ public class Deck {
         shuffle();
     }
 
+    public List<Card> getRemainingCards() {
+        return cards;
+    }
+
     public void shuffle() {
         Collections.shuffle(cards, new Random(System.currentTimeMillis()));
     }

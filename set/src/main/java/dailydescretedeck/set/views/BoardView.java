@@ -1,4 +1,4 @@
-package dailydescretedeck.view;
+package dailydescretedeck.set.views;
 
 
 import dailydescretedeck.set.models.Board;
@@ -7,6 +7,7 @@ import dailydescretedeck.set.views.CardView;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 
 import static java.lang.Double.min;
@@ -65,6 +67,38 @@ public class BoardView extends Pane {
 
         double startX = bigRectX + gap;
         double startY = bigRectY + gap / 2;
+
+        int numberCards = board.getDeck().size() + board.getCards().size();
+        Font font = new Font("Comic Sans MS", gap * 2);
+
+        Label label11 = new Label("Cards left: " + numberCards + "/63");
+        label11.setStyle("-fx-strikethrough: true; -fx-text-fill: White;");
+        label11.setFont(font);
+        label11.setLayoutX(gap);
+        label11.setLayoutY(gap);
+        getChildren().add(label11);
+
+        Label label12 = new Label("Cards left: " + numberCards + "/63");
+        label12.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
+        label12.setFont(font);
+        label12.setLayoutX(gap + 1);
+        label12.setLayoutY(gap + 1);
+        getChildren().add(label12);
+
+
+        Label label21 = new Label("Collected SETs: " + board.getnNumberSets());
+        label21.setStyle("-fx-strikethrough: true; -fx-text-fill: White;");
+        label21.setFont(font);
+        label21.setLayoutX(gap);
+        label21.setLayoutY(gap * 4);
+        getChildren().add(label21);
+
+        Label label22 = new Label("Collected SETs: " + board.getnNumberSets());
+        label22.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
+        label22.setFont(font);
+        label22.setLayoutX(gap + 1);
+        label22.setLayoutY(gap * 4 + 1);
+        getChildren().add(label22);
 
         int cardIndex = 0;
 

@@ -14,7 +14,7 @@ import dailydescretedeck.set.services.Feature;
 public class Board {
     private List<Card> cards = new ArrayList<>();
     private Deck deck;
-    private Integer sets;
+    private int sets;
 
     public Board(int n) {
         this.deck = new Deck();
@@ -51,7 +51,7 @@ public class Board {
         return deck.getRemainingCards();
     }
 
-    public Integer getnNumberSets() {
+    public int getNumberSets() {
         return sets;
     }
 

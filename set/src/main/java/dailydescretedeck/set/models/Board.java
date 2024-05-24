@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import dailydescretedeck.set.services.Feature;
+
 
 public class Board {
     private List<Card> cards = new ArrayList<>();
@@ -43,7 +45,7 @@ public class Board {
         }
     }
 
-    public Map<Dots, Integer> preparationToCount(List<Card> cards) {
+    private Map<Dots, Integer> preparationToCount(List<Card> cards) {
         Map<Dots, Integer> map = new HashMap<>();
         for (Card card : cards) {
             for (int i = 0; i < card.getFields().size(); i++) {
@@ -114,18 +116,9 @@ public class Board {
         return true;
     }
 
-    public void fill(List<List<Card>> list, List<Card> temp, List<Card> colors, int start) {
-        list.add(new ArrayList<>(temp));
-        for (int i = start; i < colors.size(); i++) {
-            temp.add(colors.get(i));
-            fill(list, temp, colors, i + 1);
-            temp.remove(temp.size() - 1);
-        }
-    }
-
     public List<Card> getSet() {
         List<List<Card>> everything = new ArrayList<>();
-        fill(everything, new ArrayList<>(), cards, 0);
+        Feature.fill(everything, new ArrayList<>(), cards, 0);
         for (List<Card> list : everything) {
             if(isSetOk(list) && list.size() != 0) return list;
         }

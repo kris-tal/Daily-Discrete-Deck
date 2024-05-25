@@ -2,26 +2,21 @@ package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.Board;
 import dailydescretedeck.set.models.Card;
-import dailydescretedeck.set.models.Deck;
-import dailydescretedeck.set.views.CardView;
-
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.stage.Modality;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.stage.Modality;
 
 import static java.lang.Double.min;
 
@@ -41,7 +36,7 @@ public class BoardView extends Pane {
         heightProperty().addListener((observable, oldValue, newValue) -> redrawBoard());
     }
 
-    private void redrawBoard() {
+    public void redrawBoard() {
         getChildren().clear();
 
         double paneWidth = getWidth();
@@ -71,22 +66,23 @@ public class BoardView extends Pane {
         double startY = bigRectY + gap / 2;
 
         int numberCards = board.getDeck().size() + board.getCards().size();
-        Font font = new Font("Comic Sans MS", gap * 2);
+        Font font = new Font("System", gap * 1.8);
 
-        Label label1 = new Label("Cards left: " + numberCards + "/63");
-        label1.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
-        label1.setFont(font);
-        label1.setLayoutX(gap);
-        label1.setLayoutY(gap);
-        getChildren().add(label1);
+        Label cardsLeftLabel = new Label("Cards left: " + numberCards + "/63");
+        cardsLeftLabel.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
+        cardsLeftLabel.setFont(font);
+        cardsLeftLabel.setLayoutX(gap);
+        cardsLeftLabel.setLayoutY(gap);
+        getChildren().add(cardsLeftLabel);
 
 
-        Label label2 = new Label("Collected SETs: " + board.getNumberSets());
-        label2.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
-        label2.setFont(font);
-        label2.setLayoutX(gap);
-        label2.setLayoutY(gap * 4);
-        getChildren().add(label2);
+
+        Label collectedSetsLabel = new Label("Collected SETs: " + board.getnNumberSets());
+        collectedSetsLabel.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
+        collectedSetsLabel.setFont(font);
+        collectedSetsLabel.setLayoutX(gap);
+        collectedSetsLabel.setLayoutY(gap * 4);
+        getChildren().add(collectedSetsLabel);
 
         int cardIndex = 0;
 
@@ -121,13 +117,13 @@ public class BoardView extends Pane {
             }
         }
 
-        Button button1 = new Button("surrender");
-        Button button2 = new Button("confirm");
-        Button button3 = new Button("cancel");
-        Button button4 = new Button("XOR");
+        Button surrenderButton = new Button("surrender");
+        Button confirmButton = new Button("confirm");
+        Button cancelButton = new Button("cancel");
+        Button xorButton = new Button("XOR");
 
         Pane buttonsPane = new Pane();
-        buttonsPane.getChildren().addAll(button1, button2, button3);
+        buttonsPane.getChildren().addAll(surrenderButton, confirmButton, cancelButton);
         buttonsPane.setPrefWidth(bigRectWidth);
         buttonsPane.setLayoutX(bigRectX);
         buttonsPane.setLayoutY(bigRectY + bigRectHeight + gap);
@@ -135,35 +131,35 @@ public class BoardView extends Pane {
         double buttonWidth = (bigRectWidth - 40) / 3;
         double buttonHeight = bigRectHeight / 10;
 
-        button1.setLayoutX(10);
-        button1.setLayoutY(0);
-        button1.setPrefWidth(buttonWidth);
-        button1.setPrefHeight(buttonHeight);
-        button1.setFont(Font.font("System", gap * 1.8));
-        button1.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        surrenderButton.setLayoutX(10);
+        surrenderButton.setLayoutY(0);
+        surrenderButton.setPrefWidth(buttonWidth);
+        surrenderButton.setPrefHeight(buttonHeight);
+        surrenderButton.setFont(Font.font("System", gap * 1.8));
+        surrenderButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
-        button2.setLayoutX(20 + buttonWidth);
-        button2.setLayoutY(0);
-        button2.setPrefWidth(buttonWidth);
-        button2.setPrefHeight(buttonHeight);
-        button2.setFont(Font.font("System", gap * 1.8));
-        button2.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        confirmButton.setLayoutX(20 + buttonWidth);
+        confirmButton.setLayoutY(0);
+        confirmButton.setPrefWidth(buttonWidth);
+        confirmButton.setPrefHeight(buttonHeight);
+        confirmButton.setFont(Font.font("System", gap * 1.8));
+        confirmButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
-        button3.setLayoutX(30 + 2 * buttonWidth);
-        button3.setLayoutY(0);
-        button3.setPrefWidth(buttonWidth);
-        button3.setPrefHeight(buttonHeight);
-        button3.setFont(Font.font("System", gap * 1.8));
-        button3.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        cancelButton.setLayoutX(30 + 2 * buttonWidth);
+        cancelButton.setLayoutY(0);
+        cancelButton.setPrefWidth(buttonWidth);
+        cancelButton.setPrefHeight(buttonHeight);
+        cancelButton.setFont(Font.font("System", gap * 1.8));
+        cancelButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
-        button4.setLayoutX(paneWidth - buttonWidth / 2 - gap);
-        button4.setLayoutY(gap);
-        button4.setPrefWidth(buttonWidth / 2);
-        button4.setPrefHeight(buttonHeight);
-        button4.setFont(Font.font("System", gap * 1.6));
-        button4.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        xorButton.setLayoutX(paneWidth - buttonWidth / 2 - gap);
+        xorButton.setLayoutY(gap);
+        xorButton.setPrefWidth(buttonWidth / 2);
+        xorButton.setPrefHeight(buttonHeight);
+        xorButton.setFont(Font.font("System", gap * 1.6));
+        xorButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
-        button1.setOnAction(event -> {
+        surrenderButton.setOnAction(event -> {
             System.out.println("Kliknięto w przycisk Surrender");
             selectedCards.clear();
             selectedCards = board.getNotSet();
@@ -182,7 +178,7 @@ public class BoardView extends Pane {
             alert.showAndWait();
         });
 
-        button2.setOnAction(event -> {
+        confirmButton.setOnAction(event -> {
             System.out.println("Kliknięto w przycisk Confirm");
             if(board.isSetOk(selectedCards))
             {
@@ -206,7 +202,7 @@ public class BoardView extends Pane {
             }
         });
 
-        button3.setOnAction(event -> {
+        cancelButton.setOnAction(event -> {
             System.out.println("Kliknięto w przycisk Cancel");
             for(Card card : board.getCards()) {
                 CardView cardView = cardViews.get(card);
@@ -216,7 +212,7 @@ public class BoardView extends Pane {
             selectedCards.clear();
         });
 
-        button4.setOnAction(event -> {
+        xorButton.setOnAction(event -> {
             System.out.println("Kliknięto w przycisk XOR");
             Card card = board.Xor((ArrayList<Card>) selectedCards);
             CardView cardView = new CardView(card, 0, 0, square/(2 * 60));
@@ -229,7 +225,7 @@ public class BoardView extends Pane {
         });
 
         getChildren().add(buttonsPane);
-        getChildren().add(button4);
+        getChildren().add(xorButton);
     }
 
 }

@@ -1,22 +1,30 @@
 package dailydescretedeck.set;
 
-import dailydescretedeck.set.models.BoardState;
-import dailydescretedeck.set.models.SimpleBoardState;
-import dailydescretedeck.set.views.PlayView;
+import dailydescretedeck.set.viewmodels.MenuViewModel;
+import dailydescretedeck.set.views.MenuView;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import java.util.Objects;
 
 public class Set extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        BoardState boardState = new SimpleBoardState(7);
-        PlayView playView = new PlayView(boardState);
-        Scene scene = new Scene(playView,1000, 800);
+        MenuViewModel menuViewModel = new MenuViewModel();
+        MenuView menuView = new MenuView(menuViewModel, stage);
+        Scene scene = new Scene(menuView, 1000, 800);
+        try {
+            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/icon.png")));
+            stage.getIcons().add(icon);
+        } catch(RuntimeException image) { System.out.println("Image not found"); }
         scene.getRoot().setStyle("-fx-background-color: thistle;");
         stage.setScene(scene);
         stage.setTitle("Set");
         stage.show();
+
+        menuView.display(stage);
     }
 
     public static void main(String[] args) {

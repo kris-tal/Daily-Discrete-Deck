@@ -1,23 +1,32 @@
 package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.BoardState;
+import dailydescretedeck.set.models.SimpleBoardState;
+import dailydescretedeck.set.viewmodels.PlayViewModel;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
-
-import javafx.geometry.Pos;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class PlayView extends StackPane {
-    private final BoardState boardState;
-    private final dailydescretedeck.set.views.BoardView boardView;
+    private final PlayViewModel playViewModel;
+    private BoardView boardView;
 
-    public PlayView(BoardState bs) {
-        this.boardState = bs;
-        this.boardView = new dailydescretedeck.set.views.BoardView(bs.getBoard());
-
+    public PlayView(PlayViewModel pvm) {
+        this.playViewModel = pvm;
+        this.boardView = new BoardView(playViewModel.getBoardState().getBoard());
         setAlignment(Pos.CENTER);
-
         getChildren().add(boardView);
+    }
+
+    public void display(Stage stage) {
+
+        PlayViewModel playViewModel = new PlayViewModel();
+        PlayView playView = new PlayView(playViewModel);
+        Scene scene = new Scene(playView,1000, 800);
+        scene.getRoot().setStyle("-fx-background-color: thistle;");
+        stage.setScene(scene);
+        stage.setTitle("Set");
+        stage.show();
     }
 }

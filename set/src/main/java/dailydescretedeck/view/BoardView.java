@@ -86,7 +86,7 @@ public class BoardView extends Pane {
 
 
 
-        Label collectedSetsLabel = new Label("Collected SETs: " + board.getnNumberSets());
+        Label collectedSetsLabel = new Label("Collected SETs: " + board.getNumberSets());
         collectedSetsLabel.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
         collectedSetsLabel.setFont(font);
         collectedSetsLabel.setLayoutX(gap);

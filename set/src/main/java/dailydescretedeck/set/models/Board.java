@@ -1,13 +1,20 @@
 package dailydescretedeck.set.models;
 
 import javafx.scene.control.Alert;
+import java.nio.file.Path;
 import javafx.stage.Modality;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import dailydescretedeck.set.services.End;
 import dailydescretedeck.set.services.Feature;
 
 
@@ -92,6 +99,22 @@ public class Board {
             }
         }
         if(cards.isEmpty()){
+            End.getInstance().addEnds(1);
+            try {
+            LocalDate currentDate = LocalDate.now();
+            String endsCollected = String.valueOf(End.getInstance().getEnds());
+            String dataToWrite = "Date: " + currentDate + ", Ends Collected: " + endsCollected;
+
+            String fileName = "endsCollected.txt";
+            Path path = (Path) Paths.get(fileName);
+
+            List<String> lines = new ArrayList<>();
+            lines.add(dataToWrite);
+
+            Files.write(path, lines, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Koniec gry");
             alert.setHeaderText(null);

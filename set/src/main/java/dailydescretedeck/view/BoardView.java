@@ -3,6 +3,11 @@ package dailydescretedeck.view;
 
 import dailydescretedeck.set.models.Board;
 import dailydescretedeck.set.models.Card;
+<<<<<<< Updated upstream:set/src/main/java/dailydescretedeck/view/BoardView.java
+=======
+import dailydescretedeck.set.models.Deck;
+import dailydescretedeck.set.services.SetCollector;
+>>>>>>> Stashed changes:set/src/main/java/dailydescretedeck/set/views/BoardView.java
 import dailydescretedeck.set.views.CardView;
 
 import javafx.scene.control.Alert;
@@ -15,6 +20,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import javafx.scene.input.MouseEvent;
@@ -22,15 +28,20 @@ import javafx.stage.Modality;
 
 import static java.lang.Double.min;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
 public class BoardView extends Pane {
     private Board board;
     private double gap;
     private List<Card> selectedCards = new ArrayList<>();
     private boolean confirm = false;
     private Map<Card, CardView> cardViews = new HashMap<>();
+    private SetCollector setCollector;
 
     public BoardView(Board board) {
         this.board = board;
+        this.setCollector = SetCollector.getInstance();
         redrawBoard();
 
         widthProperty().addListener((observable, oldValue, newValue) -> redrawBoard());
@@ -162,8 +173,28 @@ public class BoardView extends Pane {
 
         button2.setOnAction(event -> {
             System.out.println("Kliknięto w przycisk Confirm");
+            System.out.println("Wybrane karty: " + setCollector.getSets());  
             if(board.isSetOk(selectedCards))
             {
+                SetCollector setCollector = SetCollector.getInstance();
+                setCollector.addSets(1);
+                System.out.println("Zapisano ilość zebranych SETów: " + setCollector.getSets());
+        
+                try {
+                    java.time.LocalDate currentDate = java.time.LocalDate.now();
+                    String setsCollected = String.valueOf(setCollector.getSets());
+                    String dataToWrite = "Date: " + currentDate + ", Sets Collected: " + setsCollected;
+        
+                    String fileName = "setsCollected.txt";
+                    java.nio.file.Path path = java.nio.file.Paths.get(fileName);
+        
+                    List<String> lines = new ArrayList<>();
+                    lines.add(dataToWrite);
+        
+                    java.nio.file.Files.write(path, lines, StandardCharsets.UTF_8);
+                } catch (IOException e) {
+                }
+        
                 board.removeCards(selectedCards);
                 System.out.println("Znaleziono SET");
                 BoardView newBoardView = new BoardView(board);
@@ -177,7 +208,6 @@ public class BoardView extends Pane {
                 System.out.println("Nie znaleziono SET");
             }
         });
-
         button3.setOnAction(event -> {
             System.out.println("Kliknięto w przycisk Cancel");
             for(Card card : board.getCards()) {

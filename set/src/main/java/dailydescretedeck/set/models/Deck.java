@@ -41,7 +41,9 @@ public class Deck {
     public Card drawCard() {
         if (!cards.isEmpty()) {
             Card card = cards.remove(cards.size() - 1);
-            return card;
+
+            if(card.getFields().size() != 0) return card;
+            else return drawCard();
         } else {
             return null;
         }

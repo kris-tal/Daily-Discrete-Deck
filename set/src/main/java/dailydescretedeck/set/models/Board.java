@@ -8,11 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import dailydescretedeck.set.services.Feature;
+
 
 public class Board {
     private List<Card> cards = new ArrayList<>();
     private Deck deck;
-    private Integer sets;
+    private int sets;
 
     public Board(int n) {
         this.deck = new Deck();
@@ -49,7 +51,7 @@ public class Board {
         return deck.getRemainingCards();
     }
 
-    public Integer getnNumberSets() {
+    public int getNumberSets() {
         return sets;
     }
 
@@ -126,18 +128,10 @@ public class Board {
         return true;
     }
 
-    public void fill(List<List<Card>> list, List<Card> temp, List<Card> colors, int start) {
-        list.add(new ArrayList<>(temp));
-        for (int i = start; i < colors.size(); i++) {
-            temp.add(colors.get(i));
-            fill(list, temp, colors, i + 1);
-            temp.remove(temp.size() - 1);
-        }
-    }
 
     public List<Card> getSet() {
         List<List<Card>> everything = new ArrayList<>();
-        fill(everything, new ArrayList<>(), cards, 0);
+        Feature.fill(everything, new ArrayList<>(), cards, 0);
         for (List<Card> list : everything) {
             if(isSetOk(list) && list.size() != 0) return list;
         }

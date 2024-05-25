@@ -12,8 +12,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
 import java.util.Objects;
+
 
 public class MenuView extends StackPane {
     private MenuViewModel menuViewModel;

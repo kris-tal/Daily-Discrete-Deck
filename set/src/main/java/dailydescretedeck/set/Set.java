@@ -13,8 +13,7 @@ public class Set extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         MenuViewModel menuViewModel = new MenuViewModel();
-        MenuView menuView = new MenuView(menuViewModel);
-
+        MenuView menuView = new MenuView(menuViewModel, stage);
         Scene scene = new Scene(menuView, 1000, 800);
         try {
             Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/icon.png")));
@@ -25,7 +24,7 @@ public class Set extends Application {
         stage.setTitle("Set");
         stage.show();
 
-        menuView.display();
+        menuView.display(stage);
     }
 
     public static void main(String[] args) {

@@ -28,7 +28,7 @@ public class Deck {
         }
         //cards.remove(new Card(new ArrayList<>()));
 
-        System.out.println(cards.contains(new Card(new ArrayList<>())));
+        //System.out.println(cards.contains(new Card(new ArrayList<>())));
         shuffle();
     }
 

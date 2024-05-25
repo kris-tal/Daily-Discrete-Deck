@@ -11,17 +11,20 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 import java.util.Objects;
 
 public class MenuView extends StackPane {
     private MenuViewModel menuViewModel;
+    private Stage stage;
 
-    public MenuView(MenuViewModel viewModel) {
-        this.menuViewModel = viewModel;//////
+    public MenuView(MenuViewModel viewModel, Stage stage) {
+        this.menuViewModel = viewModel;
+        this.stage = stage;
     }
 
-    public void display() {
+    public void display(Stage stage) {
         Pane wrapperPane = new Pane();
         VBox buttonsVbox = new VBox();
         VBox logoVbox = new VBox();
@@ -33,7 +36,7 @@ public class MenuView extends StackPane {
         Button playSetButton = new Button("PLAY SET");
         Button profileButton = new Button("PROFILE");
         Button storeButton = new Button("STORE");
-        Button instructionsButton = new Button("STORE");
+        Button instructionsButton = new Button("INSTRUCTIONS");
 
         DoubleBinding shorterEdge = (DoubleBinding) Bindings.min(widthProperty(), heightProperty());
         DoubleBinding width = widthProperty().divide(2);
@@ -53,17 +56,17 @@ public class MenuView extends StackPane {
         instructionsButton.prefHeightProperty().bind(height);
 
 
-        playSetButton.setFont(Font.font("System", shorterEdge.divide(50).doubleValue()));
+        playSetButton.setFont(Font.font("System", shorterEdge.divide(40).doubleValue()));
         playSetButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 60;");
-        profileButton.setFont(Font.font("System", shorterEdge.divide(50).doubleValue()));
+        profileButton.setFont(Font.font("System", shorterEdge.divide(40).doubleValue()));
         profileButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 60;");
-        storeButton.setFont(Font.font("System", shorterEdge.divide(50).doubleValue()));
+        storeButton.setFont(Font.font("System", shorterEdge.divide(40).doubleValue()));
         storeButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 60;");
-        instructionsButton.setFont(Font.font("System", shorterEdge.divide(50).doubleValue()));
+        instructionsButton.setFont(Font.font("System", shorterEdge.divide(40).doubleValue()));
         instructionsButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 60;");
 
         logoVbox.prefHeightProperty().bind(heightProperty());
-        logoVbox.translateYProperty().bind(heightProperty().divide(5));
+        logoVbox.translateYProperty().bind(heightProperty().divide(6));
         logoVbox.translateXProperty().bind(widthProperty().divide(2).subtract(width.divide(2)));
         //logoVbox.setPadding(new Insets(width.get() / 100));
 
@@ -85,10 +88,9 @@ public class MenuView extends StackPane {
         buttonsVbox.getChildren().addAll(playSetButton, profileButton, storeButton, instructionsButton);
         wrapperPane.getChildren().addAll(logoVbox, buttonsVbox);
         getChildren().add(wrapperPane);
-
     }
 
     public void handleInput(MenuViewModel.MenuOptions input) {
-        menuViewModel.handleInput(input);
+        menuViewModel.handleInput(input, stage);
     }
 }

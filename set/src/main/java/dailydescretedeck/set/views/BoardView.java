@@ -2,9 +2,7 @@ package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.Board;
 import dailydescretedeck.set.models.Card;
-import dailydescretedeck.set.models.Deck;
 import dailydescretedeck.set.services.SetCollector;
-import dailydescretedeck.set.views.CardView;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,7 +17,6 @@ import javafx.stage.Modality;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import static java.lang.Double.min;

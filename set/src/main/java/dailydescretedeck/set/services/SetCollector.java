@@ -34,7 +34,7 @@ public class SetCollector {
 
     private int loadSetsFromFile() {
         LocalDate currentDate = LocalDate.now();
-        String fileName = "setsCollected_" + currentDate + ".txt";
+        String fileName = "/saves/setsCollected_" + currentDate + ".txt";
         Path path = Paths.get(fileName);
         if (Files.exists(path)) {
             try {
@@ -52,7 +52,7 @@ public class SetCollector {
 
     private void saveSetsToFile() {
         LocalDate currentDate = LocalDate.now();
-        String fileName = "setsCollected_" + currentDate + ".txt";
+        String fileName = "/saves/setsCollected_" + currentDate + ".txt";
         Path path = Paths.get(fileName);
         String dataToWrite = "Date: " + currentDate + ", Sets Collected: " + sets;
         try {

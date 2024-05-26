@@ -24,6 +24,7 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import dailydescretedeck.set.services.SavingService;
 import dailydescretedeck.set.services.SetCollector;
 
 import java.time.LocalDate;
@@ -37,44 +38,10 @@ public class CalendarApp extends Application {
     private Map<LocalDate, Integer> setsMap = new HashMap<>(); 
     private Map<LocalDate, Integer> endsMap = new HashMap<>();
 
-    public void saveSetsMapToFile() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("setsMap.txt"))) {
-            oos.writeObject(setsMap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    public void loadSetsMapFromFile() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("setsMap.txt"))) {
-            setsMap = (Map<LocalDate, Integer>) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void saveEndsMapToFile() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("endsMap.txt"))) {
-            oos.writeObject(endsMap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    public void loadEndsMapFromFile() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("endsMap.txt"))) {
-            endsMap = (Map<LocalDate, Integer>) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void start(Stage stage) {
-        loadSetsMapFromFile();
-        loadEndsMapFromFile();
+        SavingService.loadMapFromFile("/saves/setsMap.txt", setsMap);
+        SavingService.loadMapFromFile("/saves/endsMap.txt", endsMap);
         currentYearMonth = YearMonth.now();
         monthYearLabel = new Label();
 
@@ -86,7 +53,7 @@ public class CalendarApp extends Application {
                 int sets = Integer.parseInt(parts[1].substring(16));
                 setsMap.put(date, sets);
             }
-            saveSetsMapToFile();
+            SavingService.saveMapToFile("/saves/setsMap.txt", setsMap);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -99,7 +66,7 @@ public class CalendarApp extends Application {
                 int ends = Integer.parseInt(parts[1].substring(16));
                 endsMap.put(date, ends);
             }
-            saveEndsMapToFile();
+            SavingService.saveMapToFile("/saves/endsMap.txt", endsMap);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -131,7 +98,6 @@ public class CalendarApp extends Application {
         stage.setScene(scene);
         stage.show();
         SetCollector.getInstance();
-        Runtime.getRuntime().addShutdownHook(new Thread(this::saveSetsMapToFile));
     }
 
 

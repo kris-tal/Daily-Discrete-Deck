@@ -39,10 +39,10 @@ public class End {
     public int getEnds() {
         return ends;
     }
-
+   
     private int loadEndsFromFile() {
         LocalDate currentDate = LocalDate.now();
-        String fileName = "ends_" + currentDate + ".txt";
+        String fileName = "/saves/ends_" + currentDate + ".txt";
         Path path = Paths.get(fileName);
         if (Files.exists(path)) {
             try {
@@ -60,7 +60,7 @@ public class End {
 
     private void saveEndsToFile() {
         LocalDate currentDate = LocalDate.now();
-        String fileName = "ends_" + currentDate + ".txt";
+        String fileName = "/saves/ends_" + currentDate + ".txt";
         Path path = Paths.get(fileName);
         String dataToWrite = "Date: " + currentDate + ", Ends: " + ends;
         try {

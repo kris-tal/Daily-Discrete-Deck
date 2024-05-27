@@ -1,38 +1,20 @@
 package dailydescretedeck.set.views;
 
-import dailydescretedeck.set.models.BoardState;
-import dailydescretedeck.set.views.BoardView;
-import dailydescretedeck.set.models.SimpleBoardState;
 import dailydescretedeck.set.viewmodels.PlayViewModel;
-import javafx.application.Platform;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
 public class PlayView extends StackPane {
-    private final PlayViewModel playViewModel;
-    private BoardView boardView;
+    private PlayViewModel playViewModel;
+    private Runnable showMenuCallback;
 
-    public PlayView(PlayViewModel pvm) {
-        this.playViewModel = pvm;
-        this.boardView = new BoardView(playViewModel.getBoardState().getBoard());
-        setAlignment(Pos.CENTER);
-        getChildren().add(boardView);
-    }
+    public PlayView(PlayViewModel playViewModel, Runnable showMenuCallback) {
+        this.playViewModel = playViewModel;
+        this.showMenuCallback = showMenuCallback;
 
-    public void display(Stage stage) {
-        PlayViewModel playViewModel = new PlayViewModel();
-        PlayView playView = new PlayView(playViewModel);
-        Scene scene = new Scene(playView, stage.getWidth(),stage.getHeight());
-        scene.getRoot().setStyle("-fx-background-color: thistle;");
-        stage.setScene(scene);
-        stage.setTitle("Set");
-        stage.show();
+        Button backButton = new Button("Back to Menu");
+        backButton.setOnAction(e -> showMenuCallback.run());
 
-        stage.setOnCloseRequest(event -> {
-            Platform.exit();
-            System.exit(0);
-        });
+        getChildren().add(backButton);
     }
 }

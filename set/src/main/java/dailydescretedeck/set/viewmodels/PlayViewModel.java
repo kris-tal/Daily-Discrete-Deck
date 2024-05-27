@@ -1,24 +1,15 @@
 package dailydescretedeck.set.viewmodels;
 
-import dailydescretedeck.set.models.BoardState;
 import dailydescretedeck.set.models.SimpleBoardState;
 
 public class PlayViewModel {
-    private BoardState boardState;
+    private SimpleBoardState boardState;
 
-    public PlayViewModel() {
-        this.boardState = new SimpleBoardState(7);
+    public PlayViewModel(SimpleBoardState boardState) {
+        this.boardState = boardState;
     }
 
-    public void handleInput(String input) {
-        // input handling
-    }
-
-    public void updateGameState() {
-        boardState.update();
-    }
-
-    public BoardState getBoardState() {
+    public SimpleBoardState getBoardState() {
         return boardState;
     }
 }

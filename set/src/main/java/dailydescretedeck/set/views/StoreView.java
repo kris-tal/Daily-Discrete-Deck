@@ -4,9 +4,7 @@ import dailydescretedeck.set.models.Card;
 import dailydescretedeck.set.models.CardDesign;
 import dailydescretedeck.set.models.Player;
 import dailydescretedeck.set.viewmodels.StoreViewModel;
-import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
-import dailydescretedeck.set.views.carddesignes.EmoCardDesign;
-import dailydescretedeck.set.views.carddesignes.JHCardDesign;
+import dailydescretedeck.set.views.carddesignes.*;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,15 +27,19 @@ public class StoreView extends VBox {
 
     public StoreView(Stage stage, Player player) {
         products = new ArrayList<>(List.of(new DefaultCardDesign(),
-                new EmoCardDesign(),
-                new JHCardDesign()));
+                new JHCardDesign(),
+                new RedCardDesign(),
+                new BlueCardDesign()));
         this.storeViewModel = new StoreViewModel(player);
         this.player = player;
         this.stage = stage;
     }
 
     public StoreView(Stage stage, StoreViewModel svm, Player player) {
-        products = (ArrayList<CardDesign>) List.of(new DefaultCardDesign(), new EmoCardDesign(), new JHCardDesign());
+        products = new ArrayList<>(List.of(new DefaultCardDesign(),
+                new JHCardDesign(),
+                new RedCardDesign(),
+                new BlueCardDesign()));
         this.storeViewModel = svm;
         this.player = player;
         this.stage = stage;

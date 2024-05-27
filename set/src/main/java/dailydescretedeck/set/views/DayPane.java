@@ -25,10 +25,12 @@ public class DayPane extends StackPane {
     private Color chooseColor(int sets) {
         if(sets == 0) return Color.WHITE;
         if(sets < 4) return Color.rgb(210,230,181);
-        if(sets < 8) return Color.rgb(193,219,155);
-        if(sets < 12) return Color.rgb(177,207,134);
-        if(sets < 18) return Color.rgb(160,193,114);
-        return Color.rgb(142,177,92);
+        if(sets < 8) return Color.rgb(177,207,134);
+        if(sets < 12) return Color.rgb(142,177,92);
+        if(sets < 18) return Color.rgb(111, 145, 64);
+        if(sets < 22) return Color.rgb(78, 107, 37);
+        if(sets < 26) return Color.rgb(60, 84, 25);
+        return Color.rgb(43, 61, 15);
     }
 
     public DayPane(int dayOfMonth, int sets, int ends) {

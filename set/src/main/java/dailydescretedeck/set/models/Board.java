@@ -25,7 +25,7 @@ public class Board {
 
     public Board(int n) {
         this.deck = new Deck();
-        sets = 0;
+        this.sets = 0;
         for(int i = 0; i < n; i++) {
             ArrayList<Dots> list = new ArrayList<>();
             list.addAll(deck.drawCard().getFields());

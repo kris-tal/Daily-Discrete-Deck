@@ -10,9 +10,9 @@ public class PlayViewModel {
         this.boardState = new SimpleBoardState(7);
     }
 
-    public void handleInput(String input) {
-        // input handling
-    }
+//    public void handleInput(String input) {
+//        // input handling
+//    }
 
     public void updateGameState() {
         boardState.update();

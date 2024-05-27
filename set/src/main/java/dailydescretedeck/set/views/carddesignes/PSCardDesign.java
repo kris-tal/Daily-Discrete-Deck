@@ -1,18 +1,17 @@
 package dailydescretedeck.set.views.carddesignes;
 
-import dailydescretedeck.set.models.CardDesign;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
-public class DefaultCardDesign implements CardDesign {
-    private static final Color []colors = {
-            Color.CORAL,
-            Color.RED,
-            Color.GOLD,
-            Color.YELLOWGREEN,
-            Color.DEEPSKYBLUE,
-            Color.MEDIUMORCHID
+public class PSCardDesign {
+    private static final Color[]colors = {
+            Color.rgb(39, 139, 242),
+            Color.rgb(250, 80, 182),
+            Color.rgb(235, 160, 222),
+            Color.rgb(240, 216, 34),
+            Color.rgb(39, 201, 242),
+            Color.rgb(161, 64, 207)
     };
 
     private static final Color backgroundColor = Color.WHITE;
@@ -20,7 +19,7 @@ public class DefaultCardDesign implements CardDesign {
     public Color getColor(int idx) {
         return colors[idx - 1];
     }
-    
+
     public Shape getShape(double sq) {
         return new Circle(15 * sq);
     }

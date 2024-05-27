@@ -22,9 +22,10 @@ public class MenuView extends StackPane {
     public MenuView(MenuViewModel viewModel, Stage stage) {
         this.menuViewModel = viewModel;
         this.stage = stage;
+        display();
     }
 
-    public void display(Stage stage) {
+    public void display() {
         Pane wrapperPane = new Pane();
         VBox buttonsVbox = new VBox();
         VBox logoVbox = new VBox();
@@ -55,7 +56,6 @@ public class MenuView extends StackPane {
         instructionsButton.prefWidthProperty().bind(width);
         instructionsButton.prefHeightProperty().bind(height);
 
-
         playSetButton.setFont(Font.font("System", shorterEdge.divide(40).doubleValue()));
         playSetButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 60;");
         profileButton.setFont(Font.font("System", shorterEdge.divide(40).doubleValue()));
@@ -68,13 +68,10 @@ public class MenuView extends StackPane {
         logoVbox.prefHeightProperty().bind(heightProperty());
         logoVbox.translateYProperty().bind(heightProperty().divide(6));
         logoVbox.translateXProperty().bind(widthProperty().divide(2).subtract(width.divide(2)));
-        //logoVbox.setPadding(new Insets(width.get() / 100));
-
 
         buttonsVbox.prefHeightProperty().bind(heightProperty());
         buttonsVbox.translateYProperty().bind(heightProperty().divide(5).multiply(2));
         buttonsVbox.translateXProperty().bind(widthProperty().divide(2).subtract(width.divide(2)));
-        //buttonsVbox.setPadding(new Insets(width.get() / 100));
         buttonsVbox.setSpacing(height.doubleValue() / 4);
 
         VBox.setMargin(buttonsVbox, new Insets(height.get() / 2));
@@ -91,6 +88,6 @@ public class MenuView extends StackPane {
     }
 
     public void handleInput(MenuViewModel.MenuOptions input) {
-        menuViewModel.handleInput(input, stage);
+        menuViewModel.handleInput(input);
     }
 }

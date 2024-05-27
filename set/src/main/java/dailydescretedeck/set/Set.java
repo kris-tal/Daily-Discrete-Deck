@@ -1,6 +1,5 @@
 package dailydescretedeck.set;
 
-
 import dailydescretedeck.set.models.Player;
 import dailydescretedeck.set.models.SimpleBoardState;
 import dailydescretedeck.set.viewmodels.MenuViewModel;
@@ -31,7 +30,8 @@ public class Set extends Application {
     }
 
     private void showMenu() {
-        MenuView menuView = new MenuView(this::showPlayView, this::showStoreView);
+        MenuViewModel menuViewModel = new MenuViewModel(this::showPlayView, this::showStoreView);
+        MenuView menuView = new MenuView(menuViewModel, primaryStage);
         Scene scene = new Scene(menuView, 1000, 800);
         scene.setUserData(this);
         primaryStage.setScene(scene);
@@ -56,31 +56,7 @@ public class Set extends Application {
         primaryStage.setTitle("Store");
     }
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        MenuViewModel menuViewModel = new MenuViewModel();
-        MenuView menuView = new MenuView(menuViewModel, stage);
-        Scene scene = new Scene(menuView, 1000, 800);
-        try {
-            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/icon.png")));
-            stage.getIcons().add(icon);
-        } catch(RuntimeException image) { System.out.println("Image not found"); }
-        scene.getRoot().setStyle("-fx-background-color: thistle;");
-        stage.setScene(scene);
-        stage.setTitle("Set");
-        stage.show();
-
-        menuView.display(stage);
-    }
-
     public static void main(String[] args) {
         launch();
     }
 }
-
-
-
-
-
-
-

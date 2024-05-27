@@ -1,5 +1,6 @@
 package dailydescretedeck.set.views;
 
+import dailydescretedeck.set.models.Board;
 import dailydescretedeck.set.models.Card;
 import dailydescretedeck.set.viewmodels.BoardViewModel;
 import javafx.collections.FXCollections;
@@ -40,8 +41,8 @@ public class BoardView extends Pane {
     private SetCollector setCollector;
 
 
-    public BoardView(Board board) {
-        this.board = board;
+    public BoardView(BoardViewModel bViewModel) {
+        this.viewModel = bViewModel;
         this.setCollector = SetCollector.getInstance();
         redrawBoard();
 

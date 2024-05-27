@@ -30,4 +30,8 @@ public class PlayViewModel {
         boardState.update();
         updateSets();
     }
+
+    public BoardState getBoardState() {
+        return boardState;
+    }
 }

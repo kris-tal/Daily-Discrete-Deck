@@ -1,6 +1,7 @@
 package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.BoardState;
+import dailydescretedeck.set.viewmodels.BoardViewModel;
 import dailydescretedeck.set.views.BoardView;
 import dailydescretedeck.set.models.SimpleBoardState;
 import dailydescretedeck.set.viewmodels.PlayViewModel;
@@ -11,13 +12,13 @@ import javafx.stage.Stage;
 
 public class PlayView extends StackPane {
     private final PlayViewModel playViewModel;
-    private BoardView boardView;
+    private BoardViewModel boardViewModel;
 
     public PlayView(PlayViewModel pvm) {
         this.playViewModel = pvm;
-        this.boardView = new BoardView(playViewModel.getBoardState().getBoard());
+        this.boardViewModel = new BoardViewModel(playViewModel.getBoardState().getBoard());
         setAlignment(Pos.CENTER);
-        getChildren().add(boardView);
+        getChildren().add(boardViewModel.getBoard());
     }
 
     public void display(Stage stage) {

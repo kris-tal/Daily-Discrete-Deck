@@ -10,7 +10,19 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
+
+import dailydescretedeck.set.views.StoreView;
+import javafx.stage.Stage;
+
 public class MenuViewModel {
+    private Runnable showPlayView;
+    private Runnable showStoreView;
+
+    public MenuViewModel(Runnable showPlayView, Runnable showStoreView) {
+        this.showPlayView = showPlayView;
+        this.showStoreView = showStoreView;
+    }
+
     public enum MenuOptions {
         PLAY,
         PROFILE,
@@ -18,27 +30,26 @@ public class MenuViewModel {
         INSTRUCTIONS
     }
 
-    public void handleInput(MenuOptions option, Stage stage) {
+    public void handleInput(MenuOptions option) {
         switch (option) {
             case PLAY:
                 System.out.println("Play Set");
-                PlayViewModel playViewModel = new PlayViewModel();
-                PlayView playView = new PlayView(playViewModel);
-                playView.display(stage);
+                showPlayView.run();
                 break;
             case PROFILE:
-                System.out.println("Profile");
                 ProfileViewModel profileViewModel = new ProfileViewModel();
                 ProfileView profileView = new ProfileView(profileViewModel);
                 profileView.display(stage);
                 break;
+                break;
             case STORE:
                 System.out.println("Store");
+                showStoreView.run();
                 break;
             case INSTRUCTIONS:
                 System.out.println("Instructions");
+                // Implement instructions view logic if needed
                 break;
         }
-        //exit
     }
-}
+}break;

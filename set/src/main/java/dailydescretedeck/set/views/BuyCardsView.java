@@ -95,8 +95,9 @@ public class BuyCardsView extends Pane {
                 }
 
                 Product product = products.get(productIndex++);
-                ProductView productView = new ProductView(product, 0, 0, square / 10);
+                ProductView productView = new ProductView(product, 0, 0, square);
                 productViews.put(product, productView);
+
                 productView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                     if (!selectedProducts.contains(product)) {
                         selectedProducts.add(product);
@@ -183,49 +184,40 @@ public class BuyCardsView extends Pane {
 
     private static class ProductView extends StackPane {
         private Circle circle;
-        private Label nameLabel;
         private Color originalColor;
         private boolean isSelected = false;
 
         public ProductView(Product product, double x, double y, double scale) {
             originalColor = Color.valueOf(product.getName().split(" ")[0].toUpperCase());
-            circle = new Circle(5 * scale);
+            circle = new Circle(10 * scale);
             circle.setFill(originalColor);
             circle.setLayoutX(x);
             circle.setLayoutY(y);
 
-            nameLabel = new Label(product.getName());
-            nameLabel.setFont(Font.font("Comic Sans MS", 10 * scale));
-
             getChildren().addAll(circle);
 
-            setOnMouseEntered(event -> circle.setFill(darkenColor(originalColor, 0.1)));
+            setOnMouseEntered(event -> circle.setFill(originalColor.darker()));
             setOnMouseExited(event -> {
                 if (!isSelected) {
                     circle.setFill(originalColor);
                 }
             });
-
             setOnMouseClicked(event -> select());
         }
 
         private void select() {
             if (!isSelected) {
-                circle.setFill(darkenColor(originalColor, 0.3));
+                circle.setFill(originalColor.darker().darker());
                 isSelected = true;
                 new Thread(() -> {
                     try {
-                        Thread.sleep(500); // Wait for 500 milliseconds
+                        Thread.sleep(200);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    circle.setFill(originalColor);
+                    javafx.application.Platform.runLater(() -> circle.setFill(originalColor));
                 }).start();
             }
-        }
-
-        private Color darkenColor(Color color, double factor) {
-            return color.deriveColor(0, 1, 1 - factor, 1);
         }
     }
 }

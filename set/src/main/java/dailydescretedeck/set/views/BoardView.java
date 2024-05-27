@@ -1,7 +1,9 @@
 package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.Board;
+import dailydescretedeck.set.models.Calendar;
 import dailydescretedeck.set.models.Card;
+import dailydescretedeck.set.services.End;
 import dailydescretedeck.set.services.SetCollector;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -23,6 +25,7 @@ import static java.lang.Double.min;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 
 public class BoardView extends Pane {
     private Board board;
@@ -35,7 +38,9 @@ public class BoardView extends Pane {
 
     public BoardView(Board board) {
         this.board = board;
-        this.setCollector = SetCollector.getInstance();
+        if (setCollector == null) { 
+            setCollector = SetCollector.getInstance();
+        }
         redrawBoard();
 
         widthProperty().addListener((observable, oldValue, newValue) -> redrawBoard());
@@ -193,20 +198,9 @@ public class BoardView extends Pane {
                 setCollector.addSets(1);
                 System.out.println("Zapisano ilość zebranych SETów: " + setCollector.getSets());
         
-                try {
-                    java.time.LocalDate currentDate = java.time.LocalDate.now();
-                    String setsCollected = String.valueOf(setCollector.getSets());
-                    String dataToWrite = "Date: " + currentDate + ", Sets Collected: " + setsCollected;
-        
-                    String fileName = "setsCollected.txt";
-                    java.nio.file.Path path = java.nio.file.Paths.get(fileName);
-        
-                    List<String> lines = new ArrayList<>();
-                    lines.add(dataToWrite);
-        
-                    java.nio.file.Files.write(path, lines, StandardCharsets.UTF_8);
-                } catch (IOException e) {
-                }
+                Map<LocalDate, Integer> setsMap = Calendar.getSetsMap();
+                setsMap.put(LocalDate.now(), setCollector.getSets());
+                Calendar.setSetsMap(setsMap);
         
                 board.removeCards(selectedCards);
                 System.out.println("Znaleziono SET");

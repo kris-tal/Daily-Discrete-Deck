@@ -1,5 +1,6 @@
 package dailydescretedeck.set.services;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -19,8 +20,23 @@ public class SavingService {
 
     @SuppressWarnings("unchecked")
     public static void loadMapFromFile(String name, Map<LocalDate, Integer> map) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(name))) {
-            map = (Map<LocalDate, Integer>) ois.readObject();
+        File file = new File(name);
+        if (!file.exists()) {
+            try {
+                if (file.createNewFile()) {
+                    System.out.println("File created");
+                } else {
+                    System.out.println("File already exists");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            Map<LocalDate, Integer> loadedMap = (Map<LocalDate, Integer>) ois.readObject();
+            map.clear();
+            map.putAll(loadedMap);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

@@ -93,7 +93,7 @@ public class BoardView extends Pane {
             String timeString = String.format("%02d:%02d", 
                 TimeUnit.MILLISECONDS.toMinutes(time),
                 TimeUnit.MILLISECONDS.toSeconds(time) % 60);
-            timeLabel.setText("Time: " + timeString);
+            timeLabel.setText("time: " + timeString);
         };
         
         updateTime.run();
@@ -104,7 +104,7 @@ public class BoardView extends Pane {
             timeline.play();
         });
 
-        Label cardsLeftLabel = new Label("Cards left: " + numberCards + "/63");
+        Label cardsLeftLabel = new Label("cards left: " + numberCards + "/63");
         cardsLeftLabel.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
         cardsLeftLabel.setFont(font);
         cardsLeftLabel.setLayoutX(gap);
@@ -113,7 +113,7 @@ public class BoardView extends Pane {
 
 
 
-        Label collectedSetsLabel = new Label("Collected SETs: " + board.getNumberSets());
+        Label collectedSetsLabel = new Label("collected SETs: " + board.getNumberSets());
         collectedSetsLabel.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
         collectedSetsLabel.setFont(font);
         collectedSetsLabel.setLayoutX(gap);

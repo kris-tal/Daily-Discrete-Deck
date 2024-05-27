@@ -5,7 +5,10 @@ set/target/
 .idea
 .DS_Store
 
+set/.idea
+
 ### IntelliJ IDEA ###
+.idea
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml

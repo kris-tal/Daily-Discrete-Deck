@@ -88,7 +88,6 @@ public class CardView extends Pane {
     }
 
     public void clicked() {
-        System.out.println("clicked");
         if(disabled) return;
         if(thiscarddisabled) return;
         if(!this.clicked) {

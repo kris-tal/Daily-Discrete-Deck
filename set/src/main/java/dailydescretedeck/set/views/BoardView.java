@@ -168,7 +168,6 @@ public class BoardView extends Pane {
         backButton.setOnAction(event -> onBackToMenu.run());
 
         button1.setOnAction(event -> {
-            System.out.println("Clicked Surrender button");
             selectedCards.clear();
             selectedCards.addAll(viewModel.getNotSet());
 
@@ -187,20 +186,16 @@ public class BoardView extends Pane {
         });
 
         button2.setOnAction(event -> {
-            System.out.println("Clicked Confirm button");
             if (viewModel.isSetOk(selectedCards)) {
                 viewModel.removeCards(selectedCards);
-                System.out.println("Found SET");
                 redrawBoard();
                 CardView.enableCards();
                 selectedCards.clear();
             } else {
-                System.out.println("No SET found");
             }
         });
 
         button3.setOnAction(event -> {
-            System.out.println("Clicked Cancel button");
             for (Card card : viewModel.cardsProperty()) {
                 CardView cardView = cardViews.get(card);
                 cardView.unclick();
@@ -210,7 +205,6 @@ public class BoardView extends Pane {
         });
 
         button4.setOnAction(event -> {
-            System.out.println("Clicked XOR button");
             Card card = viewModel.getXor(selectedCards);
             CardView cardView = new CardView(card, 0, 0, square / 60);
             cardView.disableThisCard();

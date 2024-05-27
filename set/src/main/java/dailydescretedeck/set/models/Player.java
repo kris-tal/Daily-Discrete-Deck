@@ -25,7 +25,6 @@ public class Player {
         this.password = pwd;
         this.money = 1000;
         playersCount++;
-        System.out.printf("User constructor: %s %s; count = %d\n", username, password, playersCount);
     }
 
     public String getUsername() {

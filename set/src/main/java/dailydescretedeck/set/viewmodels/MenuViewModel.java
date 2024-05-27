@@ -30,7 +30,7 @@ public class MenuViewModel {
             case PROFILE:
                 System.out.println("Profile");
                 ProfileViewModel profileViewModel = new ProfileViewModel();
-                ProfileView profileView = new ProfileView(profileViewModel);
+                ProfileView profileView = new ProfileView(profileViewModel, stage);
                 profileView.display(stage);
                 break;
             case STORE:

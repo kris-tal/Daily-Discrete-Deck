@@ -1,11 +1,13 @@
 package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.viewmodels.CalendarViewModel;
+import dailydescretedeck.set.viewmodels.MenuViewModel;
 import dailydescretedeck.set.viewmodels.PlayViewModel;
 import dailydescretedeck.set.viewmodels.ProfileViewModel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -17,7 +19,7 @@ public class ProfileView extends StackPane {
     private final ProfileViewModel profileViewModel;
     private CalendarView calendarView;
 
-    public ProfileView(ProfileViewModel pvm) {
+    public ProfileView(ProfileViewModel pvm, Stage stage) {
         this.profileViewModel = pvm;
         this.calendarView = new CalendarView();
         Label headerLabel = new Label("Profile");
@@ -25,12 +27,38 @@ public class ProfileView extends StackPane {
         headerLabel.setFont(Font.font("System Bold", 20));
         VBox.setMargin(headerLabel, new javafx.geometry.Insets(10, 0, 10, 0));
         layout.setPadding(new Insets(30));
+
+         Button menuButton = new Button("Menu");
+        double buttonWidth = 100; 
+        double buttonHeight = 50; 
+        double gap = 10; 
+        menuButton.setLayoutX(getWidth() - buttonWidth + 50);
+        menuButton.setLayoutY(getHeight() - buttonHeight);
+        menuButton.setPrefWidth(buttonWidth * 0.5);
+        menuButton.setPrefHeight(buttonHeight * 0.5);
+        menuButton.setFont(Font.font("System", gap * 1));
+        menuButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+
+        menuButton.setOnAction(event -> {
+            System.out.println("Kliknięto w przycisk Menu");
+            MenuViewModel menuViewModel = new MenuViewModel();
+            MenuView menuView = new MenuView(menuViewModel, stage);
+            Scene scene = new Scene(menuView, 1000, 800);
+            scene.getRoot().setStyle("-fx-background-color: thistle;");
+            stage.setScene(scene);
+            stage.setTitle("Set");
+            stage.show();
+
+            menuView.display(stage);
+        });
+
         getChildren().add(layout);
+        getChildren().add(menuButton);
     }
 
     public void display(Stage stage) {      //jak to zrobic
         ProfileViewModel profileViewModel = new ProfileViewModel();
-        ProfileView profileView = new ProfileView(profileViewModel);
+        ProfileView profileView = new ProfileView(profileViewModel, stage);
         Scene scene = new Scene(profileView, stage.getWidth(),stage.getHeight());
         scene.getRoot().setStyle("-fx-background-color: thistle;");
         stage.setScene(scene);

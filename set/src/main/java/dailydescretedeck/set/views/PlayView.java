@@ -5,10 +5,10 @@ import dailydescretedeck.set.viewmodels.PlayViewModel;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class PlayView extends Pane {
+public class PlayView extends StackPane {
     private final PlayViewModel playViewModel;
     private final BoardView boardView;
 
@@ -18,23 +18,9 @@ public class PlayView extends Pane {
         this.boardView = new BoardView(boardViewModel);
 
         Button backButton = new Button("Back to Menu");
-        backButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
         backButton.setOnAction(event -> onBackToMenu.run());
 
-        double buttonWidth = 20;
-        double buttonHeight = 40;
-        double paneWidth = 1000;
-        double paneHeight = 800;
-
-        boardView.setLayoutX(0);
-        boardView.setLayoutY(0);
-        boardView.setPrefSize(paneWidth, paneHeight - buttonHeight - 20);
-
-        backButton.setLayoutX((paneWidth - buttonWidth) / 2);
-        backButton.setLayoutY(paneHeight - buttonHeight - 10);
-        backButton.setPrefWidth(buttonWidth);
-        backButton.setPrefHeight(buttonHeight);
-
+        setAlignment(Pos.CENTER);
         getChildren().addAll(boardView, backButton);
     }
 

@@ -15,7 +15,8 @@ public class MenuViewModel {
         PLAY,
         PROFILE,
         STORE,
-        INSTRUCTIONS
+        INSTRUCTIONS,
+        EXIT
     }
 
     public void handleInput(MenuOptions option, Stage stage) {
@@ -37,6 +38,10 @@ public class MenuViewModel {
                 break;
             case INSTRUCTIONS:
                 System.out.println("Instructions");
+                break;
+            case EXIT:
+                System.out.println("Exit");
+                stage.close();
                 break;
         }
         //exit

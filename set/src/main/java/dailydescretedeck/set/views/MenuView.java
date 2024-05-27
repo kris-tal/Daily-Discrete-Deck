@@ -12,8 +12,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
 import java.util.Objects;
+
 
 public class MenuView extends StackPane {
     private MenuViewModel menuViewModel;
@@ -37,6 +37,7 @@ public class MenuView extends StackPane {
         Button profileButton = new Button("PROFILE");
         Button storeButton = new Button("STORE");
         Button instructionsButton = new Button("INSTRUCTIONS");
+        Button exitButton = new Button("EXIT");
 
         DoubleBinding shorterEdge = (DoubleBinding) Bindings.min(widthProperty(), heightProperty());
         DoubleBinding width = widthProperty().divide(2);
@@ -54,6 +55,10 @@ public class MenuView extends StackPane {
         storeButton.prefHeightProperty().bind(height);
         instructionsButton.prefWidthProperty().bind(width);
         instructionsButton.prefHeightProperty().bind(height);
+        exitButton.prefWidthProperty().bind(width.divide(10));
+        exitButton.prefHeightProperty().bind(height.divide(10));
+        exitButton.translateXProperty().bind(widthProperty().subtract(exitButton.widthProperty()).subtract(10));
+        exitButton.translateYProperty().bind(heightProperty().subtract(exitButton.heightProperty()).subtract(10));
 
 
         playSetButton.setFont(Font.font("System", shorterEdge.divide(40).doubleValue()));
@@ -64,6 +69,8 @@ public class MenuView extends StackPane {
         storeButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 60;");
         instructionsButton.setFont(Font.font("System", shorterEdge.divide(40).doubleValue()));
         instructionsButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 60;");
+        exitButton.setFont(Font.font("System", shorterEdge.divide(80).doubleValue()));
+        exitButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 60;");
 
         logoVbox.prefHeightProperty().bind(heightProperty());
         logoVbox.translateYProperty().bind(heightProperty().divide(6));
@@ -86,7 +93,7 @@ public class MenuView extends StackPane {
 
         logoVbox.getChildren().add(logoView);
         buttonsVbox.getChildren().addAll(playSetButton, profileButton, storeButton, instructionsButton);
-        wrapperPane.getChildren().addAll(logoVbox, buttonsVbox);
+        wrapperPane.getChildren().addAll(exitButton, logoVbox, buttonsVbox);
         getChildren().add(wrapperPane);
     }
 

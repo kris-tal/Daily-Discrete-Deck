@@ -52,7 +52,7 @@ public class ProfileView extends StackPane {
             stage.setTitle("Set");
             stage.show();
 
-            menuView.display(stage);
+            menuView.display();
         });
 
         getChildren().add(layout);

@@ -13,7 +13,7 @@ public class Player {
     public Player(String username, int pwd) {
         this.username = username;
         this.password = pwd;
-        this.cardDesignInUse = new JHCardDesign();     //new DefaultCardDesign();
+        this.cardDesignInUse = new DefaultCardDesign(); //new JHCardDesign();
     }
 
     public Player(int points, String username, int pwd) {

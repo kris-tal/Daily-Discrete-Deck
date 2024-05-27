@@ -75,13 +75,13 @@ public class StoreView extends VBox {
             cardsHBox.getChildren().clear();
             cardsHBox.getChildren().add(previousButton);
             if (currentProduct == 0) {
-                cardsHBox.getChildren().add(new CardView(new Card(products.getLast()), 0, sideCardOffset, sideCardSize));
+                cardsHBox.getChildren().add(new CardView(new Card(products.get(products.size() - 1)), 0, sideCardOffset, sideCardSize));
             } else {
                 cardsHBox.getChildren().add(new CardView(new Card(products.get(currentProduct - 1)), 0, sideCardOffset, sideCardSize));
             }
             cardsHBox.getChildren().add(new CardView(new Card(products.get(currentProduct)), 0, 0, mainCardSize));
             if (currentProduct == products.size() - 1) {
-                cardsHBox.getChildren().add(new CardView(new Card(products.getFirst()), 0, sideCardOffset, sideCardSize));
+                cardsHBox.getChildren().add(new CardView(new Card(products.get(0)), 0, sideCardOffset, sideCardSize));
             } else {
                 cardsHBox.getChildren().add(new CardView(new Card(products.get(currentProduct + 1)), 0, sideCardOffset, sideCardSize));
             }
@@ -100,20 +100,20 @@ public class StoreView extends VBox {
             if (currentProduct == products.size() - 1) currentProduct = 0;
             else currentProduct++;                                       //powtorzenie trzeba zmienic
             if (currentProduct == 0) {
-                cardsHBox.getChildren().add(new CardView(new Card(products.getLast()), 0, sideCardOffset, sideCardSize));
+                cardsHBox.getChildren().add(new CardView(new Card(products.get(products.size() - 1)), 0, sideCardOffset, sideCardSize));
             } else {
                 cardsHBox.getChildren().add(new CardView(new Card(products.get(currentProduct - 1)), 0, sideCardOffset, sideCardSize));
             }
             cardsHBox.getChildren().add(new CardView(new Card(products.get(currentProduct)), 0, 0, mainCardSize));
             if (currentProduct == products.size() - 1) {
-                cardsHBox.getChildren().add(new CardView(new Card(products.getFirst()), 0, sideCardOffset, sideCardSize));
+                cardsHBox.getChildren().add(new CardView(new Card(products.get(0)), 0, sideCardOffset, sideCardSize));
             } else {
                 cardsHBox.getChildren().add(new CardView(new Card(products.get(currentProduct + 1)), 0, sideCardOffset, sideCardSize));
             }
             cardsHBox.getChildren().add(nextButton);
         });
 
-        cardsHBox.getChildren().addAll(previousButton, new CardView(new Card(products.getLast()), 0, sideCardOffset, sideCardSize),
+        cardsHBox.getChildren().addAll(previousButton, new CardView(new Card(products.get(products.size() - 1)), 0, sideCardOffset, sideCardSize),
                 new CardView(new Card(products.get(0)), 0, 0, mainCardSize),
                 new CardView(new Card(products.get(1)), 0, sideCardOffset, sideCardSize),
                 nextButton);

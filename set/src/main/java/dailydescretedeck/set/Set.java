@@ -2,6 +2,7 @@ package dailydescretedeck.set;
 import dailydescretedeck.set.viewmodels.MenuViewModel;
 import dailydescretedeck.set.views.MenuView;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -22,6 +23,11 @@ public class Set extends Application {
         stage.setScene(scene);
         stage.setTitle("Set");
         stage.show();
+
+        stage.setOnCloseRequest(event -> {
+            Platform.exit();
+            System.exit(0);
+        });
 
         menuView.display(stage);
     }

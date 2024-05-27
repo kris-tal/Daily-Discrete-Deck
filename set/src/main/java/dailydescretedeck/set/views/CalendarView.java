@@ -30,7 +30,6 @@ public class CalendarView extends StackPane {
     private Label monthYearLabel;
     private Map<LocalDate, Integer> setsMap = new HashMap<>();
     private Map<LocalDate, Integer> endsMap = new HashMap<>();
-    private BorderPane borderPane;
 
     public CalendarView() {
         this.calendarViewModel = new CalendarViewModel();
@@ -38,38 +37,7 @@ public class CalendarView extends StackPane {
         this.monthYearLabel = new Label();
         this.setsMap = calendarViewModel.getSetsMap();
         this.endsMap = calendarViewModel.getEndsMap();
-        this.borderPane = new BorderPane();
-        this.borderPane.setCenter(buildCalendar(currentYearMonth));
-        this.getChildren().add(borderPane);
-        createScene();
-    }
-
-    public void createScene() {
-        GridPane calendarGrid = buildCalendar(currentYearMonth);
-        borderPane.setCenter(calendarGrid);
-        BorderPane.setAlignment(calendarGrid, Pos.CENTER);
-
-        Button previousMonthButton = new Button("<");
-        previousMonthButton.setOnAction(e -> {
-            currentYearMonth = currentYearMonth.minusMonths(1);
-            updateCalendar();
-        });
-
-        Button nextMonthButton = new Button(">");
-        nextMonthButton.setOnAction(e -> {
-            currentYearMonth = currentYearMonth.plusMonths(1);
-            updateCalendar();
-        });
-        previousMonthButton.setFont(Font.font("System",15));
-        previousMonthButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 60;");
-
-        nextMonthButton.setFont(Font.font("System", 15));
-        nextMonthButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 60;");
-
-        HBox navigationBar = new HBox(previousMonthButton, monthYearLabel, nextMonthButton);
-        HBox.setHgrow(monthYearLabel, Priority.ALWAYS);
-        monthYearLabel.setAlignment(Pos.CENTER);
-        borderPane.setTop(navigationBar);
+        this.getChildren().add(buildCalendar(currentYearMonth));
     }
 
     private GridPane buildCalendar(YearMonth yearMonth) {
@@ -103,8 +71,31 @@ public class CalendarView extends StackPane {
         return gridPane;
     }
 
-    private void updateCalendar() {
-        borderPane.setCenter(buildCalendar(currentYearMonth));
-    }
+    public Scene createScene() {
+        BorderPane borderPane = new BorderPane();
+        GridPane calendarGrid = buildCalendar(currentYearMonth);
+        borderPane.setCenter(calendarGrid);
+        BorderPane.setAlignment(calendarGrid, Pos.CENTER);
 
+        Button previousMonthButton = new Button("<");
+        previousMonthButton.setOnAction(e -> {
+            currentYearMonth = currentYearMonth.minusMonths(1);
+            GridPane newCalendarGrid = buildCalendar(currentYearMonth);
+            borderPane.setCenter(newCalendarGrid);
+        });
+
+        Button nextMonthButton = new Button(">");
+        nextMonthButton.setOnAction(e -> {
+            currentYearMonth = currentYearMonth.plusMonths(1);
+            GridPane newCalendarGrid = buildCalendar(currentYearMonth);
+            borderPane.setCenter(newCalendarGrid);
+        });
+
+        HBox navigationBar = new HBox(previousMonthButton, monthYearLabel, nextMonthButton);
+        HBox.setHgrow(monthYearLabel, Priority.ALWAYS);
+        monthYearLabel.setAlignment(Pos.CENTER);
+        borderPane.setTop(navigationBar);
+
+        return new Scene(borderPane, 1000, 800);
+    }
 }

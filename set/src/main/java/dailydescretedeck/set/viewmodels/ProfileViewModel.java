@@ -1,14 +1,20 @@
 package dailydescretedeck.set.viewmodels;
 
 import dailydescretedeck.set.models.Player;
-import dailydescretedeck.set.views.ProfileView;
 
 public class ProfileViewModel {
     private Player player;
     private CalendarViewModel calendarViewModel;
 
+    public ProfileViewModel() {
+        this.calendarViewModel = new CalendarViewModel();
+    }
+
     public Player getPlayer() {
         return player;
     }
 
+    public CalendarViewModel getCalendarViewModel() {
+        return calendarViewModel;
+    }
 }

@@ -11,7 +11,7 @@ public class BuyCardsViewModel {
     public BuyCardsViewModel() {
         this.products = new SimpleListProperty<>(FXCollections.observableArrayList());
 
-        //example
+        // example
         products.add(new Product("Red Dots", 10));
         products.add(new Product("Blue Dots", 15));
         products.add(new Product("Green Dots", 20));

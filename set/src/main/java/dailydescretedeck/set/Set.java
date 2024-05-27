@@ -1,22 +1,53 @@
 package dailydescretedeck.set;
 
-import dailydescretedeck.set.models.BoardState;
+import dailydescretedeck.set.models.Player;
 import dailydescretedeck.set.models.SimpleBoardState;
+import dailydescretedeck.set.viewmodels.StoreViewModel;
+import dailydescretedeck.set.views.MenuView;
 import dailydescretedeck.set.views.PlayView;
+import dailydescretedeck.set.views.StoreView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Set extends Application {
+    private Stage primaryStage;
+    private Player player;
+    private StoreViewModel storeViewModel;
+
     @Override
-    public void start(Stage stage) throws Exception {
-        BoardState boardState = new SimpleBoardState(7);
-        PlayView playView = new PlayView(boardState);
-        Scene scene = new Scene(playView,1000, 800);
-        scene.getRoot().setStyle("-fx-background-color: thistle;");
-        stage.setScene(scene);
-        stage.setTitle("Set");
-        stage.show();
+    public void start(Stage stage) {
+        this.primaryStage = stage;
+        this.player = new Player("Player1", "password");
+        this.storeViewModel = new StoreViewModel(player);
+
+        showMenu();
+    }
+
+    private void showMenu() {
+        MenuView menuView = new MenuView(this::showPlayView, this::showStoreView);
+        Scene scene = new Scene(menuView, 1000, 800);
+        scene.setUserData(this);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Menu");
+        primaryStage.show();
+    }
+
+    private void showPlayView() {
+        SimpleBoardState boardState = new SimpleBoardState(7);
+        PlayView playView = new PlayView(boardState, this::showMenu);
+        Scene scene = new Scene(playView, 1000, 800);
+        scene.setUserData(this);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Set");
+    }
+
+    private void showStoreView() {
+        StoreView storeView = new StoreView(storeViewModel, primaryStage, this::showMenu);
+        Scene scene = new Scene(storeView, 1000, 800);
+        scene.setUserData(this);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Store");
     }
 
     public static void main(String[] args) {

@@ -6,28 +6,32 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import dailydescretedeck.set.services.Feature;
-
 public class Deck {
     private List<Card> cards;
 
-
     public Deck() {
         cards = new ArrayList<>();
-        List<List<Dots>> everything = new ArrayList<>();
-        List<Dots> colors = Arrays.asList(Dots.values());
-        Feature.fill(everything, new ArrayList<>(), colors, 0);
-        for (List<Dots> list : everything) {
-            cards.add(new Card((ArrayList<Dots>)list));
+        List<List<Dots>> combinations = generateCombinations();
+        for (List<Dots> combination : combinations) {
+            cards.add(new Card(new ArrayList<>(combination)));
         }
-        //cards.remove(new Card(new ArrayList<>()));
-
-        System.out.println(cards.contains(new Card(new ArrayList<>())));
         shuffle();
     }
 
-    public List<Card> getRemainingCards() {
-        return cards;
+    private List<List<Dots>> generateCombinations() {
+        List<List<Dots>> combinations = new ArrayList<>();
+        List<Dots> dots = Arrays.asList(Dots.values());
+        fillCombinations(combinations, new ArrayList<>(), dots, 0);
+        return combinations;
+    }
+
+    private void fillCombinations(List<List<Dots>> combinations, List<Dots> current, List<Dots> dots, int start) {
+        if (!current.isEmpty()) combinations.add(new ArrayList<>(current));
+        for (int i = start; i < dots.size(); i++) {
+            current.add(dots.get(i));
+            fillCombinations(combinations, current, dots, i + 1);
+            current.remove(current.size() - 1);
+        }
     }
 
     public void shuffle() {
@@ -40,10 +44,12 @@ public class Deck {
 
     public Card drawCard() {
         if (!cards.isEmpty()) {
-            Card card = cards.remove(cards.size() - 1);
-            return card;
-        } else {
-            return null;
+            return cards.remove(cards.size() - 1);
         }
+        return null;
+    }
+
+    public List<Card> getRemainingCards() {
+        return new ArrayList<>(cards);
     }
 }

@@ -1,22 +1,15 @@
 package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.BoardState;
-import javafx.geometry.Pos;
+import dailydescretedeck.set.viewmodels.BoardViewModel;
 import javafx.scene.layout.StackPane;
-
-import javafx.geometry.Pos;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 
 public class PlayView extends StackPane {
-    private final BoardState boardState;
-    private final dailydescretedeck.set.views.BoardView boardView;
+    private final BoardView boardView;
 
-    public PlayView(BoardState bs) {
-        this.boardState = bs;
-        this.boardView = new dailydescretedeck.set.views.BoardView(bs.getBoard());
-
-        setAlignment(Pos.CENTER);
+    public PlayView(BoardState boardState, Runnable onBackToMenu) {
+        BoardViewModel boardViewModel = new BoardViewModel(boardState.getBoard());
+        this.boardView = new BoardView(boardViewModel, onBackToMenu);
 
         getChildren().add(boardView);
     }

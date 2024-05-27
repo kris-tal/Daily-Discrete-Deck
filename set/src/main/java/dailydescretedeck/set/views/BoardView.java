@@ -1,10 +1,9 @@
 package dailydescretedeck.set.views;
 
-import dailydescretedeck.set.models.Board;
 import dailydescretedeck.set.models.Card;
-import dailydescretedeck.set.models.Deck;
-import dailydescretedeck.set.views.CardView;
-
+import dailydescretedeck.set.viewmodels.BoardViewModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,29 +11,26 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static java.lang.Double.min;
 
 public class BoardView extends Pane {
-    private Board board;
+    private BoardViewModel viewModel;
     private double gap;
-    private List<Card> selectedCards = new ArrayList<>();
-    private boolean confirm = false;
+    private ObservableList<Card> selectedCards = FXCollections.observableArrayList();
     private Map<Card, CardView> cardViews = new HashMap<>();
+    private Runnable onBackToMenu;
 
-
-    public BoardView(Board board) {
-        this.board = board;
+    public BoardView(BoardViewModel viewModel, Runnable onBackToMenu) {
+        this.viewModel = viewModel;
+        this.onBackToMenu = onBackToMenu;
         redrawBoard();
 
         widthProperty().addListener((observable, oldValue, newValue) -> redrawBoard());
@@ -70,7 +66,7 @@ public class BoardView extends Pane {
         double startX = bigRectX + gap;
         double startY = bigRectY + gap / 2;
 
-        int numberCards = board.getDeck().size() + board.getCards().size();
+        int numberCards = viewModel.cardsProperty().size();
         Font font = new Font("Comic Sans MS", gap * 2);
 
         Label label1 = new Label("Cards left: " + numberCards + "/63");
@@ -81,7 +77,7 @@ public class BoardView extends Pane {
         getChildren().add(label1);
 
 
-        Label label2 = new Label("Collected SETs: " + board.getNumberSets());
+        Label label2 = new Label("Collected SETs: " + viewModel.getBoard().getNumberSets());
         label2.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
         label2.setFont(font);
         label2.setLayoutX(gap);
@@ -95,20 +91,19 @@ public class BoardView extends Pane {
             startX += row * square;
 
             for (int col = 0; col < 4; col++) {
-                if (cardIndex >= board.getCards().size()) {
+                if (cardIndex >= viewModel.cardsProperty().size()) {
                     break;
                 }
 
-                Card card = board.getCards().get(cardIndex++);
+                Card card = viewModel.cardsProperty().get(cardIndex++);
 
                 CardView cardView = new CardView(card, 0, 0, square / 60);
                 cardViews.put(card, cardView);
-                Card Card = (Card) card;
                 cardView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    if (selectedCards.contains(Card)) {
-                        selectedCards.remove(Card);
+                    if (selectedCards.contains(card)) {
+                        selectedCards.remove(card);
                     } else {
-                        selectedCards.add(Card);
+                        selectedCards.add(card);
                     }
                 });
                 StackPane cardPane = new StackPane();
@@ -121,18 +116,19 @@ public class BoardView extends Pane {
             }
         }
 
-        Button button1 = new Button("surrender");
-        Button button2 = new Button("confirm");
-        Button button3 = new Button("cancel");
+        Button button1 = new Button("Surrender");
+        Button button2 = new Button("Confirm");
+        Button button3 = new Button("Cancel");
         Button button4 = new Button("XOR");
+        Button backButton = new Button("Back to Menu");
 
         Pane buttonsPane = new Pane();
-        buttonsPane.getChildren().addAll(button1, button2, button3);
+        buttonsPane.getChildren().addAll(button1, button2, button3, button4, backButton);
         buttonsPane.setPrefWidth(bigRectWidth);
         buttonsPane.setLayoutX(bigRectX);
         buttonsPane.setLayoutY(bigRectY + bigRectHeight + gap);
 
-        double buttonWidth = (bigRectWidth - 40) / 3;
+        double buttonWidth = (bigRectWidth - 50) / 5;
         double buttonHeight = bigRectHeight / 10;
 
         button1.setLayoutX(10);
@@ -156,59 +152,56 @@ public class BoardView extends Pane {
         button3.setFont(Font.font("System", gap * 1.8));
         button3.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
-        button4.setLayoutX(paneWidth - buttonWidth / 2 - gap);
-        button4.setLayoutY(gap);
-        button4.setPrefWidth(buttonWidth / 2);
+        button4.setLayoutX(40 + 3 * buttonWidth);
+        button4.setLayoutY(0);
+        button4.setPrefWidth(buttonWidth);
         button4.setPrefHeight(buttonHeight);
-        button4.setFont(Font.font("System", gap * 1.6));
+        button4.setFont(Font.font("System", gap * 1.8));
         button4.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
-        button1.setOnAction(event -> {
-            System.out.println("Kliknięto w przycisk Surrender");
-            selectedCards.clear();
-            selectedCards = board.getNotSet();
+        backButton.setLayoutX(50 + 4 * buttonWidth);
+        backButton.setLayoutY(0);
+        backButton.setPrefWidth(buttonWidth);
+        backButton.setPrefHeight(buttonHeight);
+        backButton.setFont(Font.font("System", gap * 1.8));
+        backButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        backButton.setOnAction(event -> onBackToMenu.run());
 
-            for(Card card : selectedCards) {
+        button1.setOnAction(event -> {
+            System.out.println("Clicked Surrender button");
+            selectedCards.clear();
+            selectedCards.addAll(viewModel.getNotSet());
+
+            for (Card card : selectedCards) {
                 CardView cardView = cardViews.get(card);
                 cardView.selectNotSelected();
             }
             CardView.disableCards();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Koniec gry");
+            alert.setTitle("Game Over");
             alert.setHeaderText(null);
-            alert.setContentText("Przegrałeś!");
+            alert.setContentText("You lost!");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
         });
 
         button2.setOnAction(event -> {
-            System.out.println("Kliknięto w przycisk Confirm");
-            if(board.isSetOk(selectedCards))
-            {
-                board.removeCards(selectedCards);
-                System.out.println("Znaleziono SET");
-                BoardView newBoardView = new BoardView(board);
-                StackPane parent = (StackPane) getParent();
-                parent.getChildren().remove(this);
-                parent.getChildren().add(newBoardView);
+            System.out.println("Clicked Confirm button");
+            if (viewModel.isSetOk(selectedCards)) {
+                viewModel.removeCards(selectedCards);
+                System.out.println("Found SET");
+                redrawBoard();
                 CardView.enableCards();
                 selectedCards.clear();
-            }
-            else {
-                System.out.println("Nie znaleziono SET");
-                for(Card card : board.getCards()) {
-                    CardView cardView = cardViews.get(card);
-                    cardView.unclick();
-                }
-                CardView.enableCards();
-                selectedCards.clear();
+            } else {
+                System.out.println("No SET found");
             }
         });
 
         button3.setOnAction(event -> {
-            System.out.println("Kliknięto w przycisk Cancel");
-            for(Card card : board.getCards()) {
+            System.out.println("Clicked Cancel button");
+            for (Card card : viewModel.cardsProperty()) {
                 CardView cardView = cardViews.get(card);
                 cardView.unclick();
             }
@@ -217,19 +210,17 @@ public class BoardView extends Pane {
         });
 
         button4.setOnAction(event -> {
-            System.out.println("Kliknięto w przycisk XOR");
-            Card card = board.Xor((ArrayList<Card>) selectedCards);
-            CardView cardView = new CardView(card, 0, 0, square/(2 * 60));
+            System.out.println("Clicked XOR button");
+            Card card = viewModel.getXor(selectedCards);
+            CardView cardView = new CardView(card, 0, 0, square / 60);
             cardView.disableThisCard();
             StackPane cardPane = new StackPane();
             cardPane.getChildren().add(cardView);
-            cardPane.setLayoutX(paneWidth - buttonWidth / 2 - gap);
+            cardPane.setLayoutX(bigRectX + bigRectWidth + gap);
             cardPane.setLayoutY(gap + buttonHeight + gap);
             getChildren().add(cardPane);
         });
 
         getChildren().add(buttonsPane);
-        getChildren().add(button4);
     }
-
 }

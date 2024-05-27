@@ -32,7 +32,7 @@ public class Set extends Application {
             System.exit(0);
         });
 
-        menuView.display(stage);
+        menuView.display();
     }
 
     public static void main(String[] args) {

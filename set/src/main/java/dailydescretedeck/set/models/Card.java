@@ -15,7 +15,7 @@ public class Card {
     }
 
     public Card(CardDesign design) {
-        this.fields = (ArrayList<Dots>) List.of(A1, A2, B1, B2, C1, C2);
+        this.fields = new ArrayList<>(List.of(A1, A2, B1, B2, C1, C2));
         this.design = design;
     }
 

@@ -22,11 +22,17 @@ public class DayPane extends StackPane {
     private Map<Integer, Color> rectColor;
 
     public DayPane(int dayOfMonth, int sets, int ends) {
-        rectColor = Map.of(0, Color.WHITE, 1, Color.rgb(210,230,181), 2, Color.rgb(193,219,155), 3, Color.rgb(177,207,134), 4, Color.rgb(160,193,114), 5, Color.rgb(142,177,92));
+        rectColor = Map.of(0, Color.WHITE, 1, Color.rgb(210,230,181), 2, Color.rgb(193,219,155), 3, Color.rgb(177,207,134), 4, Color.rgb(160,193,114), 11, Color.rgb(142,177,92));
 
         Label dateLabel = new Label(Integer.toString(dayOfMonth));
         dateLabel.setFont(Font.font("System Bold", FontWeight.BOLD, 15));
-        dateLabel.setTextFill(rectColor.get(sets).darker().darker().darker());
+        Color color = rectColor.get(sets);
+        if (color != null) {
+            dateLabel.setTextFill(color.darker().darker().darker());
+        } else {
+        // handle the case when the color is null, for example, set a default color
+            dateLabel.setTextFill(Color.BLACK);
+        }
         //Label setsLabel = new Label("Sets: " + sets);
         //Label endsLabel = new Label("Ends: " + ends);
         this.data = new VBox(dateLabel);
@@ -36,7 +42,7 @@ public class DayPane extends StackPane {
         rect.setArcWidth(30);
         rect.setFill(rectColor.get(sets));
         rect.setStrokeWidth(2);
-        rect.setStroke(rectColor.get(sets).darker());
+        if(rect != null) rect.setStroke(rectColor.get(sets).darker());
 
         getChildren().addAll(rect, data);
         data.setAlignment(Pos.CENTER);

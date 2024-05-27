@@ -3,8 +3,9 @@ package dailydescretedeck.set.views;
 import dailydescretedeck.set.models.Board;
 import dailydescretedeck.set.models.Calendar;
 import dailydescretedeck.set.models.Card;
-import dailydescretedeck.set.services.End;
 import dailydescretedeck.set.services.SetCollector;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,12 +21,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.Double.min;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import javafx.util.Duration;
 
 public class BoardView extends Pane {
     private Board board;
@@ -34,6 +34,7 @@ public class BoardView extends Pane {
     private boolean confirm = false;
     private Map<Card, CardView> cardViews = new HashMap<>();
     private SetCollector setCollector;
+    static long startTime = System.currentTimeMillis();
 
 
     public BoardView(Board board) {
@@ -78,6 +79,25 @@ public class BoardView extends Pane {
 
         int numberCards = board.getDeck().size() + board.getCards().size();
         Font font = new Font("System", gap * 1.8);
+
+        Label timeLabel = new Label();
+        timeLabel.setFont(font);
+        timeLabel.setLayoutX(gap);
+        timeLabel.setLayoutY(gap * 7); 
+        getChildren().add(timeLabel);
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            long time = System.currentTimeMillis() - startTime;
+            String timeString = String.format("%02d:%02d", 
+                TimeUnit.MILLISECONDS.toMinutes(time),
+                TimeUnit.MILLISECONDS.toSeconds(time) % 60);
+            timeLabel.setText("Time: " + timeString);
+        }));
+
+        timeline.setCycleCount(Timeline.INDEFINITE);
+
+        timeline.play();
+
 
         Label cardsLeftLabel = new Label("Cards left: " + numberCards + "/63");
         cardsLeftLabel.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");

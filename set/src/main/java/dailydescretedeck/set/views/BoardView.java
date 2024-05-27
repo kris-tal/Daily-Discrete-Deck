@@ -3,9 +3,11 @@ package dailydescretedeck.set.views;
 import dailydescretedeck.set.models.Board;
 import dailydescretedeck.set.models.Calendar;
 import dailydescretedeck.set.models.Card;
+import dailydescretedeck.set.services.End;
 import dailydescretedeck.set.services.SetCollector;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -34,8 +36,8 @@ public class BoardView extends Pane {
     private boolean confirm = false;
     private Map<Card, CardView> cardViews = new HashMap<>();
     private SetCollector setCollector;
-    static long startTime = System.currentTimeMillis();
-
+    private static  long startTime = System.currentTimeMillis();
+    private static Timeline timeline;
 
     public BoardView(Board board) {
         this.board = board;
@@ -86,18 +88,21 @@ public class BoardView extends Pane {
         timeLabel.setLayoutY(gap * 7); 
         getChildren().add(timeLabel);
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+        Runnable updateTime = () -> {
             long time = System.currentTimeMillis() - startTime;
             String timeString = String.format("%02d:%02d", 
                 TimeUnit.MILLISECONDS.toMinutes(time),
                 TimeUnit.MILLISECONDS.toSeconds(time) % 60);
             timeLabel.setText("Time: " + timeString);
-        }));
-
-        timeline.setCycleCount(Timeline.INDEFINITE);
-
-        timeline.play();
-
+        };
+        
+        updateTime.run();
+        
+        Platform.runLater(() -> {
+            timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateTime.run())); 
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.play();
+        });
 
         Label cardsLeftLabel = new Label("Cards left: " + numberCards + "/63");
         cardsLeftLabel.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
@@ -191,6 +196,10 @@ public class BoardView extends Pane {
         xorButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
         surrenderButton.setOnAction(event -> {
+            if (timeline != null) {
+                timeline.stop();
+            }
+
             System.out.println("Kliknięto w przycisk Surrender");
             selectedCards.clear();
             selectedCards = board.getNotSet();
@@ -224,6 +233,21 @@ public class BoardView extends Pane {
         
                 board.removeCards(selectedCards);
                 System.out.println("Znaleziono SET");
+                if(board.getCards().isEmpty()){
+                    if (timeline != null) {
+                        timeline.stop();
+                    }
+                    End.getInstance().addEnds(1);
+                    Map<LocalDate, Integer> endsMap = Calendar.getEndsMap();
+                    endsMap.put(LocalDate.now(), End.getInstance().getEnds());
+                     Calendar.setEndsMap(endsMap);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Koniec gry");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Wygrałeś!");
+                    alert.initModality(Modality.APPLICATION_MODAL);
+                    alert.showAndWait();
+                }
                 BoardView newBoardView = new BoardView(board);
                 StackPane parent = (StackPane) getParent();
                 parent.getChildren().remove(this);

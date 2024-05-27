@@ -108,33 +108,6 @@ public class Board {
                 }
             }
         }
-        if(cards.isEmpty()){
-            End.getInstance().addEnds(1);
-            /*try {
-            LocalDate currentDate = LocalDate.now();
-            String endsCollected = String.valueOf(End.getInstance().getEnds());
-            String dataToWrite = "Date: " + currentDate + ", Ends Collected: " + endsCollected;
-
-            String fileName = "endsCollected.txt";
-            Path path = (Path) Paths.get(fileName);
-
-            List<String> lines = new ArrayList<>();
-            lines.add(dataToWrite);
-
-            Files.write(path, lines, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-            Map<LocalDate, Integer> endsMap = Calendar.getEndsMap();
-            endsMap.put(LocalDate.now(), End.getInstance().getEnds());
-            Calendar.setEndsMap(endsMap);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Koniec gry");
-            alert.setHeaderText(null);
-            alert.setContentText("Wygrałeś!");
-            alert.initModality(Modality.APPLICATION_MODAL);
-            alert.showAndWait();
-        }
     }
 
     public List<Card> getCards() {

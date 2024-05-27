@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12792faf-e17a-4636-881d-507484ba98ce" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/services/SaveService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/Calendar.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/CalendarDay.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/CalendarApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/CalendarApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/viewmodels/MenuViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/viewmodels/MenuViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/PlayView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/PlayView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,10 +46,11 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.CalendarApp.executor": "Run",
     "Application.Set.executor": "Run",
     "JUnit.dailydescretedeck.set.views.mycolors in set.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "profile",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/kris/Documents/Sem-II/PO/PROJECT/set/src/main/resources/dailydescretedeck/set/images",
     "node.js.detected.package.eslint": "true",

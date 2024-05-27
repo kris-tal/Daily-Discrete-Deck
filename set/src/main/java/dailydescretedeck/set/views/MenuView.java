@@ -14,7 +14,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.util.Objects;
 
-public class MenuView extends StackPane {
+public class MenuView extends Pane {
     private MenuViewModel menuViewModel;
     private Stage stage;
 

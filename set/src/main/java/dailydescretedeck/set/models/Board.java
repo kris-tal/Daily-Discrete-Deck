@@ -115,7 +115,7 @@ public class Board {
             String endsCollected = String.valueOf(End.getInstance().getEnds());
             String dataToWrite = "Date: " + currentDate + ", Ends Collected: " + endsCollected;
 
-            String fileName = "endsCollected.txt";
+            String fileName = "/saves/endsCollected.txt";
             Path path = (Path) Paths.get(fileName);
 
             List<String> lines = new ArrayList<>();

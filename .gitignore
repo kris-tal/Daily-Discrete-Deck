@@ -2,9 +2,11 @@ set/target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-.idea
+
 .DS_Store
 set/.idea/workspace.xml
+.idea/
+.DS_Store/
 set/.idea
 
 ### IntelliJ IDEA ###

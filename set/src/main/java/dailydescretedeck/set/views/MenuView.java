@@ -44,8 +44,8 @@ public class MenuView extends StackPane {
         DoubleBinding width = widthProperty().divide(2);
         DoubleBinding height = heightProperty().divide(10);
 
-        logoView.setFitHeight(shorterEdge.divide(6).doubleValue());
-        logoView.setFitWidth(shorterEdge.divide(18).doubleValue());
+        logoView.setFitHeight(shorterEdge.doubleValue() / 6);
+        logoView.setFitWidth(shorterEdge.doubleValue() / 18);
         logoView.fitWidthProperty().bind(shorterEdge);
 
         playSetButton.prefWidthProperty().bind(width);

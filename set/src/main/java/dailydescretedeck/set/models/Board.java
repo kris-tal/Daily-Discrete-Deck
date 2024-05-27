@@ -1,21 +1,7 @@
 package dailydescretedeck.set.models;
 
-import javafx.scene.control.Alert;
-import java.nio.file.Path;
-import javafx.stage.Modality;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import dailydescretedeck.set.services.End;
-import dailydescretedeck.set.services.Feature;
-
 
 public class Board {
     private List<Card> cards;

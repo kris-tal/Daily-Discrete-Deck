@@ -14,24 +14,19 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.stage.Modality;
-
-import java.util.HashMap;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static java.lang.Double.min;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static java.lang.Double.min;
 
 public class BoardView extends Pane {
     private BoardViewModel viewModel;
@@ -39,7 +34,6 @@ public class BoardView extends Pane {
     private ObservableList<Card> selectedCards = FXCollections.observableArrayList();
     private Map<Card, CardView> cardViews = new HashMap<>();
     private SetCollector setCollector;
-
 
     public BoardView(BoardViewModel bViewModel) {
         this.viewModel = bViewModel;
@@ -79,7 +73,7 @@ public class BoardView extends Pane {
         double startX = bigRectX + gap;
         double startY = bigRectY + gap / 2;
 
-        int numberCards = board.getDeck().size() + board.getCards().size();
+        int numberCards = viewModel.getBoard().getDeck().size() + viewModel.getBoard().getCards().size();
         Font font = new Font("System", gap * 1.8);
 
         Label cardsLeftLabel = new Label("Cards left: " + numberCards + "/63");
@@ -89,9 +83,7 @@ public class BoardView extends Pane {
         cardsLeftLabel.setLayoutY(gap);
         getChildren().add(cardsLeftLabel);
 
-
-
-        Label collectedSetsLabel = new Label("Collected SETs: " + board.getNumberSets());
+        Label collectedSetsLabel = new Label("Collected SETs: " + viewModel.getBoard().getNumberSets());
         collectedSetsLabel.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
         collectedSetsLabel.setFont(font);
         collectedSetsLabel.setLayoutX(gap);
@@ -191,42 +183,33 @@ public class BoardView extends Pane {
         });
 
         confirmButton.setOnAction(event -> {
-            System.out.println("Wybrane karty: " + setCollector.getSets());  
-            if(board.isSetOk(selectedCards))
-            {
+            if (viewModel.isSetOk(selectedCards)) {
                 SetCollector setCollector = SetCollector.getInstance();
                 setCollector.addSets(1);
                 System.out.println("Zapisano ilość zebranych SETów: " + setCollector.getSets());
-        
+
                 try {
                     java.time.LocalDate currentDate = java.time.LocalDate.now();
                     String setsCollected = String.valueOf(setCollector.getSets());
                     String dataToWrite = "Date: " + currentDate + ", Sets Collected: " + setsCollected;
-        
+
                     String fileName = "setsCollected.txt";
                     java.nio.file.Path path = java.nio.file.Paths.get(fileName);
-        
+
                     List<String> lines = new ArrayList<>();
                     lines.add(dataToWrite);
-        
+
                     java.nio.file.Files.write(path, lines, StandardCharsets.UTF_8);
                 } catch (IOException e) {
+                    //e.printStackTrace();
                 }
-        
-                board.removeCards(selectedCards);
+
+                viewModel.removeCards(selectedCards);
                 System.out.println("Znaleziono SET");
-                BoardView newBoardView = new BoardView(board);
+                BoardView newBoardView = new BoardView(viewModel);
                 StackPane parent = (StackPane) getParent();
                 parent.getChildren().remove(this);
                 parent.getChildren().add(newBoardView);
-                CardView.enableCards();
-                selectedCards.clear();
-            }
-            else {
-                for(Card card : board.getCards()) {
-                    CardView cardView = cardViews.get(card);
-                    cardView.unclick();
-                }
                 CardView.enableCards();
                 selectedCards.clear();
             } else {
@@ -236,7 +219,7 @@ public class BoardView extends Pane {
 
         cancelButton.setOnAction(event -> {
             System.out.println("Kliknięto w przycisk Cancel");
-            for(Card card : board.getCards()) {
+            for (Card card : viewModel.cardsProperty()) {
                 CardView cardView = cardViews.get(card);
                 cardView.unclick();
             }
@@ -246,8 +229,8 @@ public class BoardView extends Pane {
 
         xorButton.setOnAction(event -> {
             System.out.println("Kliknięto w przycisk XOR");
-            Card card = board.Xor((ArrayList<Card>) selectedCards);
-            CardView cardView = new CardView(card, 0, 0, square/(2 * 60));
+            Card card = viewModel.getXor(selectedCards);
+            CardView cardView = new CardView(card, 0, 0, square / 60);
             cardView.disableThisCard();
             StackPane cardPane = new StackPane();
             cardPane.getChildren().add(cardView);

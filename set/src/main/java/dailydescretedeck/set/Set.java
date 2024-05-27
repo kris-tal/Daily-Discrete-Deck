@@ -3,6 +3,7 @@ package dailydescretedeck.set;
 import dailydescretedeck.set.models.Player;
 import dailydescretedeck.set.models.SimpleBoardState;
 import dailydescretedeck.set.viewmodels.MenuViewModel;
+import dailydescretedeck.set.viewmodels.PlayViewModel;
 import dailydescretedeck.set.viewmodels.StoreViewModel;
 import dailydescretedeck.set.views.MenuView;
 import dailydescretedeck.set.views.PlayView;
@@ -41,7 +42,8 @@ public class Set extends Application {
 
     private void showPlayView() {
         SimpleBoardState boardState = new SimpleBoardState(7);
-        PlayView playView = new PlayView(boardState, this::showMenu);
+        PlayViewModel playViewModel = new PlayViewModel(boardState);
+        PlayView playView = new PlayView(playViewModel, this::showMenu);
         Scene scene = new Scene(playView, 1000, 800);
         scene.setUserData(this);
         primaryStage.setScene(scene);

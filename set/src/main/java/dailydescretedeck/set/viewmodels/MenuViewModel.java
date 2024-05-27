@@ -1,17 +1,6 @@
 package dailydescretedeck.set.viewmodels;
 
-import dailydescretedeck.set.models.BoardState;
-import dailydescretedeck.set.models.SimpleBoardState;
-import dailydescretedeck.set.views.PlayView;
 import dailydescretedeck.set.views.ProfileView;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
-
-import java.util.Objects;
-
-
-import dailydescretedeck.set.views.StoreView;
 import javafx.stage.Stage;
 
 public class MenuViewModel {
@@ -30,7 +19,7 @@ public class MenuViewModel {
         INSTRUCTIONS
     }
 
-    public void handleInput(MenuOptions option) {
+    public void handleInput(MenuOptions option, Stage stage) {
         switch (option) {
             case PLAY:
                 System.out.println("Play Set");
@@ -40,7 +29,6 @@ public class MenuViewModel {
                 ProfileViewModel profileViewModel = new ProfileViewModel();
                 ProfileView profileView = new ProfileView(profileViewModel);
                 profileView.display(stage);
-                break;
                 break;
             case STORE:
                 System.out.println("Store");
@@ -52,4 +40,4 @@ public class MenuViewModel {
                 break;
         }
     }
-}break;
+}

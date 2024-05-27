@@ -1,9 +1,6 @@
 package dailydescretedeck.set.views;
 
-import dailydescretedeck.set.models.BoardState;
 import dailydescretedeck.set.viewmodels.BoardViewModel;
-import dailydescretedeck.set.views.BoardView;
-import dailydescretedeck.set.models.SimpleBoardState;
 import dailydescretedeck.set.viewmodels.PlayViewModel;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,19 +9,18 @@ import javafx.stage.Stage;
 
 public class PlayView extends StackPane {
     private final PlayViewModel playViewModel;
-    private BoardViewModel boardViewModel;
+    private final BoardView boardView;
 
-    public PlayView(PlayViewModel pvm) {
-        this.playViewModel = pvm;
-        this.boardViewModel = new BoardViewModel(playViewModel.getBoardState().getBoard());
+    public PlayView(PlayViewModel playViewModel, Runnable onBackToMenu) {
+        this.playViewModel = playViewModel;
+        BoardViewModel boardViewModel = new BoardViewModel(playViewModel.getBoardState().getBoard());
+        this.boardView = new BoardView(boardViewModel);
         setAlignment(Pos.CENTER);
-        getChildren().add(boardViewModel.getBoard());
+        getChildren().add(boardView);
     }
 
     public void display(Stage stage) {
-        PlayViewModel playViewModel = new PlayViewModel();
-        PlayView playView = new PlayView(playViewModel);
-        Scene scene = new Scene(playView, stage.getWidth(),stage.getHeight());
+        Scene scene = new Scene(this, stage.getWidth(), stage.getHeight());
         scene.getRoot().setStyle("-fx-background-color: thistle;");
         stage.setScene(scene);
         stage.setTitle("Set");

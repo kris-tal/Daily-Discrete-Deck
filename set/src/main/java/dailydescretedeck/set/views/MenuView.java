@@ -22,10 +22,10 @@ public class MenuView extends StackPane {
     public MenuView(MenuViewModel viewModel, Stage stage) {
         this.menuViewModel = viewModel;
         this.stage = stage;
-        display();
+        display(stage);
     }
 
-    public void display() {
+    public void display(Stage stage) {
         Pane wrapperPane = new Pane();
         VBox buttonsVbox = new VBox();
         VBox logoVbox = new VBox();
@@ -76,10 +76,10 @@ public class MenuView extends StackPane {
 
         VBox.setMargin(buttonsVbox, new Insets(height.get() / 2));
 
-        playSetButton.setOnAction(event -> handleInput(MenuViewModel.MenuOptions.PLAY));
-        profileButton.setOnAction(event -> handleInput(MenuViewModel.MenuOptions.PROFILE));
-        storeButton.setOnAction(event -> handleInput(MenuViewModel.MenuOptions.STORE));
-        instructionsButton.setOnAction(event -> handleInput(MenuViewModel.MenuOptions.INSTRUCTIONS));
+        playSetButton.setOnAction(event -> handleInput(MenuViewModel.MenuOptions.PLAY, stage));
+        profileButton.setOnAction(event -> handleInput(MenuViewModel.MenuOptions.PROFILE, stage));
+        storeButton.setOnAction(event -> handleInput(MenuViewModel.MenuOptions.STORE, stage));
+        instructionsButton.setOnAction(event -> handleInput(MenuViewModel.MenuOptions.INSTRUCTIONS, stage));
 
         logoVbox.getChildren().add(logoView);
         buttonsVbox.getChildren().addAll(playSetButton, profileButton, storeButton, instructionsButton);
@@ -87,7 +87,7 @@ public class MenuView extends StackPane {
         getChildren().add(wrapperPane);
     }
 
-    public void handleInput(MenuViewModel.MenuOptions input) {
-        menuViewModel.handleInput(input);
+    public void handleInput(MenuViewModel.MenuOptions input, Stage stage) {
+        menuViewModel.handleInput(input, stage);
     }
 }

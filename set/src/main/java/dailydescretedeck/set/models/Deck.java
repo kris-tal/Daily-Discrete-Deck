@@ -51,7 +51,6 @@ public class Deck {
         } else {
             return null;
         }
-        return null;
     }
 
     public List<Card> getRemainingCards() {

@@ -320,7 +320,7 @@ public class BoardView extends Pane {
         stage.setTitle("Set");
         stage.show();
 
-        menuView.display(stage);
+        menuView.display();
         });
 
         getChildren().add(buttonsPane);

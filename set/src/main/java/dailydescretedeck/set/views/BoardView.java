@@ -201,20 +201,19 @@ public class BoardView extends Pane {
         cancelButton.setFont(Font.font("System", gap * 1.8));
         cancelButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
-        xorButton.setLayoutX(paneWidth - buttonWidth / 2 - gap);
+        xorButton.setLayoutX(paneWidth -( buttonWidth / 2 - gap) /4);
         xorButton.setLayoutY(gap);
         xorButton.setPrefWidth(buttonWidth / 2);
         xorButton.setPrefHeight(buttonHeight);
         xorButton.setFont(Font.font("System", gap * 1.6));
         xorButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
-        menuButton.setLayoutX(40 + 3 * buttonWidth);
-        menuButton.setLayoutY(0);
-        menuButton.setPrefWidth(buttonWidth);
-        menuButton.setPrefHeight(buttonHeight);
-        menuButton.setFont(Font.font("System", gap * 1.8));
+        menuButton.setLayoutX(getWidth() - buttonWidth + 50);
+        menuButton.setLayoutY(getHeight() - buttonHeight);
+        menuButton.setPrefWidth(buttonWidth * 0.5);
+        menuButton.setPrefHeight(buttonHeight* 0.5);
+        menuButton.setFont(Font.font("System", gap * 1));
         menuButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-
         surrenderButton.setOnAction(event -> {
             if (timeline != null) {
                 timeline.stop();

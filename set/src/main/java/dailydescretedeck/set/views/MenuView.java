@@ -55,8 +55,8 @@ public class MenuView extends StackPane {
         storeButton.prefHeightProperty().bind(height);
         instructionsButton.prefWidthProperty().bind(width);
         instructionsButton.prefHeightProperty().bind(height);
-        exitButton.prefWidthProperty().bind(width.divide(10));
-        exitButton.prefHeightProperty().bind(height.divide(10));
+        exitButton.prefWidthProperty().bind(width.divide(4));
+        exitButton.prefHeightProperty().bind(height.divide(4));
         exitButton.translateXProperty().bind(widthProperty().subtract(exitButton.widthProperty()).subtract(10));
         exitButton.translateYProperty().bind(heightProperty().subtract(exitButton.heightProperty()).subtract(10));
 

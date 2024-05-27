@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12792faf-e17a-4636-881d-507484ba98ce" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/Calendar.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/CalendarDay.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/DayPane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/CalendarApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/CalendarApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/viewmodels/MenuViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/viewmodels/MenuViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/PlayView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/PlayView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setsCollected.txt" beforeDir="false" afterPath="$PROJECT_DIR$/setsCollected.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/CalendarDay.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/CalendarView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/CalendarView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/ProfileView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/views/ProfileView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

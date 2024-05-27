@@ -12,6 +12,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
 
@@ -42,12 +44,13 @@ public class CalendarView extends StackPane {
         monthYearLabel.setText(yearMonth.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH) + " " + yearMonth.getYear());
 
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
+        gridPane.setHgap(8);
+        gridPane.setVgap(8);
 
         String[] daysOfWeek = {" Mon ", " Tue ", " Wed ", " Thu ", " Fri ", " Sat ", " Sun "};
         for (int i = 0; i < 7; i++) {
             Label dayLabel = new Label(daysOfWeek[i]);
+            dayLabel.setFont(Font.font("System Bold", 15));
             gridPane.add(dayLabel, i, 0);
         }
 
@@ -59,18 +62,7 @@ public class CalendarView extends StackPane {
             LocalDate date = yearMonth.atDay(dayOfMonth);
             int sets = setsMap.getOrDefault(date, 0);
             int ends = endsMap.getOrDefault(date, 0);
-
-            Label dateLabel = new Label(Integer.toString(dayOfMonth));
-            Label setsLabel = new Label("Sets: " + sets);
-            Label endsLabel = new Label("Ends: " + ends);
-            VBox dayBox = new VBox(dateLabel, setsLabel, endsLabel);
-
-            Rectangle rect = new Rectangle(40, 40);
-            rect.setFill(Color.LIGHTGRAY);
-            rect.setStroke(Color.BLACK);
-
-            StackPane dayPane = new StackPane();
-            dayPane.getChildren().addAll(rect, dayBox);
+            DayPane dayPane = new DayPane(dayOfMonth, sets, ends);
 
             int column = (startDayOfWeek + dayOfMonth - 1) % 7;
             int row = (startDayOfWeek + dayOfMonth - 1) / 7 + 1;

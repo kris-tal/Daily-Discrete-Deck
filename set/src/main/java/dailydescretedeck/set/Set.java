@@ -27,7 +27,7 @@ public class Set extends Application {
     }
 
     private void showMenu() {
-        MenuViewModel menuViewModel = new MenuViewModel(this::showPlayView, this::showStoreView, primaryStage);
+        MenuViewModel menuViewModel = new MenuViewModel(this::showPlayView, this::showStoreView);
         MenuView menuView = new MenuView(menuViewModel, primaryStage);
         Scene scene = new Scene(menuView, 1000, 800);
         scene.setUserData(this);

@@ -10,14 +10,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -98,6 +98,7 @@ public class StoreView extends Pane {
         selectedProductsLabel.setLayoutY(gap * 8);
         getChildren().add(selectedProductsLabel);
 
+
         Button backButton = new Button("Back to Menu");
         backButton.setLayoutX(startX);
         backButton.setLayoutY(startY + bigRectHeight + gap);
@@ -118,19 +119,26 @@ public class StoreView extends Pane {
 
         getChildren().addAll(backButton, cartButton);
 
+        GridPane categoryGrid = new GridPane();
+        categoryGrid.setLayoutX(startX);
+        categoryGrid.setLayoutY(startY);
+        categoryGrid.setHgap(gap);
+        categoryGrid.setVgap(gap);
+        categoryGrid.setPrefSize(bigRectWidth - 2 * gap, bigRectHeight - 2 * gap);
+
         for (int i = 0; i < 6; i++) {
             Button categoryButton = new Button("Category " + (i + 1));
-            categoryButton.setLayoutX(startX + (i % 3) * (bigRectWidth / 3));
-            categoryButton.setLayoutY(startY + (i / 3) * (bigRectHeight / 2));
-            categoryButton.setPrefSize(bigRectWidth / 3 - gap, bigRectHeight / 2 - gap);
+            categoryButton.setPrefSize(bigRectWidth / 3 - gap, bigRectHeight / 3 - gap);
             categoryButton.setFont(Font.font("System", 18));
             categoryButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 10;");
             final int categoryIndex = i;
             if (categoryIndex == 0) {
                 categoryButton.setOnAction(event -> openBuyCardsView());
             }
-            getChildren().add(categoryButton);
+            categoryGrid.add(categoryButton, i % 3, i / 3);
         }
+
+        getChildren().add(categoryGrid);
     }
 
     private void openCartView() {

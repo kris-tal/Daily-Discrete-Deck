@@ -95,11 +95,13 @@ public class BuyCardsView extends Pane {
                 }
 
                 Product product = products.get(productIndex++);
-                ProductView productView = new ProductView(product, 0, 0, square);
+                ProductView productView = new ProductView(product, 0, 0, square / 10);
                 productViews.put(product, productView);
-
                 productView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    if (!selectedProducts.contains(product)) {
+                    if (selectedProducts.contains(product)) {
+                        selectedProducts.remove(product);
+                        productView.unselect();
+                    } else {
                         selectedProducts.add(product);
                         productView.select();
                         storeViewModel.addToCart(product);
@@ -184,40 +186,41 @@ public class BuyCardsView extends Pane {
 
     private static class ProductView extends StackPane {
         private Circle circle;
+        private Label nameLabel;
         private Color originalColor;
         private boolean isSelected = false;
 
         public ProductView(Product product, double x, double y, double scale) {
             originalColor = Color.valueOf(product.getName().split(" ")[0].toUpperCase());
-            circle = new Circle(10 * scale);
+            circle = new Circle(5 * scale);
             circle.setFill(originalColor);
             circle.setLayoutX(x);
             circle.setLayoutY(y);
 
+            nameLabel = new Label(product.getName());
+            nameLabel.setFont(Font.font("Comic Sans MS", 10 * scale));
+
             getChildren().addAll(circle);
 
-            setOnMouseEntered(event -> circle.setFill(originalColor.darker()));
-            setOnMouseExited(event -> {
-                if (!isSelected) {
-                    circle.setFill(originalColor);
-                }
-            });
-            setOnMouseClicked(event -> select());
+            setOnMouseClicked(event -> toggleSelect());
+        }
+
+        private void toggleSelect() {
+            if (isSelected) {
+                unselect();
+            } else {
+                select();
+            }
         }
 
         private void select() {
-            if (!isSelected) {
-                circle.setFill(originalColor.darker().darker());
-                isSelected = true;
-                new Thread(() -> {
-                    try {
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    javafx.application.Platform.runLater(() -> circle.setFill(originalColor));
-                }).start();
-            }
+            circle.setFill(originalColor.darker());
+            isSelected = true;
+        }
+
+        private void unselect() {
+            circle.setFill(originalColor);
+            isSelected = false;
         }
     }
 }

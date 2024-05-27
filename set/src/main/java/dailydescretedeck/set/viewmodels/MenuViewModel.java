@@ -28,7 +28,9 @@ public class MenuViewModel {
         switch (option) {
             case PLAY:
                 System.out.println("Play Set");
-                PlayView playView = new PlayView();
+
+                PlayViewModel playViewModel = new PlayViewModel();
+                PlayView playView = new PlayView(playViewModel, stage);
                 playView.display(stage);
                 break;
             case PROFILE:

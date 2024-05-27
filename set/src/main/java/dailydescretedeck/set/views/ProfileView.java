@@ -23,8 +23,8 @@ public class ProfileView extends StackPane {
         this.calendarView = new CalendarView();
         this.stage = stage;
         Label headerLabel = new Label("Profile");
-        headerLabel.setFont(Font.font("System Bold", 20));
         VBox layout = new VBox(headerLabel, calendarView);
+        headerLabel.setFont(Font.font("System Bold", 20));
         VBox.setMargin(headerLabel, new javafx.geometry.Insets(10, 0, 10, 0));
         layout.setPadding(new Insets(30));
         getChildren().add(layout);

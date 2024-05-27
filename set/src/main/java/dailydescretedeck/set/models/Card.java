@@ -1,9 +1,9 @@
 package dailydescretedeck.set.models;
 
-import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import static dailydescretedeck.set.models.Dots.*;
 
 public class Card {
     private ArrayList<Dots> fields;
@@ -11,7 +11,12 @@ public class Card {
 
     public Card(List<Dots> existingFields) {
         this.fields = (ArrayList<Dots>) existingFields;
-        this.design = new DefaultCardDesign();
+        this.design = Player.getCardDesignInUse();
+    }
+
+    public Card(CardDesign design) {
+        this.fields = (ArrayList<Dots>) List.of(A1, A2, B1, B2, C1, C2);
+        this.design = design;
     }
 
     public List<Dots> getFields() {

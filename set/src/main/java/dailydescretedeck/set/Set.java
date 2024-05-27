@@ -1,4 +1,5 @@
 package dailydescretedeck.set;
+import dailydescretedeck.set.models.Player;
 import dailydescretedeck.set.viewmodels.MenuViewModel;
 import dailydescretedeck.set.views.MenuView;
 import javafx.application.Application;
@@ -13,6 +14,7 @@ public class Set extends Application {
     public void start(Stage stage) throws Exception {
         MenuViewModel menuViewModel = new MenuViewModel();
         MenuView menuView = new MenuView(menuViewModel, stage);
+        Player player = new Player("Kozikonator", 666);
         Scene scene = new Scene(menuView, 1000, 800);
         try {
             Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/icon.png")));
@@ -23,7 +25,7 @@ public class Set extends Application {
         stage.setTitle("Set");
         stage.show();
 
-        menuView.display(stage);
+        menuView.display();
     }
 
     public static void main(String[] args) {

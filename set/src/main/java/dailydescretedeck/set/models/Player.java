@@ -1,32 +1,25 @@
 package dailydescretedeck.set.models;
 
 import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
+import dailydescretedeck.set.views.carddesignes.EmoCardDesign;
+import dailydescretedeck.set.views.carddesignes.JHCardDesign;
 
 public class Player {
     private final String username;
-    private final String password;      //to tam sie potem zhaszuje zamiast trzymac w stringu
+    private final int password;      //to tam sie potem zhaszuje zamiast trzymac w stringu
     private int OOPoints;
-    private CardDesign cardDesignInUse;
+    private static CardDesign cardDesignInUse;
 
-    private static int playersCount = 0;
-
-    public Player(String username, String pwd) {
+    public Player(String username, int pwd) {
         this.username = username;
         this.password = pwd;
-        this.cardDesignInUse = new DefaultCardDesign();
-        playersCount++;
-        System.out.printf( "User constructor: %s %s; count = %d\n",
-                username, password, playersCount);
+        this.cardDesignInUse = new JHCardDesign();     //new DefaultCardDesign();
     }
 
-    public Player(int points, String username, String pwd) {
+    public Player(int points, String username, int pwd) {
         this.OOPoints = points;
         this.username = username;
         this.password = pwd;
-
-        playersCount++;
-        System.out.printf( "User constructor: %s %s; count = %d\n",
-                username, password, playersCount);
     }
 
     //moze trzeba nadpisac finalize ale nie wiem
@@ -35,7 +28,7 @@ public class Player {
         return username;
     }
 
-    public String getPassword() {
+    public int getPassword() {
         return password;
     }
 
@@ -43,7 +36,7 @@ public class Player {
         return OOPoints;
     }
 
-    public CardDesign getCardDesignInUse() {
+    public static CardDesign getCardDesignInUse() {
         return cardDesignInUse;
     }
 

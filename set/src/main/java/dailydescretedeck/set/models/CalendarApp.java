@@ -1,4 +1,5 @@
 package dailydescretedeck.set.models;
+import dailydescretedeck.set.services.SaveService;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -32,6 +33,7 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 
 public class CalendarApp extends Application {
+    private SaveService saveService = new SaveService();
     private YearMonth currentYearMonth;
     private Label monthYearLabel;
     private Map<LocalDate, Integer> setsMap = new HashMap<>(); 
@@ -73,8 +75,8 @@ public class CalendarApp extends Application {
 
     @Override
     public void start(Stage stage) {
-        loadSetsMapFromFile();
-        loadEndsMapFromFile();
+        setsMap = saveService.loadSetsMapFromFile();
+        endsMap = saveService.loadEndsMapFromFile();
         currentYearMonth = YearMonth.now();
         monthYearLabel = new Label();
 
@@ -131,7 +133,7 @@ public class CalendarApp extends Application {
         stage.setScene(scene);
         stage.show();
         SetCollector.getInstance();
-        Runtime.getRuntime().addShutdownHook(new Thread(this::saveSetsMapToFile));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> saveService.saveSetsMapToFile(setsMap)));
     }
 
 

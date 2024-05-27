@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12792faf-e17a-4636-881d-507484ba98ce" name="Changes" comment="" />
+    <list default="true" id="12792faf-e17a-4636-881d-507484ba98ce" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/services/SaveService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/CalendarApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dailydescretedeck/set/models/CalendarApp.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,7 +46,7 @@
     "Application.Set.executor": "Run",
     "JUnit.dailydescretedeck.set.views.mycolors in set.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "menu",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/kris/Documents/Sem-II/PO/PROJECT/set/src/main/resources/dailydescretedeck/set/images",
     "node.js.detected.package.eslint": "true",

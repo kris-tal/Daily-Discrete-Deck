@@ -4,6 +4,7 @@ import dailydescretedeck.set.models.BoardState;
 import dailydescretedeck.set.views.BoardView;
 import dailydescretedeck.set.models.SimpleBoardState;
 import dailydescretedeck.set.viewmodels.PlayViewModel;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -28,5 +29,10 @@ public class PlayView extends StackPane {
         stage.setScene(scene);
         stage.setTitle("Set");
         stage.show();
+
+        stage.setOnCloseRequest(event -> {
+            Platform.exit();
+            System.exit(0);
+        });
     }
 }

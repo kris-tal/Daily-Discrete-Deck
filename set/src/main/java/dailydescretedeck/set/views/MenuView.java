@@ -90,6 +90,7 @@ public class MenuView extends StackPane {
         profileButton.setOnAction(event -> handleInput(MenuViewModel.MenuOptions.PROFILE));
         storeButton.setOnAction(event -> handleInput(MenuViewModel.MenuOptions.STORE));
         instructionsButton.setOnAction(event -> handleInput(MenuViewModel.MenuOptions.INSTRUCTIONS));
+        exitButton.setOnAction(event -> handleInput(MenuViewModel.MenuOptions.EXIT));
 
         logoVbox.getChildren().add(logoView);
         buttonsVbox.getChildren().addAll(playSetButton, profileButton, storeButton, instructionsButton);

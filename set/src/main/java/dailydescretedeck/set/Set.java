@@ -9,6 +9,7 @@ import dailydescretedeck.set.views.MenuView;
 import dailydescretedeck.set.views.PlayView;
 import dailydescretedeck.set.views.StoreView;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -22,6 +23,11 @@ public class Set extends Application {
         this.primaryStage = stage;
         this.player = new Player("Player1", "password");
         this.storeViewModel = new StoreViewModel(player);
+
+        primaryStage.setOnCloseRequest(event -> {
+            Platform.exit();
+            System.exit(0);
+        });
 
         showMenu();
     }

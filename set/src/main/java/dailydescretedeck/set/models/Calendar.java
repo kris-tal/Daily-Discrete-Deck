@@ -15,8 +15,8 @@ public class Calendar {
 
     public Calendar() {
         this.currentYearMonth = YearMonth.now();
-        this.setsMap = saveService.loadSetsMapFromFile();
-        this.endsMap = saveService.loadEndsMapFromFile();
+        saveService.loadMapFromFile("setsMap.txt", setsMap);
+        saveService.loadMapFromFile("endsMap.txt", endsMap);
     }
 
     public YearMonth getCurrentYearMonth() {
@@ -36,10 +36,10 @@ public class Calendar {
     }
 
     public void saveSetsMapToFile() {
-        saveService.saveSetsMapToFile(setsMap);
+        saveService.saveMapToFile("setsMap.txt", setsMap);
     }
 
     public void saveEndsMapToFile() {
-        saveService.saveEndsMapToFile(endsMap);
+        saveService.saveMapToFile("endsMap.txt", endsMap);
     }
 }

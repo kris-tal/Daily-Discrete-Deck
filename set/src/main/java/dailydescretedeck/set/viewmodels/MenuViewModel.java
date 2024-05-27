@@ -3,6 +3,7 @@ package dailydescretedeck.set.viewmodels;
 import dailydescretedeck.set.models.BoardState;
 import dailydescretedeck.set.models.SimpleBoardState;
 import dailydescretedeck.set.views.PlayView;
+import dailydescretedeck.set.views.ProfileView;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -27,6 +28,9 @@ public class MenuViewModel {
                 break;
             case PROFILE:
                 System.out.println("Profile");
+                ProfileViewModel profileViewModel = new ProfileViewModel();
+                ProfileView profileView = new ProfileView(profileViewModel);
+                profileView.display(stage);
                 break;
             case STORE:
                 System.out.println("Store");

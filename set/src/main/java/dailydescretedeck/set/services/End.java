@@ -41,8 +41,7 @@ public class End {
     }
    
     private int loadEndsFromFile() {
-        LocalDate currentDate = LocalDate.now();
-        String fileName = "/saves/ends_" + currentDate + ".txt";
+        String fileName = "ends.txt";
         Path path = Paths.get(fileName);
         if (Files.exists(path)) {
             try {
@@ -60,7 +59,7 @@ public class End {
 
     private void saveEndsToFile() {
         LocalDate currentDate = LocalDate.now();
-        String fileName = "/saves/ends_" + currentDate + ".txt";
+        String fileName = "ends.txt";
         Path path = Paths.get(fileName);
         String dataToWrite = "Date: " + currentDate + ", Ends: " + ends;
         try {

@@ -110,12 +110,12 @@ public class Board {
         }
         if(cards.isEmpty()){
             End.getInstance().addEnds(1);
-            try {
+            /*try {
             LocalDate currentDate = LocalDate.now();
             String endsCollected = String.valueOf(End.getInstance().getEnds());
             String dataToWrite = "Date: " + currentDate + ", Ends Collected: " + endsCollected;
 
-            String fileName = "/saves/endsCollected.txt";
+            String fileName = "endsCollected.txt";
             Path path = (Path) Paths.get(fileName);
 
             List<String> lines = new ArrayList<>();
@@ -124,7 +124,10 @@ public class Board {
             Files.write(path, lines, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
+            Map<LocalDate, Integer> endsMap = Calendar.getEndsMap();
+            endsMap.put(LocalDate.now(), End.getInstance().getEnds());
+            Calendar.setEndsMap(endsMap);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Koniec gry");
             alert.setHeaderText(null);
@@ -149,15 +152,6 @@ public class Board {
         
         sets++;
         return true;
-    }
-
-    public void fill(List<List<Card>> list, List<Card> temp, List<Card> colors, int start) {
-        list.add(new ArrayList<>(temp));
-        for (int i = start; i < colors.size(); i++) {
-            temp.add(colors.get(i));
-            fill(list, temp, colors, i + 1);
-            temp.remove(temp.size() - 1);
-        }
     }
 
     public List<Card> getSet() {

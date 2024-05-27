@@ -1,5 +1,4 @@
 package dailydescretedeck.set;
-
 import dailydescretedeck.set.viewmodels.MenuViewModel;
 import dailydescretedeck.set.views.MenuView;
 import javafx.application.Application;

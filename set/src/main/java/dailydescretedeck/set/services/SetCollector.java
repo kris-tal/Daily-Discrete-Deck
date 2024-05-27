@@ -19,6 +19,7 @@ public class SetCollector {
     public static SetCollector getInstance() {
         if (instance == null) {
             instance = new SetCollector();
+            instance.sets = instance.loadSetsFromFile();
         }
         return instance;
     }
@@ -33,8 +34,7 @@ public class SetCollector {
     }
 
     private int loadSetsFromFile() {
-        LocalDate currentDate = LocalDate.now();
-        String fileName = "/saves/setsCollected_" + currentDate + ".txt";
+        String fileName = "setsCollected.txt";
         Path path = Paths.get(fileName);
         if (Files.exists(path)) {
             try {
@@ -52,7 +52,7 @@ public class SetCollector {
 
     private void saveSetsToFile() {
         LocalDate currentDate = LocalDate.now();
-        String fileName = "/saves/setsCollected_" + currentDate + ".txt";
+        String fileName = "setsCollected.txt";
         Path path = Paths.get(fileName);
         String dataToWrite = "Date: " + currentDate + ", Sets Collected: " + sets;
         try {

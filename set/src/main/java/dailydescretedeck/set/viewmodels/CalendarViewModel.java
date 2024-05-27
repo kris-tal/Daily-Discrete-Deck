@@ -28,12 +28,4 @@ public class CalendarViewModel {
     public Map<LocalDate, Integer> getEndsMap() {
         return calendar.getEndsMap();
     }
-
-    public void saveSetsMapToFile() {
-        calendar.saveSetsMapToFile();
-    }
-
-    public void saveEndsMapToFile() {
-        calendar.saveEndsMapToFile();
-    }
 }

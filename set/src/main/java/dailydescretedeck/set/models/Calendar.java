@@ -1,6 +1,6 @@
 package dailydescretedeck.set.models;
 
-import dailydescretedeck.set.services.SaveService;
+import dailydescretedeck.set.services.SavingService;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -8,15 +8,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Calendar {
-    private SaveService saveService = new SaveService();
     private YearMonth currentYearMonth;
-    private Map<LocalDate, Integer> setsMap = new HashMap<>();
-    private Map<LocalDate, Integer> endsMap = new HashMap<>();
+    private static Map<LocalDate, Integer> setsMap = new HashMap<>();
+    private static Map<LocalDate, Integer> endsMap = new HashMap<>();
 
     public Calendar() {
         this.currentYearMonth = YearMonth.now();
-        saveService.loadMapFromFile("setsMap.txt", setsMap);
-        saveService.loadMapFromFile("endsMap.txt", endsMap);
+        SavingService.loadMapFromFile("setsMap.txt", setsMap);
+        SavingService.loadMapFromFile("endsMap.txt", endsMap);
     }
 
     public YearMonth getCurrentYearMonth() {
@@ -27,19 +26,19 @@ public class Calendar {
         this.currentYearMonth = currentYearMonth;
     }
 
-    public Map<LocalDate, Integer> getSetsMap() {
+    public static Map<LocalDate, Integer> getSetsMap() {
         return setsMap;
     }
 
-    public Map<LocalDate, Integer> getEndsMap() {
+    public static Map<LocalDate, Integer> getEndsMap() {
         return endsMap;
     }
-
-    public void saveSetsMapToFile() {
-        saveService.saveMapToFile("setsMap.txt", setsMap);
+    public static void setSetsMap(Map<LocalDate, Integer> setsMap) {
+        Calendar.setsMap = setsMap;
+        SavingService.saveMapToFile("setsMap.txt", setsMap);
     }
-
-    public void saveEndsMapToFile() {
-        saveService.saveMapToFile("endsMap.txt", endsMap);
+    public static void setEndsMap(Map<LocalDate, Integer> endsMap) {
+        Calendar.endsMap = endsMap;
+        SavingService.loadMapFromFile("endsMap.txt", endsMap);
     }
 }

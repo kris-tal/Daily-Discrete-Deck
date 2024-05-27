@@ -3,6 +3,7 @@ package dailydescretedeck.set.views;
 import dailydescretedeck.set.models.Product;
 import dailydescretedeck.set.viewmodels.BuyCardsViewModel;
 import dailydescretedeck.set.viewmodels.StoreViewModel;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -10,10 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -98,47 +96,44 @@ public class StoreView extends Pane {
         selectedProductsLabel.setLayoutY(gap * 8);
         getChildren().add(selectedProductsLabel);
 
+        double buttonY = startY + bigRectHeight + gap;
+        double buttonWidth = bigRectWidth / 3 - gap;
 
         Button backButton = new Button("Back to Menu");
         backButton.setLayoutX(startX);
-        backButton.setLayoutY(startY + bigRectHeight + gap);
-        backButton.setPrefWidth(bigRectWidth / 3 - gap);
+        backButton.setLayoutY(buttonY);
+        backButton.setPrefWidth(buttonWidth);
         backButton.setPrefHeight(40);
         backButton.setFont(Font.font("System", 18));
         backButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
         backButton.setOnAction(event -> backToMenu.run());
 
         Button cartButton = new Button("View Cart");
-        cartButton.setLayoutX(startX + bigRectWidth / 3 + gap);
-        cartButton.setLayoutY(startY + bigRectHeight + gap);
-        cartButton.setPrefWidth(bigRectWidth / 3 - gap);
+        cartButton.setLayoutX(startX + buttonWidth + gap);
+        cartButton.setLayoutY(buttonY);
+        cartButton.setPrefWidth(buttonWidth);
         cartButton.setPrefHeight(40);
+        cartButton.autosize();
         cartButton.setFont(Font.font("System", 18));
         cartButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
         cartButton.setOnAction(event -> openCartView());
 
         getChildren().addAll(backButton, cartButton);
 
-        GridPane categoryGrid = new GridPane();
-        categoryGrid.setLayoutX(startX);
-        categoryGrid.setLayoutY(startY);
-        categoryGrid.setHgap(gap);
-        categoryGrid.setVgap(gap);
-        categoryGrid.setPrefSize(bigRectWidth - 2 * gap, bigRectHeight - 2 * gap);
-
         for (int i = 0; i < 6; i++) {
             Button categoryButton = new Button("Category " + (i + 1));
-            categoryButton.setPrefSize(bigRectWidth / 3 - gap, bigRectHeight / 3 - gap);
+            categoryButton.setLayoutX(startX + (i % 3) * (bigRectWidth / 3));
+            categoryButton.setLayoutY(startY + (i / 3) * (bigRectHeight / 2));
+            //categoryButton.setPrefSize(bigRectWidth / 3 - gap, bigRectHeight / 2 - gap);
+            categoryButton.autosize();
             categoryButton.setFont(Font.font("System", 18));
-            categoryButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 10;");
+            categoryButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 100;");
             final int categoryIndex = i;
             if (categoryIndex == 0) {
                 categoryButton.setOnAction(event -> openBuyCardsView());
             }
-            categoryGrid.add(categoryButton, i % 3, i / 3);
+            getChildren().add(categoryButton);
         }
-
-        getChildren().add(categoryGrid);
     }
 
     private void openCartView() {

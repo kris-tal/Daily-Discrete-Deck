@@ -22,13 +22,13 @@ public class MenuViewModel {
                 showPlayView.run();
                 break;
             case PROFILE:
-                // Implement profile view logic if needed
+                // Implement profile
                 break;
             case STORE:
                 showStoreView.run();
                 break;
             case INSTRUCTIONS:
-                // Implement instructions view logic if needed
+                // Implement instructions
                 break;
         }
     }

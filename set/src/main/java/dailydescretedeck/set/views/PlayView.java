@@ -12,17 +12,19 @@ import javafx.stage.Stage;
 public class PlayView extends StackPane {
     private final PlayViewModel playViewModel;
     private BoardView boardView;
+    Stage stage;
 
-    public PlayView(PlayViewModel pvm) {
+    public PlayView(PlayViewModel pvm, Stage stage) {
         this.playViewModel = pvm;
-        this.boardView = new BoardView(playViewModel.getBoardState().getBoard());
+        this.boardView = new BoardView(playViewModel.getBoardState().getBoard(), stage );
         setAlignment(Pos.CENTER);
+        this.stage = stage;
         getChildren().add(boardView);
     }
 
     public void display(Stage stage) {
         PlayViewModel playViewModel = new PlayViewModel();
-        PlayView playView = new PlayView(playViewModel);
+        PlayView playView = new PlayView(playViewModel, stage);
         Scene scene = new Scene(playView, stage.getWidth(),stage.getHeight());
         scene.getRoot().setStyle("-fx-background-color: thistle;");
         stage.setScene(scene);

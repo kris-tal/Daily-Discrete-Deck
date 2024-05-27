@@ -5,12 +5,15 @@ import dailydescretedeck.set.models.Calendar;
 import dailydescretedeck.set.models.Card;
 import dailydescretedeck.set.services.End;
 import dailydescretedeck.set.services.SetCollector;
+import dailydescretedeck.set.viewmodels.MenuViewModel;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -18,11 +21,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Double.min;
@@ -38,9 +43,12 @@ public class BoardView extends Pane {
     private SetCollector setCollector;
     private static  long startTime = System.currentTimeMillis();
     private static Timeline timeline;
+    private Stage stage;
+    private static boolean bylo = false;
 
-    public BoardView(Board board) {
+    public BoardView(Board board, Stage stage) {
         this.board = board;
+        this.stage = stage;
         if (setCollector == null) { 
             setCollector = SetCollector.getInstance();
         }
@@ -52,7 +60,11 @@ public class BoardView extends Pane {
 
     public void redrawBoard() {
         getChildren().clear();
-
+        if(bylo)
+        {
+            startTime = System.currentTimeMillis();
+            bylo = false;
+        }
         double paneWidth = getWidth();
         double paneHeight = getHeight();
 
@@ -157,6 +169,7 @@ public class BoardView extends Pane {
         Button confirmButton = new Button("confirm");
         Button cancelButton = new Button("cancel");
         Button xorButton = new Button("XOR");
+        Button menuButton = new Button("Menu");
 
         Pane buttonsPane = new Pane();
         buttonsPane.getChildren().addAll(surrenderButton, confirmButton, cancelButton);
@@ -194,6 +207,13 @@ public class BoardView extends Pane {
         xorButton.setPrefHeight(buttonHeight);
         xorButton.setFont(Font.font("System", gap * 1.6));
         xorButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+
+        menuButton.setLayoutX(40 + 3 * buttonWidth);
+        menuButton.setLayoutY(0);
+        menuButton.setPrefWidth(buttonWidth);
+        menuButton.setPrefHeight(buttonHeight);
+        menuButton.setFont(Font.font("System", gap * 1.8));
+        menuButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
         surrenderButton.setOnAction(event -> {
             if (timeline != null) {
@@ -248,7 +268,7 @@ public class BoardView extends Pane {
                     alert.initModality(Modality.APPLICATION_MODAL);
                     alert.showAndWait();
                 }
-                BoardView newBoardView = new BoardView(board);
+                BoardView newBoardView = new BoardView(board, stage);
                 StackPane parent = (StackPane) getParent();
                 parent.getChildren().remove(this);
                 parent.getChildren().add(newBoardView);
@@ -287,9 +307,26 @@ public class BoardView extends Pane {
             cardPane.setLayoutY(gap + buttonHeight + gap);
             getChildren().add(cardPane);
         });
+        menuButton.setOnAction(event -> {
+            if (timeline != null) {
+                timeline.stop();
+            }
+            bylo = true;
+            System.out.println("Kliknięto w przycisk Menu");
+            MenuViewModel menuViewModel = new MenuViewModel();
+        MenuView menuView = new MenuView(menuViewModel, stage);
+        Scene scene = new Scene(menuView, 1000, 800);
+        scene.getRoot().setStyle("-fx-background-color: thistle;");
+        stage.setScene(scene);
+        stage.setTitle("Set");
+        stage.show();
+
+        menuView.display(stage);
+        });
 
         getChildren().add(buttonsPane);
         getChildren().add(xorButton);
+        getChildren().add(menuButton);
     }
 
 }

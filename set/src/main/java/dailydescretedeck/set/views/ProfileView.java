@@ -18,10 +18,13 @@ import javafx.stage.Stage;
 public class ProfileView extends StackPane {
     private final ProfileViewModel profileViewModel;
     private CalendarView calendarView;
+    Stage stage;
 
-    public ProfileView(ProfileViewModel pvm, Stage stage) {
-        this.profileViewModel = pvm;
+
+    public ProfileView(Stage stage) {
+        this.profileViewModel = new ProfileViewModel();
         this.calendarView = new CalendarView();
+        this.stage = stage;
         Label headerLabel = new Label("Profile");
         VBox layout = new VBox(headerLabel, calendarView);
         headerLabel.setFont(Font.font("System Bold", 20));
@@ -56,10 +59,20 @@ public class ProfileView extends StackPane {
         getChildren().add(menuButton);
     }
 
-    public void display(Stage stage) {      //jak to zrobic
-        ProfileViewModel profileViewModel = new ProfileViewModel();
-        ProfileView profileView = new ProfileView(profileViewModel, stage);
-        Scene scene = new Scene(profileView, stage.getWidth(),stage.getHeight());
+    public ProfileView(Stage stage, ProfileViewModel pvm) {
+        this.profileViewModel = pvm;
+        this.calendarView = new CalendarView();
+        this.stage = stage;
+        Label headerLabel = new Label("Profile");
+        headerLabel.setFont(Font.font("System Bold", 20));
+        VBox layout = new VBox(headerLabel, calendarView);
+        VBox.setMargin(headerLabel, new javafx.geometry.Insets(10, 0, 10, 0));
+        layout.setPadding(new Insets(30));
+        getChildren().add(layout);
+    }
+
+    public void display() {      //jak to zrobic
+        Scene scene = new Scene(this, stage.getWidth(),stage.getHeight());
         scene.getRoot().setStyle("-fx-background-color: thistle;");
         stage.setScene(scene);
         stage.setTitle("Set");

@@ -24,7 +24,7 @@ public class MenuView extends StackPane {
         this.stage = stage;
     }
 
-    public void display(Stage stage) {
+    public void display() {
         Pane wrapperPane = new Pane();
         VBox buttonsVbox = new VBox();
         VBox logoVbox = new VBox();

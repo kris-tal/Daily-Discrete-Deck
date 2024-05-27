@@ -14,7 +14,15 @@ public class PlayView extends StackPane {
     private BoardView boardView;
     Stage stage;
 
+    public PlayView() {
+        this.playViewModel = new PlayViewModel();
+        this.boardView = new BoardView(playViewModel.getBoardState().getBoard());
+        setAlignment(Pos.CENTER);
+        getChildren().add(boardView);
+    }
+
     public PlayView(PlayViewModel pvm, Stage stage) {
+
         this.playViewModel = pvm;
         this.boardView = new BoardView(playViewModel.getBoardState().getBoard(), stage );
         setAlignment(Pos.CENTER);

@@ -71,7 +71,6 @@ public class StoreView extends VBox {
         previousButton.setOnAction(event -> {
             if (currentProduct == 0) currentProduct = products.size() - 1;          //powtorzenie trzeba zmienic
             else currentProduct--;
-            System.out.println("Previous");
             cardsHBox.getChildren().clear();
             cardsHBox.getChildren().add(previousButton);
             if (currentProduct == 0) {

@@ -43,7 +43,6 @@ public class ProfileView extends StackPane {
         menuButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
         menuButton.setOnAction(event -> {
-            System.out.println("Kliknięto w przycisk Menu");
             MenuViewModel menuViewModel = new MenuViewModel();
             MenuView menuView = new MenuView(menuViewModel, stage);
             Scene scene = new Scene(menuView, 1000, 800);

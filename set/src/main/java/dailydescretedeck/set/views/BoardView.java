@@ -219,7 +219,6 @@ public class BoardView extends Pane {
                 timeline.stop();
             }
 
-            System.out.println("Kliknięto w przycisk Surrender");
             selectedCards.clear();
             selectedCards = board.getNotSet();
 
@@ -238,20 +237,16 @@ public class BoardView extends Pane {
         });
 
         confirmButton.setOnAction(event -> {
-            System.out.println("Kliknięto w przycisk Confirm");
-            System.out.println("Wybrane karty: " + setCollector.getSets());  
             if(board.isSetOk(selectedCards))
             {
                 SetCollector setCollector = SetCollector.getInstance();
                 setCollector.addSets(1);
-                System.out.println("Zapisano ilość zebranych SETów: " + setCollector.getSets());
         
                 Map<LocalDate, Integer> setsMap = Calendar.getSetsMap();
                 setsMap.put(LocalDate.now(), setCollector.getSets());
                 Calendar.setSetsMap(setsMap);
         
                 board.removeCards(selectedCards);
-                System.out.println("Znaleziono SET");
                 if(board.getCards().isEmpty()){
                     if (timeline != null) {
                         timeline.stop();
@@ -275,7 +270,6 @@ public class BoardView extends Pane {
                 selectedCards.clear();
             }
             else {
-                System.out.println("Nie znaleziono SET");
                 for(Card card : board.getCards()) {
                     CardView cardView = cardViews.get(card);
                     cardView.unclick();
@@ -286,7 +280,6 @@ public class BoardView extends Pane {
         });
 
         cancelButton.setOnAction(event -> {
-            System.out.println("Kliknięto w przycisk Cancel");
             for(Card card : board.getCards()) {
                 CardView cardView = cardViews.get(card);
                 cardView.unclick();
@@ -296,7 +289,6 @@ public class BoardView extends Pane {
         });
 
         xorButton.setOnAction(event -> {
-            System.out.println("Kliknięto w przycisk XOR");
             Card card = board.Xor((ArrayList<Card>) selectedCards);
             CardView cardView = new CardView(card, 0, 0, square/(2 * 60));
             cardView.disableThisCard();
@@ -311,7 +303,6 @@ public class BoardView extends Pane {
                 timeline.stop();
             }
             bylo = true;
-            System.out.println("Kliknięto w przycisk Menu");
             MenuViewModel menuViewModel = new MenuViewModel();
         MenuView menuView = new MenuView(menuViewModel, stage);
         Scene scene = new Scene(menuView, 1000, 800);

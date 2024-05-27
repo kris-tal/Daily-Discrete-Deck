@@ -17,9 +17,7 @@ public class SavingService {
         if (!file.exists()) {
             try {
                 if (file.createNewFile()) {
-                    System.out.println("File created");
                 } else {
-                    System.out.println("File already exists");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -39,10 +37,8 @@ public class SavingService {
         if (!file.exists()) {
             try {
                 if (file.createNewFile()) {
-                    System.out.println("File created");
                     map = new HashMap<>();
                 } else {
-                    System.out.println("File already exists");
                 }
             } catch (IOException e) {
                 e.printStackTrace();

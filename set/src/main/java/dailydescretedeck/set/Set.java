@@ -15,12 +15,12 @@ public class Set extends Application {
     public void start(Stage stage) throws Exception {
         MenuViewModel menuViewModel = new MenuViewModel();
         MenuView menuView = new MenuView(menuViewModel, stage);
-        Player player = new Player("Kozikonator", 666);
+        Player player = new Player("User", 666);
         Scene scene = new Scene(menuView, 1000, 800);
         try {
             Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/icon.png")));
             stage.getIcons().add(icon);
-        } catch(RuntimeException image) { System.out.println("Image not found"); }
+        } catch(RuntimeException image) {  }
         scene.getRoot().setStyle("-fx-background-color: thistle;");
         stage.setScene(scene);
         stage.setTitle("Set");

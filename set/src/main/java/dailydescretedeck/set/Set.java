@@ -8,13 +8,9 @@ import dailydescretedeck.set.viewmodels.StoreViewModel;
 import dailydescretedeck.set.views.MenuView;
 import dailydescretedeck.set.views.PlayView;
 import dailydescretedeck.set.views.StoreView;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
-import java.util.Objects;
 
 public class Set extends Application {
     private Stage primaryStage;
@@ -31,7 +27,7 @@ public class Set extends Application {
     }
 
     private void showMenu() {
-        MenuViewModel menuViewModel = new MenuViewModel(this::showPlayView, this::showStoreView);
+        MenuViewModel menuViewModel = new MenuViewModel(this::showPlayView, this::showStoreView, primaryStage);
         MenuView menuView = new MenuView(menuViewModel, primaryStage);
         Scene scene = new Scene(menuView, 1000, 800);
         scene.setUserData(this);

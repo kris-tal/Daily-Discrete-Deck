@@ -6,10 +6,12 @@ import javafx.stage.Stage;
 public class MenuViewModel {
     private Runnable showPlayView;
     private Runnable showStoreView;
+    private Stage stage;
 
-    public MenuViewModel(Runnable showPlayView, Runnable showStoreView) {
+    public MenuViewModel(Runnable showPlayView, Runnable showStoreView, Stage stage) {
         this.showPlayView = showPlayView;
         this.showStoreView = showStoreView;
+        this.stage = stage;
     }
 
     public enum MenuOptions {
@@ -19,7 +21,7 @@ public class MenuViewModel {
         INSTRUCTIONS
     }
 
-    public void handleInput(MenuOptions option, Stage stage) {
+    public void handleInput(MenuOptions option) {
         switch (option) {
             case PLAY:
                 System.out.println("Play Set");

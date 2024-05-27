@@ -23,7 +23,7 @@ public class PlayView extends StackPane {
 
         PlayViewModel playViewModel = new PlayViewModel();
         PlayView playView = new PlayView(playViewModel);
-        Scene scene = new Scene(playView,1000, 800);
+        Scene scene = new Scene(playView, stage.getWidth(), stage.getHeight());
         scene.getRoot().setStyle("-fx-background-color: thistle;");
         stage.setScene(scene);
         stage.setTitle("Set");

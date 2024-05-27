@@ -3,6 +3,7 @@ package dailydescretedeck.set.views;
 import dailydescretedeck.set.models.Board;
 import dailydescretedeck.set.models.Card;
 import dailydescretedeck.set.viewmodels.BoardViewModel;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import dailydescretedeck.set.services.SetCollector;
@@ -23,8 +24,6 @@ import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import static java.lang.Double.min;
 
@@ -34,14 +33,50 @@ public class BoardView extends Pane {
     private ObservableList<Card> selectedCards = FXCollections.observableArrayList();
     private Map<Card, CardView> cardViews = new HashMap<>();
     private SetCollector setCollector;
+    private boolean xorSelected = false;
+    private Rectangle xorRectangle;
+    private double buttonWidth;
+    private double buttonHeight;
+    private double square;
+    private double cardWidth;
+    private double cardHeight;
+    private StackPane xorButtonPane;
 
     public BoardView(BoardViewModel bViewModel) {
         this.viewModel = bViewModel;
         this.setCollector = SetCollector.getInstance();
-        redrawBoard();
+
+        initializeComponents();
+
+        Platform.runLater(this::redrawBoard);
 
         widthProperty().addListener((observable, oldValue, newValue) -> redrawBoard());
         heightProperty().addListener((observable, oldValue, newValue) -> redrawBoard());
+    }
+
+    private void initializeComponents() {
+        xorRectangle = new Rectangle();
+        xorRectangle.setFill(Color.LIGHTGRAY);
+        xorRectangle.setArcWidth(10);
+        xorRectangle.setArcHeight(10);
+        xorRectangle.setStroke(Color.BLACK);
+        xorRectangle.setStrokeWidth(2);
+
+        Label xorLabel = new Label("XOR");
+        xorLabel.setFont(Font.font("System", 16));
+        xorLabel.setTextFill(Color.BLACK);
+        xorButtonPane = new StackPane(xorRectangle, xorLabel);
+
+        xorButtonPane.setOnMouseEntered(event -> xorRectangle.setFill(darkenColor((Color) xorRectangle.getFill(), 0.1)));
+        xorButtonPane.setOnMouseExited(event -> {
+            if (!xorSelected) {
+                xorRectangle.setFill(Color.LIGHTGRAY);
+            }
+        });
+
+        xorButtonPane.setOnMouseClicked(event -> selectXor());
+
+        getChildren().add(xorButtonPane);
     }
 
     public void redrawBoard() {
@@ -54,7 +89,7 @@ public class BoardView extends Pane {
             return;
         }
 
-        double square = min(paneWidth, paneHeight) * 0.09;
+        square = min(paneWidth, paneHeight) * 0.09;
         double bigRectWidth = square * 9;
         double bigRectHeight = square * 7;
 
@@ -67,8 +102,8 @@ public class BoardView extends Pane {
 
         gap = square / 5;
 
-        double cardWidth = square * 2;
-        double cardHeight = square * 3;
+        cardWidth = square * 2;
+        cardHeight = square * 3;
 
         double startX = bigRectX + gap;
         double startY = bigRectY + gap / 2;
@@ -122,10 +157,12 @@ public class BoardView extends Pane {
             }
         }
 
+        buttonWidth = (bigRectWidth - 40) / 4;
+        buttonHeight = bigRectHeight / 10;
+
         Button surrenderButton = new Button("surrender");
         Button confirmButton = new Button("confirm");
         Button cancelButton = new Button("cancel");
-        Button xorButton = new Button("XOR");
 
         Pane buttonsPane = new Pane();
         buttonsPane.getChildren().addAll(surrenderButton, confirmButton, cancelButton);
@@ -133,8 +170,11 @@ public class BoardView extends Pane {
         buttonsPane.setLayoutX(bigRectX);
         buttonsPane.setLayoutY(bigRectY + bigRectHeight + gap);
 
-        double buttonWidth = (bigRectWidth - 50) / 5;
-        double buttonHeight = bigRectHeight / 10;
+        xorRectangle.setWidth(buttonWidth / 2);
+        xorRectangle.setHeight(buttonHeight);
+
+        xorButtonPane.setLayoutX(paneWidth - buttonWidth / 2 - gap);
+        xorButtonPane.setLayoutY(gap);
 
         surrenderButton.setLayoutX(10);
         surrenderButton.setLayoutY(0);
@@ -156,13 +196,6 @@ public class BoardView extends Pane {
         cancelButton.setPrefHeight(buttonHeight);
         cancelButton.setFont(Font.font("System", gap * 1.8));
         cancelButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-
-        xorButton.setLayoutX(paneWidth - buttonWidth / 2 - gap);
-        xorButton.setLayoutY(gap);
-        xorButton.setPrefWidth(buttonWidth / 2);
-        xorButton.setPrefHeight(buttonHeight);
-        xorButton.setFont(Font.font("System", gap * 1.6));
-        xorButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
         surrenderButton.setOnAction(event -> {
             selectedCards.clear();
@@ -201,7 +234,7 @@ public class BoardView extends Pane {
 
                     java.nio.file.Files.write(path, lines, StandardCharsets.UTF_8);
                 } catch (IOException e) {
-                    //e.printStackTrace();
+                    e.printStackTrace();
                 }
 
                 viewModel.removeCards(selectedCards);
@@ -227,19 +260,38 @@ public class BoardView extends Pane {
             selectedCards.clear();
         });
 
-        xorButton.setOnAction(event -> {
-            System.out.println("Kliknięto w przycisk XOR");
-            Card card = viewModel.getXor(selectedCards);
-            CardView cardView = new CardView(card, 0, 0, square / 60);
-            cardView.disableThisCard();
-            StackPane cardPane = new StackPane();
-            cardPane.getChildren().add(cardView);
-            cardPane.setLayoutX(bigRectX + bigRectWidth + gap);
-            cardPane.setLayoutY(gap + buttonHeight + gap);
-            getChildren().add(cardPane);
-        });
-
         getChildren().add(buttonsPane);
-        getChildren().add(xorButton);
+        getChildren().add(xorButtonPane);
+
+        System.out.println("XOR button pane added at layoutX: " + xorButtonPane.getLayoutX() + " layoutY: " + xorButtonPane.getLayoutY());
+    }
+
+    private void selectXor() {
+        System.out.println("selectXor called");
+        xorRectangle.setFill(darkenColor((Color) xorRectangle.getFill(), 0.5));
+        xorSelected = true;
+        xorRectangle.setFill(Color.BLACK);
+
+        System.out.println("Kliknięto w prostokąt XOR");
+        Card card = viewModel.getXor(selectedCards);
+        System.out.println("Card created: " + card);
+        CardView cardView = new CardView(card, 0, 0, min(getWidth(), getHeight()) * 0.09 / 60);
+        System.out.println("CardView created: " + cardView);
+        cardView.disableThisCard();
+        StackPane cardPane = new StackPane();
+        cardPane.getChildren().add(cardView);
+        cardPane.setLayoutX(getWidth() - gap - cardView.getWidth());
+        cardPane.setLayoutY(gap + xorRectangle.getHeight() + gap);
+        getChildren().add(cardPane);
+        System.out.println("CardView added to the pane");
+    }
+
+    private Color darkenColor(Color color, double factor) {
+        return new Color(
+                Math.max(0, color.getRed() - factor),
+                Math.max(0, color.getGreen() - factor),
+                Math.max(0, color.getBlue() - factor),
+                color.getOpacity()
+        );
     }
 }

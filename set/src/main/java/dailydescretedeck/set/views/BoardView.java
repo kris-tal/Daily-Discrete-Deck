@@ -1,7 +1,9 @@
 package dailydescretedeck.set.views;
 
-import dailydescretedeck.set.models.Board;
 import dailydescretedeck.set.models.Card;
+import dailydescretedeck.set.viewmodels.BoardViewModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import dailydescretedeck.set.services.SetCollector;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -11,6 +13,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Modality;
+
+import java.util.HashMap;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 
@@ -25,10 +33,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 public class BoardView extends Pane {
-    private Board board;
+    private BoardViewModel viewModel;
     private double gap;
-    private List<Card> selectedCards = new ArrayList<>();
-    private boolean confirm = false;
+    private ObservableList<Card> selectedCards = FXCollections.observableArrayList();
     private Map<Card, CardView> cardViews = new HashMap<>();
     private SetCollector setCollector;
 
@@ -97,20 +104,19 @@ public class BoardView extends Pane {
             startX += row * square;
 
             for (int col = 0; col < 4; col++) {
-                if (cardIndex >= board.getCards().size()) {
+                if (cardIndex >= viewModel.cardsProperty().size()) {
                     break;
                 }
 
-                Card card = board.getCards().get(cardIndex++);
+                Card card = viewModel.cardsProperty().get(cardIndex++);
 
                 CardView cardView = new CardView(card, 0, 0, square / 60);
                 cardViews.put(card, cardView);
-                Card Card = (Card) card;
                 cardView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    if (selectedCards.contains(Card)) {
-                        selectedCards.remove(Card);
+                    if (selectedCards.contains(card)) {
+                        selectedCards.remove(card);
                     } else {
-                        selectedCards.add(Card);
+                        selectedCards.add(card);
                     }
                 });
                 StackPane cardPane = new StackPane();
@@ -134,7 +140,7 @@ public class BoardView extends Pane {
         buttonsPane.setLayoutX(bigRectX);
         buttonsPane.setLayoutY(bigRectY + bigRectHeight + gap);
 
-        double buttonWidth = (bigRectWidth - 40) / 3;
+        double buttonWidth = (bigRectWidth - 50) / 5;
         double buttonHeight = bigRectHeight / 10;
 
         surrenderButton.setLayoutX(10);
@@ -166,26 +172,24 @@ public class BoardView extends Pane {
         xorButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
         surrenderButton.setOnAction(event -> {
-            System.out.println("Kliknięto w przycisk Surrender");
             selectedCards.clear();
-            selectedCards = board.getNotSet();
+            selectedCards.addAll(viewModel.getNotSet());
 
-            for(Card card : selectedCards) {
+            for (Card card : selectedCards) {
                 CardView cardView = cardViews.get(card);
                 cardView.selectNotSelected();
             }
             CardView.disableCards();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Koniec gry");
+            alert.setTitle("Game Over");
             alert.setHeaderText(null);
-            alert.setContentText("Przegrałeś!");
+            alert.setContentText("You lost!");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
         });
 
         confirmButton.setOnAction(event -> {
-            System.out.println("Kliknięto w przycisk Confirm");
             System.out.println("Wybrane karty: " + setCollector.getSets());  
             if(board.isSetOk(selectedCards))
             {
@@ -218,13 +222,14 @@ public class BoardView extends Pane {
                 selectedCards.clear();
             }
             else {
-                System.out.println("Nie znaleziono SET");
                 for(Card card : board.getCards()) {
                     CardView cardView = cardViews.get(card);
                     cardView.unclick();
                 }
                 CardView.enableCards();
                 selectedCards.clear();
+            } else {
+                System.out.println("No SET found");
             }
         });
 
@@ -245,7 +250,7 @@ public class BoardView extends Pane {
             cardView.disableThisCard();
             StackPane cardPane = new StackPane();
             cardPane.getChildren().add(cardView);
-            cardPane.setLayoutX(paneWidth - buttonWidth / 2 - gap);
+            cardPane.setLayoutX(bigRectX + bigRectWidth + gap);
             cardPane.setLayoutY(gap + buttonHeight + gap);
             getChildren().add(cardPane);
         });
@@ -253,5 +258,4 @@ public class BoardView extends Pane {
         getChildren().add(buttonsPane);
         getChildren().add(xorButton);
     }
-
 }

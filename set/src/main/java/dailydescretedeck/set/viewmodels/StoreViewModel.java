@@ -21,11 +21,6 @@ public class StoreViewModel {
         this.products = new SimpleListProperty<>(FXCollections.observableArrayList());
         this.totalCost = new SimpleIntegerProperty(0);
         this.selectedProductsCount = new SimpleIntegerProperty(0);
-
-        // example
-        products.add(new Product("Product 1", 10));
-        products.add(new Product("Product 2", 20));
-        products.add(new Product("Product 3", 30));
     }
 
     public ListProperty<Product> getProducts() {

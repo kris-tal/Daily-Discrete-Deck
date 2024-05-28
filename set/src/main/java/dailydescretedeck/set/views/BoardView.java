@@ -187,7 +187,16 @@ public class BoardView extends Pane {
 
         button2.setOnAction(event -> {
             if (viewModel.isSetOk(selectedCards)) {
-                viewModel.removeCards(selectedCards);
+                boolean ok = viewModel.removeCards(selectedCards);
+                if(!ok){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Koniec gry");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Wygrałeś!");
+                    alert.initModality(Modality.APPLICATION_MODAL);
+                    alert.showAndWait();
+                }
+
                 redrawBoard();
                 CardView.enableCards();
                 selectedCards.clear();

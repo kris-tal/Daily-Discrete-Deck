@@ -64,7 +64,7 @@ public class CardManager {
         return notSet;
     }
 
-    public void removeCards(List<Card> selectedCards) {
+    public boolean removeCards(List<Card> selectedCards) {
         for (Card c : selectedCards) {
             int index = board.getCards().indexOf(c);
             if (index != -1) {
@@ -80,12 +80,19 @@ public class CardManager {
             }
         }
         if (board.getCards().isEmpty()) {
+            return false;
+            /*
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Koniec gry");
             alert.setHeaderText(null);
             alert.setContentText("Wygrałeś!");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
+
+             */
+        }
+        else {
+            return true;
         }
     }
 

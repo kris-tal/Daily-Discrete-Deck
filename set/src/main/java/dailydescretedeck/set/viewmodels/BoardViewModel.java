@@ -39,9 +39,10 @@ public class BoardViewModel {
         return cardManager.isSetOk(selectedCards);
     }
 
-    public void removeCards(List<Card> selectedCards) {
-        cardManager.removeCards(selectedCards);
+    public boolean removeCards(List<Card> selectedCards) {
+        boolean ok = cardManager.removeCards(selectedCards);
         cards.set(FXCollections.observableArrayList(board.getCards()));
+        return ok;
     }
 
     public void reset() {

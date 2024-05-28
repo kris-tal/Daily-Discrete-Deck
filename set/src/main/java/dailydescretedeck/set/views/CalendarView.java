@@ -1,23 +1,10 @@
 package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.viewmodels.CalendarViewModel;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
-import javafx.geometry.Pos;
 
-import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.TextStyle;
 import java.util.HashMap;
@@ -28,9 +15,8 @@ public class CalendarView extends StackPane {
     private final CalendarViewModel calendarViewModel;
     private YearMonth currentYearMonth;
     private Label monthYearLabel;
-    private Map<LocalDate, Integer> setsMap = new HashMap<>();
-    private Map<LocalDate, Integer> endsMap = new HashMap<>();
-    private BorderPane borderPane;
+    private Map<java.time.LocalDate, Integer> setsMap = new HashMap<>();
+    private Map<java.time.LocalDate, Integer> endsMap = new HashMap<>();
 
     public CalendarView() {
         this.calendarViewModel = new CalendarViewModel();
@@ -38,38 +24,7 @@ public class CalendarView extends StackPane {
         this.monthYearLabel = new Label();
         this.setsMap = calendarViewModel.getSetsMap();
         this.endsMap = calendarViewModel.getEndsMap();
-        this.borderPane = new BorderPane();
-        this.borderPane.setCenter(buildCalendar(currentYearMonth));
-        this.getChildren().add(borderPane);
-        createScene();
-    }
-
-    public void createScene() {
-        GridPane calendarGrid = buildCalendar(currentYearMonth);
-        borderPane.setCenter(calendarGrid);
-        BorderPane.setAlignment(calendarGrid, Pos.CENTER);
-
-        Button previousMonthButton = new Button("<");
-        previousMonthButton.setOnAction(e -> {
-            currentYearMonth = currentYearMonth.minusMonths(1);
-            updateCalendar();
-        });
-
-        Button nextMonthButton = new Button(">");
-        nextMonthButton.setOnAction(e -> {
-            currentYearMonth = currentYearMonth.plusMonths(1);
-            updateCalendar();
-        });
-        previousMonthButton.setFont(Font.font("System",15));
-        previousMonthButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 60;");
-
-        nextMonthButton.setFont(Font.font("System", 15));
-        nextMonthButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 60;");
-
-        HBox navigationBar = new HBox(previousMonthButton, monthYearLabel, nextMonthButton);
-        HBox.setHgrow(monthYearLabel, Priority.ALWAYS);
-        monthYearLabel.setAlignment(Pos.CENTER);
-        borderPane.setTop(navigationBar);
+        this.getChildren().add(buildCalendar(currentYearMonth));
     }
 
     private GridPane buildCalendar(YearMonth yearMonth) {
@@ -82,16 +37,16 @@ public class CalendarView extends StackPane {
         String[] daysOfWeek = {" Mon ", " Tue ", " Wed ", " Thu ", " Fri ", " Sat ", " Sun "};
         for (int i = 0; i < 7; i++) {
             Label dayLabel = new Label(daysOfWeek[i]);
-            dayLabel.setFont(Font.font("System Bold", 15));
+            dayLabel.setFont(javafx.scene.text.Font.font("System Bold", 15));
             gridPane.add(dayLabel, i, 0);
         }
 
-        LocalDate startDate = yearMonth.atDay(1);
-        int startDayOfWeek = startDate.getDayOfWeek().getValue() - 1;
+        java.time.LocalDate startDate = yearMonth.atDay(1);
+        int startDayOfWeek = startDate.getDayOfWeek().getValue() % 7;
         int daysInMonth = yearMonth.lengthOfMonth();
 
         for (int dayOfMonth = 1; dayOfMonth <= daysInMonth; dayOfMonth++) {
-            LocalDate date = yearMonth.atDay(dayOfMonth);
+            java.time.LocalDate date = yearMonth.atDay(dayOfMonth);
             int sets = setsMap.getOrDefault(date, 0);
             int ends = endsMap.getOrDefault(date, 0);
             DayPane dayPane = new DayPane(dayOfMonth, sets, ends);
@@ -103,8 +58,8 @@ public class CalendarView extends StackPane {
         return gridPane;
     }
 
-    private void updateCalendar() {
-        borderPane.setCenter(buildCalendar(currentYearMonth));
+    public void updateCalendar(YearMonth yearMonth) {
+        this.getChildren().clear();
+        this.getChildren().add(buildCalendar(yearMonth));
     }
-
 }

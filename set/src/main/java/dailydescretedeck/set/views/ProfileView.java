@@ -1,80 +1,82 @@
 package dailydescretedeck.set.views;
 
-import dailydescretedeck.set.viewmodels.CalendarViewModel;
-import dailydescretedeck.set.viewmodels.MenuViewModel;
-import dailydescretedeck.set.viewmodels.PlayViewModel;
 import dailydescretedeck.set.viewmodels.ProfileViewModel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToolBar;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.time.YearMonth;
+
 public class ProfileView extends StackPane {
     private final ProfileViewModel profileViewModel;
-    private CalendarView calendarView;
-    Stage stage;
+    private Runnable onMenu;
+    private YearMonth currentYearMonth;
+    private Label monthYearLabel;
 
+    public ProfileView(ProfileViewModel pvm, Runnable onMenu) {
+        this.profileViewModel = pvm;
+        this.onMenu = onMenu;
+        this.currentYearMonth = YearMonth.now();
+        this.monthYearLabel = new Label();
+        initializeComponents();
+    }
 
-    public ProfileView(Stage stage) {
-        this.profileViewModel = new ProfileViewModel();
-        this.calendarView = new CalendarView();
-        this.stage = stage;
+    private void initializeComponents() {
         Label headerLabel = new Label("Profile");
-        VBox layout = new VBox(headerLabel, calendarView);
         headerLabel.setFont(Font.font("System Bold", 20));
-        VBox.setMargin(headerLabel, new javafx.geometry.Insets(10, 0, 10, 0));
+
+        CalendarView calendarView = new CalendarView();
+        VBox calendarContainer = new VBox(calendarView);
+        calendarContainer.setSpacing(10);
+        calendarContainer.setAlignment(Pos.CENTER);
+
+        Button backButton = new Button("Back to Menu");
+        backButton.setOnAction(event -> onMenu.run());
+
+        ToolBar toolBar = createNavigationBar(calendarView);
+
+        VBox layout = new VBox(headerLabel, toolBar, calendarContainer, backButton);
+        layout.setSpacing(20);
+        layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(30));
+        getChildren().add(layout);
+    }
 
-         Button menuButton = new Button("Menu");
-        double buttonWidth = 100; 
-        double buttonHeight = 50; 
-        double gap = 10; 
-        menuButton.setLayoutX(getWidth() - buttonWidth + 50);
-        menuButton.setLayoutY(getHeight() - buttonHeight);
-        menuButton.setPrefWidth(buttonWidth * 0.5);
-        menuButton.setPrefHeight(buttonHeight * 0.5);
-        menuButton.setFont(Font.font("System", gap * 1));
-        menuButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-
-        menuButton.setOnAction(event -> {
-            MenuViewModel menuViewModel = new MenuViewModel();
-            MenuView menuView = new MenuView(menuViewModel, stage);
-            Scene scene = new Scene(menuView, 1000, 800);
-            scene.getRoot().setStyle("-fx-background-color: thistle;");
-            stage.setScene(scene);
-            stage.setTitle("Set");
-            stage.show();
-
-            menuView.display();
+    private ToolBar createNavigationBar(CalendarView calendarView) {
+        Button previousMonthButton = new Button("<");
+        previousMonthButton.setOnAction(e -> {
+            currentYearMonth = currentYearMonth.minusMonths(1);
+            calendarView.updateCalendar(currentYearMonth);
+            monthYearLabel.setText(currentYearMonth.getMonth().getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.ENGLISH) + " " + currentYearMonth.getYear());
         });
 
-        getChildren().add(layout);
-        getChildren().add(menuButton);
+        Button nextMonthButton = new Button(">");
+        nextMonthButton.setOnAction(e -> {
+            currentYearMonth = currentYearMonth.plusMonths(1);
+            calendarView.updateCalendar(currentYearMonth);
+            monthYearLabel.setText(currentYearMonth.getMonth().getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.ENGLISH) + " " + currentYearMonth.getYear());
+        });
+
+        monthYearLabel.setText(currentYearMonth.getMonth().getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.ENGLISH) + " " + currentYearMonth.getYear());
+
+        ToolBar toolBar = new ToolBar(previousMonthButton, monthYearLabel, nextMonthButton);
+        toolBar.setStyle("-fx-background-color: thistle;");
+        return toolBar;
     }
 
-    public ProfileView(Stage stage, ProfileViewModel pvm) {
-        this.profileViewModel = pvm;
-        this.calendarView = new CalendarView();
-        this.stage = stage;
-        Label headerLabel = new Label("Profile");
-        headerLabel.setFont(Font.font("System Bold", 20));
-        VBox layout = new VBox(headerLabel, calendarView);
-        VBox.setMargin(headerLabel, new javafx.geometry.Insets(10, 0, 10, 0));
-        layout.setPadding(new Insets(30));
-        getChildren().add(layout);
-    }
-
-    public void display() {      //jak to zrobic
-        Scene scene = new Scene(this, stage.getWidth(),stage.getHeight());
+    public void display(Stage stage) {
+        Scene scene = new Scene(this, stage.getWidth(), stage.getHeight());
         scene.getRoot().setStyle("-fx-background-color: thistle;");
         stage.setScene(scene);
-        stage.setTitle("Set");
+        stage.setTitle("Profile");
         stage.show();
     }
 }

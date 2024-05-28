@@ -1,39 +1,39 @@
 package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.BoardState;
-import dailydescretedeck.set.views.BoardView;
-import dailydescretedeck.set.models.SimpleBoardState;
+import dailydescretedeck.set.viewmodels.BoardViewModel;
 import dailydescretedeck.set.viewmodels.PlayViewModel;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class PlayView extends StackPane {
-    private final PlayViewModel playViewModel;
-    private BoardView boardView;
-    Stage stage;
+    private final BoardView boardView;
+    private Runnable onMenu;
 
-    public PlayView() {
-        this.playViewModel = new PlayViewModel();
-        this.boardView = new BoardView(playViewModel.getBoardState().getBoard(), stage);
-        setAlignment(Pos.CENTER);
-        getChildren().add(boardView);
+    public PlayView(BoardState boardState, Runnable onMenu) {
+        BoardViewModel boardViewModel = new BoardViewModel(boardState.getBoard());
+        this.boardView = new BoardView(boardViewModel, onMenu);
+        this.onMenu = onMenu;
+
+        initializeComponents();
     }
 
-    public PlayView(PlayViewModel pvm, Stage stage) {
-
-        this.playViewModel = pvm;
-        this.boardView = new BoardView(playViewModel.getBoardState().getBoard(), stage );
-        setAlignment(Pos.CENTER);
-        this.stage = stage;
+    private void initializeComponents() {
+        // Dodaj BoardView
         getChildren().add(boardView);
+
+        // Dodaj przycisk powrotu do menu
+        Button backButton = new Button("Back to Menu");
+        backButton.setOnAction(event -> onMenu.run());
+        StackPane.setAlignment(backButton, Pos.TOP_LEFT); // Ustawienie przycisku w lewym górnym rogu
+        getChildren().add(backButton);
     }
 
     public void display(Stage stage) {
-        PlayViewModel playViewModel = new PlayViewModel();
-        PlayView playView = new PlayView(playViewModel, stage);
-        Scene scene = new Scene(playView, stage.getWidth(),stage.getHeight());
+        Scene scene = new Scene(this, stage.getWidth(), stage.getHeight());
         scene.getRoot().setStyle("-fx-background-color: thistle;");
         stage.setScene(scene);
         stage.setTitle("Set");

@@ -1,70 +1,45 @@
 package dailydescretedeck.set.views;
 
-import dailydescretedeck.set.models.Board;
-import dailydescretedeck.set.models.Calendar;
 import dailydescretedeck.set.models.Card;
-import dailydescretedeck.set.services.End;
-import dailydescretedeck.set.services.SetCollector;
-import dailydescretedeck.set.viewmodels.MenuViewModel;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
-import javafx.scene.Scene;
+import dailydescretedeck.set.viewmodels.BoardViewModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 import static java.lang.Double.min;
-import java.time.LocalDate;
-import javafx.util.Duration;
 
 public class BoardView extends Pane {
-    private Board board;
+    private BoardViewModel viewModel;
     private double gap;
-    private List<Card> selectedCards = new ArrayList<>();
-    private boolean confirm = false;
+    private ObservableList<Card> selectedCards = FXCollections.observableArrayList();
     private Map<Card, CardView> cardViews = new HashMap<>();
-    private SetCollector setCollector;
-    private static  long startTime = System.currentTimeMillis();
-    private static Timeline timeline;
-    private Stage stage;
-    private static boolean bylo = false;
+    private Runnable onBackToMenu;
 
-    public BoardView(Board board, Stage stage) {
-        this.board = board;
-        this.stage = stage;
-        if (setCollector == null) { 
-            setCollector = SetCollector.getInstance();
-        }
+    public BoardView(BoardViewModel viewModel, Runnable onBackToMenu) {
+        this.viewModel = viewModel;
+        this.onBackToMenu = onBackToMenu;
         redrawBoard();
 
         widthProperty().addListener((observable, oldValue, newValue) -> redrawBoard());
         heightProperty().addListener((observable, oldValue, newValue) -> redrawBoard());
     }
 
-    public void redrawBoard() {
+    private void redrawBoard() {
         getChildren().clear();
-        if(bylo)
-        {
-            startTime = System.currentTimeMillis();
-            bylo = false;
-        }
+
         double paneWidth = getWidth();
         double paneHeight = getHeight();
 
@@ -91,46 +66,23 @@ public class BoardView extends Pane {
         double startX = bigRectX + gap;
         double startY = bigRectY + gap / 2;
 
-        int numberCards = board.getDeck().size() + board.getCards().size();
-        Font font = new Font("System", gap * 1.8);
+        int numberCards = viewModel.cardsProperty().size();
+        Font font = new Font("Comic Sans MS", gap * 2);
 
-        Label timeLabel = new Label();
-        timeLabel.setFont(font);
-        timeLabel.setLayoutX(gap);
-        timeLabel.setLayoutY(gap * 7); 
-        getChildren().add(timeLabel);
-
-        Runnable updateTime = () -> {
-            long time = System.currentTimeMillis() - startTime;
-            String timeString = String.format("%02d:%02d", 
-                TimeUnit.MILLISECONDS.toMinutes(time),
-                TimeUnit.MILLISECONDS.toSeconds(time) % 60);
-            timeLabel.setText("time: " + timeString);
-        };
-        
-        updateTime.run();
-        
-        Platform.runLater(() -> {
-            timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateTime.run())); 
-            timeline.setCycleCount(Timeline.INDEFINITE);
-            timeline.play();
-        });
-
-        Label cardsLeftLabel = new Label("cards left: " + numberCards + "/63");
-        cardsLeftLabel.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
-        cardsLeftLabel.setFont(font);
-        cardsLeftLabel.setLayoutX(gap);
-        cardsLeftLabel.setLayoutY(gap);
-        getChildren().add(cardsLeftLabel);
+        Label label1 = new Label("Cards left: " + numberCards + "/63");
+        label1.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
+        label1.setFont(font);
+        label1.setLayoutX(gap);
+        label1.setLayoutY(gap);
+        getChildren().add(label1);
 
 
-
-        Label collectedSetsLabel = new Label("collected SETs: " + board.getNumberSets());
-        collectedSetsLabel.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
-        collectedSetsLabel.setFont(font);
-        collectedSetsLabel.setLayoutX(gap);
-        collectedSetsLabel.setLayoutY(gap * 4);
-        getChildren().add(collectedSetsLabel);
+        Label label2 = new Label("Collected SETs: " + viewModel.getBoard().getNumberSets());
+        label2.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
+        label2.setFont(font);
+        label2.setLayoutX(gap);
+        label2.setLayoutY(gap * 4);
+        getChildren().add(label2);
 
         int cardIndex = 0;
 
@@ -139,20 +91,19 @@ public class BoardView extends Pane {
             startX += row * square;
 
             for (int col = 0; col < 4; col++) {
-                if (cardIndex >= board.getCards().size()) {
+                if (cardIndex >= viewModel.cardsProperty().size()) {
                     break;
                 }
 
-                Card card = board.getCards().get(cardIndex++);
+                Card card = viewModel.cardsProperty().get(cardIndex++);
 
                 CardView cardView = new CardView(card, 0, 0, square / 60);
                 cardViews.put(card, cardView);
-                Card Card = (Card) card;
                 cardView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    if (selectedCards.contains(Card)) {
-                        selectedCards.remove(Card);
+                    if (selectedCards.contains(card)) {
+                        selectedCards.remove(card);
                     } else {
-                        selectedCards.add(Card);
+                        selectedCards.add(card);
                     }
                 });
                 StackPane cardPane = new StackPane();
@@ -165,96 +116,79 @@ public class BoardView extends Pane {
             }
         }
 
-        Button surrenderButton = new Button("surrender");
-        Button confirmButton = new Button("confirm");
-        Button cancelButton = new Button("cancel");
-        Button xorButton = new Button("XOR");
-        Button menuButton = new Button("Menu");
+        Button button1 = new Button("Surrender");
+        Button button2 = new Button("Confirm");
+        Button button3 = new Button("Cancel");
+        Button button4 = new Button("XOR");
+        Button backButton = new Button("Back to Menu");
 
         Pane buttonsPane = new Pane();
-        buttonsPane.getChildren().addAll(surrenderButton, confirmButton, cancelButton);
+        buttonsPane.getChildren().addAll(button1, button2, button3, button4, backButton);
         buttonsPane.setPrefWidth(bigRectWidth);
         buttonsPane.setLayoutX(bigRectX);
         buttonsPane.setLayoutY(bigRectY + bigRectHeight + gap);
 
-        double buttonWidth = (bigRectWidth - 40) / 3;
+        double buttonWidth = (bigRectWidth - 50) / 5;
         double buttonHeight = bigRectHeight / 10;
 
-        surrenderButton.setLayoutX(10);
-        surrenderButton.setLayoutY(0);
-        surrenderButton.setPrefWidth(buttonWidth);
-        surrenderButton.setPrefHeight(buttonHeight);
-        surrenderButton.setFont(Font.font("System", gap * 1.8));
-        surrenderButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        button1.setLayoutX(10);
+        button1.setLayoutY(0);
+        button1.setPrefWidth(buttonWidth);
+        button1.setPrefHeight(buttonHeight);
+        button1.setFont(Font.font("System", gap * 1.8));
+        button1.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
-        confirmButton.setLayoutX(20 + buttonWidth);
-        confirmButton.setLayoutY(0);
-        confirmButton.setPrefWidth(buttonWidth);
-        confirmButton.setPrefHeight(buttonHeight);
-        confirmButton.setFont(Font.font("System", gap * 1.8));
-        confirmButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        button2.setLayoutX(20 + buttonWidth);
+        button2.setLayoutY(0);
+        button2.setPrefWidth(buttonWidth);
+        button2.setPrefHeight(buttonHeight);
+        button2.setFont(Font.font("System", gap * 1.8));
+        button2.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
-        cancelButton.setLayoutX(30 + 2 * buttonWidth);
-        cancelButton.setLayoutY(0);
-        cancelButton.setPrefWidth(buttonWidth);
-        cancelButton.setPrefHeight(buttonHeight);
-        cancelButton.setFont(Font.font("System", gap * 1.8));
-        cancelButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        button3.setLayoutX(30 + 2 * buttonWidth);
+        button3.setLayoutY(0);
+        button3.setPrefWidth(buttonWidth);
+        button3.setPrefHeight(buttonHeight);
+        button3.setFont(Font.font("System", gap * 1.8));
+        button3.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
-        xorButton.setLayoutX(paneWidth - buttonWidth / 2 - gap);
-        xorButton.setLayoutY(gap);
-        xorButton.setPrefWidth(buttonWidth / 2);
-        xorButton.setPrefHeight(buttonHeight);
-        xorButton.setFont(Font.font("System", gap * 1.6));
-        xorButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        button4.setLayoutX(40 + 3 * buttonWidth);
+        button4.setLayoutY(0);
+        button4.setPrefWidth(buttonWidth);
+        button4.setPrefHeight(buttonHeight);
+        button4.setFont(Font.font("System", gap * 1.8));
+        button4.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
-        menuButton.setLayoutX(getWidth() - (buttonWidth)/4 - 70);
-        menuButton.setLayoutY(getHeight() - buttonHeight);
-        menuButton.setPrefWidth(buttonWidth * 0.5);
-        menuButton.setPrefHeight(buttonHeight* 0.5);
-        menuButton.setFont(Font.font("System", gap * 1));
-        menuButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        surrenderButton.setOnAction(event -> {
-            if (timeline != null) {
-                timeline.stop();
-            }
+        backButton.setLayoutX(50 + 4 * buttonWidth);
+        backButton.setLayoutY(0);
+        backButton.setPrefWidth(buttonWidth);
+        backButton.setPrefHeight(buttonHeight);
+        backButton.setFont(Font.font("System", gap * 1.8));
+        backButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        backButton.setOnAction(event -> onBackToMenu.run());
 
+        button1.setOnAction(event -> {
             selectedCards.clear();
-            selectedCards = board.getNotSet();
+            selectedCards.addAll(viewModel.getNotSet());
 
-            for(Card card : selectedCards) {
+            for (Card card : selectedCards) {
                 CardView cardView = cardViews.get(card);
                 cardView.selectNotSelected();
             }
             CardView.disableCards();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Koniec gry");
+            alert.setTitle("Game Over");
             alert.setHeaderText(null);
-            alert.setContentText("Przegrałeś!");
+            alert.setContentText("You lost!");
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.showAndWait();
         });
 
-        confirmButton.setOnAction(event -> {
-            if(board.isSetOk(selectedCards))
-            {
-                SetCollector setCollector = SetCollector.getInstance();
-                setCollector.addSets(1);
-        
-                Map<LocalDate, Integer> setsMap = Calendar.getSetsMap();
-                setsMap.put(LocalDate.now(), setCollector.getSets());
-                Calendar.setSetsMap(setsMap);
-        
-                board.removeCards(selectedCards);
-                if(board.getCards().isEmpty()){
-                    if (timeline != null) {
-                        timeline.stop();
-                    }
-                    End.getInstance().addEnds(1);
-                    Map<LocalDate, Integer> endsMap = Calendar.getEndsMap();
-                    endsMap.put(LocalDate.now(), End.getInstance().getEnds());
-                     Calendar.setEndsMap(endsMap);
+        button2.setOnAction(event -> {
+            if (viewModel.isSetOk(selectedCards)) {
+                boolean ok = viewModel.removeCards(selectedCards);
+                if(!ok){
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Koniec gry");
                     alert.setHeaderText(null);
@@ -262,25 +196,16 @@ public class BoardView extends Pane {
                     alert.initModality(Modality.APPLICATION_MODAL);
                     alert.showAndWait();
                 }
-                BoardView newBoardView = new BoardView(board, stage);
-                StackPane parent = (StackPane) getParent();
-                parent.getChildren().remove(this);
-                parent.getChildren().add(newBoardView);
+
+                redrawBoard();
                 CardView.enableCards();
                 selectedCards.clear();
-            }
-            else {
-                for(Card card : board.getCards()) {
-                    CardView cardView = cardViews.get(card);
-                    cardView.unclick();
-                }
-                CardView.enableCards();
-                selectedCards.clear();
+            } else {
             }
         });
 
-        cancelButton.setOnAction(event -> {
-            for(Card card : board.getCards()) {
+        button3.setOnAction(event -> {
+            for (Card card : viewModel.cardsProperty()) {
                 CardView cardView = cardViews.get(card);
                 cardView.unclick();
             }
@@ -288,35 +213,17 @@ public class BoardView extends Pane {
             selectedCards.clear();
         });
 
-        xorButton.setOnAction(event -> {
-            Card card = board.Xor((ArrayList<Card>) selectedCards);
-            CardView cardView = new CardView(card, 0, 0, square/(2 * 60));
+        button4.setOnAction(event -> {
+            Card card = viewModel.getXor(selectedCards);
+            CardView cardView = new CardView(card, 0, 0, square / 60);
             cardView.disableThisCard();
             StackPane cardPane = new StackPane();
             cardPane.getChildren().add(cardView);
-            cardPane.setLayoutX(paneWidth - buttonWidth / 2 - gap);
+            cardPane.setLayoutX(bigRectX + bigRectWidth + gap);
             cardPane.setLayoutY(gap + buttonHeight + gap);
             getChildren().add(cardPane);
         });
-        menuButton.setOnAction(event -> {
-            if (timeline != null) {
-                timeline.stop();
-            }
-            bylo = true;
-            MenuViewModel menuViewModel = new MenuViewModel();
-        MenuView menuView = new MenuView(menuViewModel, stage);
-        Scene scene = new Scene(menuView, 1000, 800);
-        scene.getRoot().setStyle("-fx-background-color: thistle;");
-        stage.setScene(scene);
-        stage.setTitle("Set");
-        stage.show();
-
-        menuView.display();
-        });
 
         getChildren().add(buttonsPane);
-        getChildren().add(xorButton);
-        getChildren().add(menuButton);
     }
-
 }

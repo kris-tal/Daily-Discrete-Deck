@@ -10,7 +10,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
-
 import java.util.ArrayList;
 
 public class CardView extends Pane {

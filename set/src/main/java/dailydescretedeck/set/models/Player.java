@@ -1,34 +1,37 @@
 package dailydescretedeck.set.models;
 
 import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
-import dailydescretedeck.set.views.carddesignes.EmoCardDesign;
-import dailydescretedeck.set.views.carddesignes.JHCardDesign;
 
 public class Player {
     private final String username;
-    private final int password;      //to tam sie potem zhaszuje zamiast trzymac w stringu
+    private final String password;
     private int OOPoints;
-    private static CardDesign cardDesignInUse;
+    private int money;
+    private CardDesign cardDesignInUse;
 
-    public Player(String username, int pwd) {
+    private static int playersCount = 0;
+
+    public Player(String username, String pwd) {
         this.username = username;
         this.password = pwd;
-        this.cardDesignInUse = new DefaultCardDesign(); //new JHCardDesign();
+        this.cardDesignInUse = new DefaultCardDesign();
+        this.money = 1000;
+        playersCount++;
     }
 
-    public Player(int points, String username, int pwd) {
+    public Player(int points, String username, String pwd) {
         this.OOPoints = points;
         this.username = username;
         this.password = pwd;
+        this.money = 1000;
+        playersCount++;
     }
-
-    //moze trzeba nadpisac finalize ale nie wiem
 
     public String getUsername() {
         return username;
     }
 
-    public int getPassword() {
+    public String getPassword() {
         return password;
     }
 
@@ -36,7 +39,7 @@ public class Player {
         return OOPoints;
     }
 
-    public static CardDesign getCardDesignInUse() {
+    public CardDesign getCardDesignInUse() {
         return cardDesignInUse;
     }
 
@@ -44,4 +47,19 @@ public class Player {
         this.OOPoints = points;
     }
 
+    public int getMoney() {
+        return money;
+    }
+
+    public void addMoney(int amount) {
+        this.money += amount;
+    }
+
+    public boolean spendMoney(int amount) {
+        if (money >= amount) {
+            this.money -= amount;
+            return true;
+        }
+        return false;
+    }
 }

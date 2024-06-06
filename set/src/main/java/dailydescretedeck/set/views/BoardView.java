@@ -162,14 +162,14 @@ public class BoardView extends Pane {
             }
         }
 
-        Button button1 = new Button("Surrender");
-        Button button2 = new Button("Confirm");
-        Button button3 = new Button("Cancel");
-        Button button4 = new Button("XOR");
+        Button surrenderButton = new Button("Surrender");
+        Button confirmButton = new Button("Confirm");
+        Button cancelButton = new Button("Cancel");
+        Button xorButton = new Button("XOR");
         Button backButton = new Button("Back to Menu");
 
         Pane buttonsPane = new Pane();
-        buttonsPane.getChildren().addAll(button1, button2, button3, button4, backButton);
+        buttonsPane.getChildren().addAll(surrenderButton, confirmButton, cancelButton, xorButton, backButton);
         buttonsPane.setPrefWidth(bigRectWidth);
         buttonsPane.setLayoutX(bigRectX);
         buttonsPane.setLayoutY(bigRectY + bigRectHeight + gap);
@@ -177,36 +177,36 @@ public class BoardView extends Pane {
         double buttonWidth = (bigRectWidth - 50) / 5;
         double buttonHeight = bigRectHeight / 10;
 
-        button1.setLayoutX(10);
-        button1.setLayoutY(0);
-        button1.setPrefWidth(buttonWidth);
-        button1.setPrefHeight(buttonHeight);
-        button1.setFont(Font.font("System", gap * 1.8));
-        button1.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        surrenderButton.setLayoutX(10);
+        surrenderButton.setLayoutY(0);
+        surrenderButton.setPrefWidth(buttonWidth);
+        surrenderButton.setPrefHeight(buttonHeight);
+        surrenderButton.setFont(Font.font("System", gap * 1.8));
+        surrenderButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
-        button2.setLayoutX(20 + buttonWidth);
-        button2.setLayoutY(0);
-        button2.setPrefWidth(buttonWidth);
-        button2.setPrefHeight(buttonHeight);
-        button2.setFont(Font.font("System", gap * 1.8));
-        button2.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        confirmButton.setLayoutX(20 + buttonWidth);
+        confirmButton.setLayoutY(0);
+        confirmButton.setPrefWidth(buttonWidth);
+        confirmButton.setPrefHeight(buttonHeight);
+        confirmButton.setFont(Font.font("System", gap * 1.8));
+        confirmButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
-        button3.setLayoutX(30 + 2 * buttonWidth);
-        button3.setLayoutY(0);
-        button3.setPrefWidth(buttonWidth);
-        button3.setPrefHeight(buttonHeight);
-        button3.setFont(Font.font("System", gap * 1.8));
-        button3.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        cancelButton.setLayoutX(30 + 2 * buttonWidth);
+        cancelButton.setLayoutY(0);
+        cancelButton.setPrefWidth(buttonWidth);
+        cancelButton.setPrefHeight(buttonHeight);
+        cancelButton.setFont(Font.font("System", gap * 1.8));
+        cancelButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
-        button4.setLayoutX(40 + 3 * buttonWidth);
-        button4.setLayoutY(0);
-        button4.setPrefWidth(buttonWidth);
-        button4.setPrefHeight(buttonHeight);
-        button4.setFont(Font.font("System", gap * 1.8));
-        button4.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        xorButton.setLayoutX(paneWidth - buttonWidth / 2 - gap);
+        xorButton.setLayoutY(gap);
+        xorButton.setPrefWidth(buttonWidth / 2);
+        xorButton.setPrefHeight(buttonHeight);
+        xorButton.setFont(Font.font("System", gap * 1.6));
+        xorButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
 
-        backButton.setLayoutX(50 + 4 * buttonWidth);
-        backButton.setLayoutY(0);
+        backButton.setLayoutX(paneWidth - buttonWidth - gap); 
+        backButton.setLayoutY(paneHeight - buttonHeight - gap); 
         backButton.setPrefWidth(buttonWidth);
         backButton.setPrefHeight(buttonHeight);
         backButton.setFont(Font.font("System", gap * 1.8));
@@ -219,7 +219,7 @@ public class BoardView extends Pane {
             onBackToMenu.run();
         } );
 
-        button1.setOnAction(event -> {
+        surrenderButton.setOnAction(event -> {
             if (timeline != null) {
                 timeline.stop();
             }
@@ -241,7 +241,7 @@ public class BoardView extends Pane {
             alert.showAndWait();
         });
 
-        button2.setOnAction(event -> {
+        confirmButton.setOnAction(event -> {
             if (viewModel.isSetOk(selectedCards)) {
                 boolean ok = viewModel.removeCards(selectedCards);
                 SetCollector setCollector = SetCollector.getInstance();
@@ -286,7 +286,7 @@ public class BoardView extends Pane {
             }
         });
 
-        button3.setOnAction(event -> {
+        cancelButton.setOnAction(event -> {
             for (Card card : viewModel.cardsProperty()) {
                 CardView cardView = cardViews.get(card);
                 cardView.unclick();
@@ -295,17 +295,19 @@ public class BoardView extends Pane {
             selectedCards.clear();
         });
 
-        button4.setOnAction(event -> {
+        xorButton.setOnAction(event -> {
             Card card = viewModel.getXor(selectedCards);
-            CardView cardView = new CardView(card, 0, 0, square / 60);
+            CardView cardView = new CardView(card, 0, 0, square/(2 * 60));
             cardView.disableThisCard();
             StackPane cardPane = new StackPane();
             cardPane.getChildren().add(cardView);
-            cardPane.setLayoutX(bigRectX + bigRectWidth + gap);
+            cardPane.setLayoutX(paneWidth - buttonWidth / 2 - gap);
             cardPane.setLayoutY(gap + buttonHeight + gap);
             getChildren().add(cardPane);
         });
 
         getChildren().add(buttonsPane);
+        getChildren().add(xorButton);
+        getChildren().add(backButton);
     }
 }

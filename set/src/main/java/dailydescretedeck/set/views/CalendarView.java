@@ -17,6 +17,7 @@ public class CalendarView extends StackPane {
     private Label monthYearLabel;
     private Map<java.time.LocalDate, Long> setsMap = new HashMap<>();
     private Map<java.time.LocalDate, Long> endsMap = new HashMap<>();
+    private Map<java.time.LocalDate, Long> timeMap = new HashMap<>();
 
     public CalendarView() {
         this.calendarViewModel = new CalendarViewModel();
@@ -42,14 +43,14 @@ public class CalendarView extends StackPane {
         }
 
         java.time.LocalDate startDate = yearMonth.atDay(1);
-        int startDayOfWeek = startDate.getDayOfWeek().getValue() % 7;
+        int startDayOfWeek = startDate.getDayOfWeek().getValue() - 1;
         int daysInMonth = yearMonth.lengthOfMonth();
 
         for (int dayOfMonth = 1; dayOfMonth <= daysInMonth; dayOfMonth++) {
             java.time.LocalDate date = yearMonth.atDay(dayOfMonth);
             Long sets = setsMap.getOrDefault(date, (long) 0);
             Long ends = endsMap.getOrDefault(date, (long) 0);
-            DayPane dayPane = new DayPane(dayOfMonth, sets, ends);
+            DayPane dayPane = new DayPane(dayOfMonth, sets.longValue(), ends.longValue());
 
             int column = (startDayOfWeek + dayOfMonth - 1) % 7;
             int row = (startDayOfWeek + dayOfMonth - 1) / 7 + 1;

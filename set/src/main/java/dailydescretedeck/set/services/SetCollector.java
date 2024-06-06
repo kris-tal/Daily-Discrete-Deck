@@ -20,7 +20,7 @@ public class SetCollector {
         return instance;
     }
 
-    public void addSets(int sets) {
+    public void addSets(long sets) {
         this.sets += sets;
         SavingService.saveNumberToFile("setsCollected.txt", ", Sets Collected: ", sets);
     }

@@ -44,7 +44,7 @@ public class SavingService {
         return map;
     }
 
-    public static Long loadNumberFromFile(String fileName) {
+    public static long loadNumberFromFile(String fileName) {
         Path path = Paths.get(fileName);
         if (Files.exists(path)) {
             try {
@@ -57,7 +57,7 @@ public class SavingService {
                 e.printStackTrace();
             }
         }
-        return null;
+        return 0;
     }
 
     public static void saveNumberToFile(String fileName, String text, long number) {

@@ -24,7 +24,7 @@ public class End {
         return instance;
     }
 
-    public void addEnds(int ends) {
+    public void addEnds(long ends) {
         this.ends += ends;
         SavingService.saveNumberToFile("ends.txt", ", Ends: ", ends);
     }

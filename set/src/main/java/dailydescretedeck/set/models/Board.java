@@ -1,8 +1,5 @@
 package dailydescretedeck.set.models;
 
-import javafx.scene.control.Alert;
-import javafx.stage.Modality;
-
 import java.util.ArrayList;
 import java.util.List;
 

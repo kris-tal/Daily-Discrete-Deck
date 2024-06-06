@@ -19,17 +19,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Double.min;

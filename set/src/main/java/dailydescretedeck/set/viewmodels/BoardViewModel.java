@@ -6,7 +6,6 @@ import dailydescretedeck.set.models.CardManager;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.util.List;
 

@@ -2,7 +2,6 @@ package dailydescretedeck.set;
 
 import dailydescretedeck.set.models.Player;
 import dailydescretedeck.set.models.SimpleBoardState;
-import dailydescretedeck.set.viewmodels.PlayViewModel;
 import dailydescretedeck.set.viewmodels.ProfileViewModel;
 import dailydescretedeck.set.viewmodels.StoreViewModel;
 import dailydescretedeck.set.views.MenuView;

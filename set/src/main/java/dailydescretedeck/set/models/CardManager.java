@@ -1,9 +1,8 @@
 package dailydescretedeck.set.models;
 
-import javafx.scene.control.Alert;
-import javafx.stage.Modality;
-
 import java.util.*;
+
+import dailydescretedeck.set.services.Feature;
 
 public class CardManager {
     private Board board;
@@ -46,7 +45,7 @@ public class CardManager {
 
     public List<Card> getSet() {
         List<List<Card>> combinations = new ArrayList<>();
-        fillCombinations(combinations, new ArrayList<>(), board.getCards(), 0);
+        Feature.fill(combinations, new ArrayList<>(), board.getCards(), 0);
         for (List<Card> combination : combinations) {
             if (isSetOk(combination) && combination.size() == 3) {
                 return combination;
@@ -81,30 +80,9 @@ public class CardManager {
         }
         if (board.getCards().isEmpty()) {
             return false;
-            /*
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Koniec gry");
-            alert.setHeaderText(null);
-            alert.setContentText("Wygrałeś!");
-            alert.initModality(Modality.APPLICATION_MODAL);
-            alert.showAndWait();
-
-             */
         }
         else {
             return true;
-        }
-    }
-
-    private void fillCombinations(List<List<Card>> combinations, List<Card> current, List<Card> cards, int start) {
-        for (int i = start; i < cards.size(); i++) {
-            current.add(cards.get(i));
-            if (current.size() == 3) {
-                combinations.add(new ArrayList<>(current));
-            } else {
-                fillCombinations(combinations, current, cards, i + 1);
-            }
-            current.remove(current.size() - 1);
         }
     }
 }

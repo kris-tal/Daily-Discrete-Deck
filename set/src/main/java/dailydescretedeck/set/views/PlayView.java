@@ -2,7 +2,6 @@ package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.BoardState;
 import dailydescretedeck.set.viewmodels.BoardViewModel;
-import dailydescretedeck.set.viewmodels.PlayViewModel;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

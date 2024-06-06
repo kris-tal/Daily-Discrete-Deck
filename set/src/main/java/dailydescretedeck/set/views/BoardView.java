@@ -1,7 +1,13 @@
 package dailydescretedeck.set.views;
 
+import dailydescretedeck.set.models.Calendar;
 import dailydescretedeck.set.models.Card;
+import dailydescretedeck.set.services.End;
+import dailydescretedeck.set.services.SetCollector;
 import dailydescretedeck.set.viewmodels.BoardViewModel;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -15,11 +21,20 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.Double.min;
+import java.time.LocalDate;
+import javafx.util.Duration;
 
 public class BoardView extends Pane {
     private BoardViewModel viewModel;
@@ -27,6 +42,9 @@ public class BoardView extends Pane {
     private ObservableList<Card> selectedCards = FXCollections.observableArrayList();
     private Map<Card, CardView> cardViews = new HashMap<>();
     private Runnable onBackToMenu;
+    private static  long startTime = System.currentTimeMillis();
+    private static Timeline timeline;
+    private static boolean bylo = false;
 
     public BoardView(BoardViewModel viewModel, Runnable onBackToMenu) {
         this.viewModel = viewModel;
@@ -39,6 +57,12 @@ public class BoardView extends Pane {
 
     private void redrawBoard() {
         getChildren().clear();
+
+        if(bylo)
+        {
+            startTime = System.currentTimeMillis();
+            bylo = false;
+        }
 
         double paneWidth = getWidth();
         double paneHeight = getHeight();
@@ -66,8 +90,30 @@ public class BoardView extends Pane {
         double startX = bigRectX + gap;
         double startY = bigRectY + gap / 2;
 
-        int numberCards = viewModel.cardsProperty().size();
+        int numberCards = viewModel.leftCards();
         Font font = new Font("Comic Sans MS", gap * 2);
+
+        Label timeLabel = new Label();
+        timeLabel.setFont(font);
+        timeLabel.setLayoutX(gap);
+        timeLabel.setLayoutY(gap * 7); 
+        getChildren().add(timeLabel);
+
+        Runnable updateTime = () -> {
+            long time = System.currentTimeMillis() - startTime;
+            String timeString = String.format("%02d:%02d", 
+                TimeUnit.MILLISECONDS.toMinutes(time),
+                TimeUnit.MILLISECONDS.toSeconds(time) % 60);
+            timeLabel.setText("time: " + timeString);
+        };
+        
+        updateTime.run();
+        
+        Platform.runLater(() -> {
+            timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateTime.run())); 
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.play();
+        });
 
         Label label1 = new Label("Cards left: " + numberCards + "/63");
         label1.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
@@ -165,9 +211,19 @@ public class BoardView extends Pane {
         backButton.setPrefHeight(buttonHeight);
         backButton.setFont(Font.font("System", gap * 1.8));
         backButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        backButton.setOnAction(event -> onBackToMenu.run());
+        backButton.setOnAction(event ->{
+            if (timeline != null) {
+                timeline.stop();
+            }
+            bylo = true;
+            onBackToMenu.run();
+        } );
 
         button1.setOnAction(event -> {
+            if (timeline != null) {
+                timeline.stop();
+            }
+
             selectedCards.clear();
             selectedCards.addAll(viewModel.getNotSet());
 
@@ -188,7 +244,23 @@ public class BoardView extends Pane {
         button2.setOnAction(event -> {
             if (viewModel.isSetOk(selectedCards)) {
                 boolean ok = viewModel.removeCards(selectedCards);
+                SetCollector setCollector = SetCollector.getInstance();
+                setCollector.addSets(1);
+                System.out.println("Zapisano ilość zebranych SETów: " + setCollector.getSets());
+
+                Map<LocalDate, Integer> setsMap = Calendar.getSetsMap();
+                setsMap.put(LocalDate.now(), setCollector.getSets());
+                Calendar.setSetsMap(setsMap);
+        
+                System.out.println("Znaleziono SET");
                 if(!ok){
+                    if (timeline != null) {
+                        timeline.stop();
+                    }
+                    End.getInstance().addEnds(1);
+                    Map<LocalDate, Integer> endsMap = Calendar.getEndsMap();
+                    endsMap.put(LocalDate.now(), End.getInstance().getEnds());
+                     Calendar.setEndsMap(endsMap);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Koniec gry");
                     alert.setHeaderText(null);
@@ -197,10 +269,20 @@ public class BoardView extends Pane {
                     alert.showAndWait();
                 }
 
-                redrawBoard();
+                BoardView newBoardView = new BoardView(viewModel, onBackToMenu);
+                StackPane parent = (StackPane) getParent();
+                parent.getChildren().remove(this);
+                parent.getChildren().add(newBoardView);
                 CardView.enableCards();
                 selectedCards.clear();
             } else {
+                System.out.println("Nie znaleziono SET");
+                for(Card card : viewModel.cardsProperty()) {
+                    CardView cardView = cardViews.get(card);
+                    cardView.unclick();
+                }
+                CardView.enableCards();
+                selectedCards.clear();
             }
         });
 

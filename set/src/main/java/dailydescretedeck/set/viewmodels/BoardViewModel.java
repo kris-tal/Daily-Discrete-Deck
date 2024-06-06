@@ -25,6 +25,10 @@ public class BoardViewModel {
         return cards;
     }
 
+    public int leftCards() {
+        return board.getDeck().size() + cards.size();
+    }
+
     public void addCard(Card card) {
         board.addCard(card);
         cards.set(FXCollections.observableArrayList(board.getCards()));

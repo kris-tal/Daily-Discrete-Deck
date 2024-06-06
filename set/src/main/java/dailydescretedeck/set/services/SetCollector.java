@@ -1,65 +1,32 @@
 package dailydescretedeck.set.services;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
 import java.time.*;
-import java.util.*;
 import java.util.concurrent.*;
 
 public class SetCollector {
     private static SetCollector instance;
-    private int sets;
+    private long sets;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     private SetCollector() {
-        sets = loadSetsFromFile();
+        sets = SavingService.loadNumberFromFile("setsCollected.txt");
         resetSetsAtMidnight();
     }
 
     public static SetCollector getInstance() {
         if (instance == null) {
             instance = new SetCollector();
-            instance.sets = instance.loadSetsFromFile();
+            instance.sets = SavingService.loadNumberFromFile("setsCollected.txt");
         }
         return instance;
     }
 
     public void addSets(int sets) {
         this.sets += sets;
-        saveSetsToFile();
+        SavingService.saveNumberToFile("setsCollected.txt", ", Sets Collected: ", sets);
     }
 
-    public int getSets() {
+    public long getSets() {
         return sets;
-    }
-
-    private int loadSetsFromFile() {
-        String fileName = "setsCollected.txt";
-        Path path = Paths.get(fileName);
-        if (Files.exists(path)) {
-            try {
-                List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
-                if (!lines.isEmpty()) {
-                    String[] parts = lines.get(0).split(", ");
-                    return Integer.parseInt(parts[1].substring(16));
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return 0;
-    }
-
-    private void saveSetsToFile() {
-        LocalDate currentDate = LocalDate.now();
-        String fileName = "setsCollected.txt";
-        Path path = Paths.get(fileName);
-        String dataToWrite = "Date: " + currentDate + ", Sets Collected: " + sets;
-        try {
-            Files.write(path, Collections.singletonList(dataToWrite), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void resetSetsAtMidnight() {
@@ -70,7 +37,7 @@ public class SetCollector {
 
         scheduler.scheduleAtFixedRate(() -> {
             sets = 0;
-            saveSetsToFile();
+            SavingService.saveNumberToFile("setsCollected.txt", ", Sets Collected: ", sets);
         }, initialDelay, TimeUnit.DAYS.toSeconds(1), TimeUnit.SECONDS);
     }
 }

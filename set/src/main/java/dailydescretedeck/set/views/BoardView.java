@@ -241,7 +241,7 @@ public class BoardView extends Pane {
                 setCollector.addSets(1);
                 System.out.println("Zapisano ilość zebranych SETów: " + setCollector.getSets());
 
-                Map<LocalDate, Integer> setsMap = Calendar.getSetsMap();
+                Map<LocalDate, Long> setsMap = Calendar.getSetsMap();
                 setsMap.put(LocalDate.now(), setCollector.getSets());
                 Calendar.setSetsMap(setsMap);
         
@@ -251,7 +251,7 @@ public class BoardView extends Pane {
                         timeline.stop();
                     }
                     End.getInstance().addEnds(1);
-                    Map<LocalDate, Integer> endsMap = Calendar.getEndsMap();
+                    Map<LocalDate, Long> endsMap = Calendar.getEndsMap();
                     endsMap.put(LocalDate.now(), End.getInstance().getEnds());
                      Calendar.setEndsMap(endsMap);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);

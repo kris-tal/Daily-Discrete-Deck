@@ -14,7 +14,7 @@ import javafx.scene.text.FontWeight;
 public class DayPane extends StackPane {
     private VBox data;
 
-    private Color chooseColor(int sets) {
+    private Color chooseColor(long sets) {
         if(sets == 0) return Color.WHITE;
         if(sets < 4) return Color.rgb(210,230,181);
         if(sets < 8) return Color.rgb(177,207,134);
@@ -25,7 +25,7 @@ public class DayPane extends StackPane {
         return Color.rgb(43, 61, 15);
     }
 
-    public DayPane(int dayOfMonth, int sets, int ends) {
+    public DayPane(int dayOfMonth, long sets, long ends) {
 
         Label dateLabel = new Label(Integer.toString(dayOfMonth));
         dateLabel.setFont(Font.font("System Bold", FontWeight.BOLD, 15));

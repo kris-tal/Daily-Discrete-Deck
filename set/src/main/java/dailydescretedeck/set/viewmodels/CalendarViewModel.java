@@ -21,11 +21,11 @@ public class CalendarViewModel {
         calendar.setCurrentYearMonth(currentYearMonth);
     }
 
-    public Map<LocalDate, Integer> getSetsMap() {
+    public Map<LocalDate, Long> getSetsMap() {
         return calendar.getSetsMap();
     }
 
-    public Map<LocalDate, Integer> getEndsMap() {
+    public Map<LocalDate, Long> getEndsMap() {
         return calendar.getEndsMap();
     }
 }

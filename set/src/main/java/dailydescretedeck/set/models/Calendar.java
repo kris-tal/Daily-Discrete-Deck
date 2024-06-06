@@ -9,13 +9,13 @@ import java.util.Map;
 
 public class Calendar {
     private YearMonth currentYearMonth;
-    private static Map<LocalDate, Integer> setsMap = new HashMap<>();
-    private static Map<LocalDate, Integer> endsMap = new HashMap<>();
+    private static Map<LocalDate, Long> setsMap = new HashMap<>();
+    private static Map<LocalDate, Long> endsMap = new HashMap<>();
 
     public Calendar() {
         this.currentYearMonth = YearMonth.now();
-        SavingService.loadMapFromFile("setsMap.txt", setsMap);
-        SavingService.loadMapFromFile("endsMap.txt", endsMap);
+        setsMap = SavingService.loadMapFromFile("setsMap.txt");
+        endsMap = SavingService.loadMapFromFile("endsMap.txt");
     }
 
     public YearMonth getCurrentYearMonth() {
@@ -26,19 +26,19 @@ public class Calendar {
         this.currentYearMonth = currentYearMonth;
     }
 
-    public static Map<LocalDate, Integer> getSetsMap() {
+    public static Map<LocalDate, Long> getSetsMap() {
         return setsMap;
     }
 
-    public static Map<LocalDate, Integer> getEndsMap() {
+    public static Map<LocalDate, Long> getEndsMap() {
         return endsMap;
     }
-    public static void setSetsMap(Map<LocalDate, Integer> setsMap) {
+    public static void setSetsMap(Map<LocalDate, Long> setsMap) {
         Calendar.setsMap = setsMap;
         SavingService.saveMapToFile("setsMap.txt", setsMap);
     }
-    public static void setEndsMap(Map<LocalDate, Integer> endsMap) {
+    public static void setEndsMap(Map<LocalDate, Long> endsMap) {
         Calendar.endsMap = endsMap;
-        SavingService.loadMapFromFile("endsMap.txt", endsMap);
+        SavingService.saveMapToFile("endsMap.txt", endsMap);
     }
 }

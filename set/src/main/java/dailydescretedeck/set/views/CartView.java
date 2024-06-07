@@ -13,11 +13,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class CartView extends Pane {
-    private BuyCardsViewModel viewModel;
+    private BuyCardsViewModel buyCardsviewModel;
     private Scenes scenes;
 
     public CartView(BuyCardsViewModel viewModel) {
-        this.viewModel = viewModel;
+        this.buyCardsviewModel = viewModel;
         this.scenes = new Scenes();
         setPrefSize(400, 600);
         initialize();
@@ -29,8 +29,8 @@ public class CartView extends Pane {
         Label titleLabel = new Label("Cart");
         titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
-        ListView<Product> cartListView = new ListView<>(viewModel.getCartItems());
-        cartListView.setCellFactory(param -> new ProductCell(viewModel));
+        ListView<Product> cartListView = new ListView<>(buyCardsviewModel.getCartItems());
+        cartListView.setCellFactory(parameter -> new ProductCell(buyCardsviewModel));
 
         Button backButton = new Button("Back");
         backButton.setOnAction(event -> scenes.showBuyCardsView());

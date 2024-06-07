@@ -123,19 +123,25 @@ public class StoreView extends Pane {
 
         getChildren().addAll(backButton);
 
-        for (int i = 0; i < 6; i++) {
-            Button categoryButton = new Button("Category " + (i + 1));
-            categoryButton.setLayoutX(startX + (i % 3) * (bigRectWidth / 3));
-            categoryButton.setLayoutY(startY + (i / 3) * (bigRectHeight / 2));
-            categoryButton.setPrefSize(bigRectWidth / 3 - gap, bigRectHeight / 2 - gap);
-            categoryButton.setFont(Font.font("System", 18));
-            categoryButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 10;");
-            final int categoryIndex = i;
-            if (categoryIndex == 0) {
-                categoryButton.setOnAction(event -> scenes.showBuyCardsView());   //dodac playera
-            }
-            getChildren().add(categoryButton);
-        }
+
+        Button categoryButton = new Button("Category " + (0 + 1));
+        categoryButton.setLayoutX(startX + (0 % 3) * (bigRectWidth / 3));
+        categoryButton.setLayoutY(startY + (0 / 3) * (bigRectHeight / 2));
+        categoryButton.setPrefSize(bigRectWidth / 3 - gap, bigRectHeight / 2 - gap);
+        categoryButton.setFont(Font.font("System", 18));
+        categoryButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 10;");
+        categoryButton.setOnAction(event -> scenes.showBuyCardsView());   //dodac playera
+        getChildren().add(categoryButton);
+
+        Button categoryButton2 = new Button("Category " + (1 + 1));
+        categoryButton2.setLayoutX(startX + (1 % 3) * (bigRectWidth / 3));
+        categoryButton2.setLayoutY(startY + (1 / 3) * (bigRectHeight / 2));
+        categoryButton2.setPrefSize(bigRectWidth / 3 - gap, bigRectHeight / 2 - gap);
+        categoryButton2.setFont(Font.font("System", 18));
+        categoryButton2.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 10;");
+        categoryButton2.setOnAction(event -> scenes.showBuyCardsView());   //dodac playera
+        getChildren().add(categoryButton2);
+
     }
 
 //    private void openCartView() {

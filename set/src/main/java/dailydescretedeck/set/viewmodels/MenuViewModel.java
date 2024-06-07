@@ -1,12 +1,14 @@
 package dailydescretedeck.set.viewmodels;
 
-public class MenuViewModel {
-    private Runnable showPlayView;
-    private Runnable showStoreView;
+import dailydescretedeck.set.models.Player;
 
-    public MenuViewModel(Runnable showPlayView, Runnable showStoreView) {
-        this.showPlayView = showPlayView;
-        this.showStoreView = showStoreView;
+public class MenuViewModel {
+    private Scenes scenes;
+    private Player player;
+
+    public MenuViewModel(Player player) {
+        scenes = new Scenes();
+        this.player = player;
     }
 
     public enum MenuOptions {
@@ -19,16 +21,15 @@ public class MenuViewModel {
     public void handleInput(MenuOptions option) {
         switch (option) {
             case PLAY:
-                showPlayView.run();
+                scenes.showPlayView();
                 break;
             case PROFILE:
-                // Implement profile
+                scenes.showProfileView();
                 break;
             case STORE:
-                showStoreView.run();
+                scenes.showStoreView(player);
                 break;
             case INSTRUCTIONS:
-                // Implement instructions
                 break;
         }
     }

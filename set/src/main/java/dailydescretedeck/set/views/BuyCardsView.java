@@ -35,7 +35,7 @@ public class BuyCardsView extends Pane {
     private int currentPage = 0;
     private final int itemsPerPage = 6;
 
-    public BuyCardsView(BuyCardsViewModel viewModel, StoreViewModel storeViewModel, Stage stage, Runnable backToStore) {
+    public BuyCardsView(BuyCardsViewModel viewModel, StoreViewModel storeViewModel) {
         this.viewModel = viewModel;
         this.storeViewModel = storeViewModel;
         this.stage = stage;
@@ -171,13 +171,13 @@ public class BuyCardsView extends Pane {
     }
 
     private void openCartView() {
-        CartView cartView = new CartView(storeViewModel, stage, this::goBackToBuyCards);
+        CartView cartView = new CartView(storeViewModel);
         Scene scene = new Scene(cartView, 400, 600);
         stage.setScene(scene);
     }
 
     private void goBackToBuyCards() {
-        Scene scene = new Scene(new BuyCardsView(viewModel, storeViewModel, stage, backToStore), getWidth(), getHeight());
+        Scene scene = new Scene(new BuyCardsView(viewModel, storeViewModel), getWidth(), getHeight());
         stage.setScene(scene);
     }
 

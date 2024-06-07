@@ -5,24 +5,20 @@ import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
 
 public class Player {
     private final String username;
-    private int OOPoints;
-    private int money;
+    private static int OOPoints;
+    private static int money;
     private CardDesign cardDesignInUse;
-
-    private static int playersCount = 0;
 
     public Player(String username) {
         this.username = username;
         this.cardDesignInUse = new DefaultCardDesign();
         this.money = 1000;
-        playersCount++;
     }
 
     public Player(int points, String username, String pwd) {
         this.OOPoints = points;
         this.username = username;
         this.money = 1000;
-        playersCount++;
     }
 
     public String getUsername() {

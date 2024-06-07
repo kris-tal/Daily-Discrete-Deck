@@ -40,10 +40,10 @@ public class Set extends Application {
             SavingService.saveNameToFile("name.txt", name); 
         });
         }
-        //this.player = new Player(playerName.getName());
-       // Scenes.setPrimaryStage(primaryStage);
-        //Scenes scenes = new Scenes();
-        //scenes.showMenuView();
+        this.player = new Player(playerName.getName());
+        Scenes.setPrimaryStage(primaryStage);
+        Scenes scenes = new Scenes();
+        scenes.showMenuView();
     }
 
     public static void main(String[] args) {

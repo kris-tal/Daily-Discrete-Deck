@@ -15,7 +15,6 @@ public class Scenes {
         MenuViewModel menuViewModel = new MenuViewModel();
         MenuView menuView = new MenuView(menuViewModel);
         Scene scene = new Scene(menuView, 1000, 800);
-        scene.setFill(Color.THISTLE);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Menu");
         primaryStage.show();
@@ -25,7 +24,6 @@ public class Scenes {
         SimpleBoardState boardState = new SimpleBoardState(7);
         PlayView playView = new PlayView(boardState);
         Scene scene = new Scene(playView, 1000, 800);
-        scene.setFill(Color.THISTLE);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Set");
     }
@@ -35,7 +33,6 @@ public class Scenes {
         ProfileViewModel profileViewModel = new ProfileViewModel();
         ProfileView profileView = new ProfileView(profileViewModel);
         Scene scene = new Scene(profileView, 1000, 800);
-        scene.setFill(Color.THISTLE);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Profile");
     }
@@ -44,7 +41,6 @@ public class Scenes {
         StoreViewModel storeViewModel = new StoreViewModel(player);
         StoreView storeView = new StoreView(storeViewModel);
         Scene scene = new Scene(storeView, 1000, 800);
-        scene.setFill(Color.THISTLE);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Store");
     }
@@ -52,7 +48,6 @@ public class Scenes {
     public void showCartView(BuyCardsViewModel buyCardsViewModel) {
         CartView cartView = new CartView(buyCardsViewModel);
         Scene scene = new Scene(cartView, 400, 600);
-        scene.setFill(Color.THISTLE);
         primaryStage.setScene(scene);
     }
 

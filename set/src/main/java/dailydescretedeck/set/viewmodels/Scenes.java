@@ -4,6 +4,7 @@ import dailydescretedeck.set.models.Player;
 import dailydescretedeck.set.models.SimpleBoardState;
 import dailydescretedeck.set.views.*;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Scenes {
@@ -53,6 +54,7 @@ public class Scenes {
     public void showBuyCardsView() {
         BuyCardsViewModel buyCardsViewModel = new BuyCardsViewModel();
         BuyCardsView buyCardsView = new BuyCardsView(buyCardsViewModel);
+
         Scene scene = new Scene(buyCardsView, 1000, 800);
         primaryStage.setScene(scene);
     }

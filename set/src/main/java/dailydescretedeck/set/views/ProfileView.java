@@ -1,6 +1,7 @@
 package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.viewmodels.ProfileViewModel;
+import dailydescretedeck.set.viewmodels.Scenes;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -16,15 +18,15 @@ import java.time.YearMonth;
 
 public class ProfileView extends StackPane {
     private final ProfileViewModel profileViewModel;
-    private Runnable onMenu;
     private YearMonth currentYearMonth;
     private Label monthYearLabel;
+    private Scenes scenes;
 
-    public ProfileView(ProfileViewModel pvm, Runnable onMenu) {
+    public ProfileView(ProfileViewModel pvm) {
         this.profileViewModel = pvm;
-        this.onMenu = onMenu;
         this.currentYearMonth = YearMonth.now();
         this.monthYearLabel = new Label();
+        this.scenes = new Scenes();
         initializeComponents();
     }
 
@@ -35,16 +37,16 @@ public class ProfileView extends StackPane {
         CalendarView calendarView = new CalendarView();
         VBox calendarContainer = new VBox(calendarView);
         calendarContainer.setSpacing(10);
-        calendarContainer.setAlignment(Pos.CENTER);
+        calendarContainer.setAlignment(Pos.TOP_CENTER);
 
         Button backButton = new Button("Back to Menu");
-        backButton.setOnAction(event -> onMenu.run());
+        backButton.setOnAction(event -> scenes.showMenuView());
 
         ToolBar toolBar = createNavigationBar(calendarView);
 
         VBox layout = new VBox(headerLabel, toolBar, calendarContainer, backButton);
         layout.setSpacing(20);
-        layout.setAlignment(Pos.CENTER);
+        layout.setAlignment(Pos.TOP_CENTER);
         layout.setPadding(new Insets(30));
         getChildren().add(layout);
     }
@@ -73,6 +75,7 @@ public class ProfileView extends StackPane {
 
     public void display(Stage stage) {
         Scene scene = new Scene(this, stage.getWidth(), stage.getHeight());
+        scene.setFill(Color.THISTLE);
         scene.getRoot().setStyle("-fx-background-color: thistle;");
         stage.setScene(scene);
         stage.setTitle("Profile");

@@ -12,10 +12,10 @@ public class PlayView extends StackPane {
     private final BoardView boardView;
     private Runnable onMenu;
 
-    public PlayView(BoardState boardState, Runnable onMenu) {
+    public PlayView(BoardState boardState) {
         BoardViewModel boardViewModel = new BoardViewModel(boardState.getBoard());
-        this.boardView = new BoardView(boardViewModel, onMenu);
-        this.onMenu = onMenu;
+        this.boardView = new BoardView(boardViewModel); //onMenu
+        //this.onMenu = onMenu;
 
         initializeComponents();
     }

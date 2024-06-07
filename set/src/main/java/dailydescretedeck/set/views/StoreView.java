@@ -32,7 +32,7 @@ public class StoreView extends Pane {
     private Map<Product, ProductCell> productCells = new HashMap<>();
     private Runnable backToMenu;
 
-    public StoreView(StoreViewModel viewModel, Stage stage, Runnable backToMenu) {
+    public StoreView(StoreViewModel viewModel) {
         this.viewModel = viewModel;
         this.stage = stage;
         this.backToMenu = backToMenu;
@@ -134,20 +134,20 @@ public class StoreView extends Pane {
     }
 
     private void openCartView() {
-        CartView cartView = new CartView(viewModel, stage, this::goBackToStore);
+        CartView cartView = new CartView(viewModel);
         Scene scene = new Scene(cartView, 400, 600);
         stage.setScene(scene);
     }
 
     private void openBuyCardsView() {
         BuyCardsViewModel buyCardsViewModel = new BuyCardsViewModel();
-        BuyCardsView buyCardsView = new BuyCardsView(buyCardsViewModel, viewModel, stage, this::goBackToStore);
+        BuyCardsView buyCardsView = new BuyCardsView(buyCardsViewModel, viewModel);
         Scene scene = new Scene(buyCardsView, getWidth(), getHeight());
         stage.setScene(scene);
     }
 
     private void goBackToStore() {
-        Scene scene = new Scene(new StoreView(viewModel, stage, backToMenu), getWidth(), getHeight());
+        Scene scene = new Scene(new StoreView(viewModel), getWidth(), getHeight());
         stage.setScene(scene);
     }
 

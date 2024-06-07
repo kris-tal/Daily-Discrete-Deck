@@ -52,6 +52,8 @@ public class BoardView extends Pane {
     private void redrawBoard() {
         getChildren().clear();
 
+        setStyle("-fx-background-color: thistle;");
+
         if(bylo)
         {
             startTime = System.currentTimeMillis();

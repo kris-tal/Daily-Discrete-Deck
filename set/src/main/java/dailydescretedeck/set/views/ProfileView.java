@@ -1,5 +1,6 @@
 package dailydescretedeck.set.views;
 
+import dailydescretedeck.set.services.PlayerName;
 import dailydescretedeck.set.viewmodels.ProfileViewModel;
 import dailydescretedeck.set.viewmodels.Scenes;
 import javafx.geometry.Insets;
@@ -31,15 +32,17 @@ public class ProfileView extends StackPane {
     }
 
     private void initializeComponents() {
-        Label headerLabel = new Label("Profile");
-        headerLabel.setFont(Font.font("System Bold", 20));
+        Label headerLabel = new Label(new PlayerName().getName());
+        headerLabel.setFont(Font.font("System Bold", 35));
+
+        setStyle("-fx-background-color: thistle;");
 
         CalendarView calendarView = new CalendarView();
         VBox calendarContainer = new VBox(calendarView);
         calendarContainer.setSpacing(10);
         calendarContainer.setAlignment(Pos.TOP_CENTER);
 
-        Button backButton = new Button("Back to Menu");
+        Button backButton = new MyButton("Back to Menu");
         backButton.setOnAction(event -> scenes.showMenuView());
 
         ToolBar toolBar = createNavigationBar(calendarView);
@@ -69,16 +72,7 @@ public class ProfileView extends StackPane {
         monthYearLabel.setText(currentYearMonth.getMonth().getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.ENGLISH) + " " + currentYearMonth.getYear());
 
         ToolBar toolBar = new ToolBar(previousMonthButton, monthYearLabel, nextMonthButton);
-        toolBar.setStyle("-fx-background-color: thistle;");
+        toolBar.setStyle("-fx-background-color: #E6D4E6;");
         return toolBar;
-    }
-
-    public void display(Stage stage) {
-        Scene scene = new Scene(this, stage.getWidth(), stage.getHeight());
-        scene.setFill(Color.THISTLE);
-        scene.getRoot().setStyle("-fx-background-color: thistle;");
-        stage.setScene(scene);
-        stage.setTitle("Profile");
-        stage.show();
     }
 }

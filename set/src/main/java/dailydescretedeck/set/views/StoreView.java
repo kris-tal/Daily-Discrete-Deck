@@ -48,6 +48,8 @@ public class StoreView extends Pane {
     private void redrawStore() {
         getChildren().clear();
 
+        setStyle("-fx-background-color: thistle;");
+
         double paneWidth = getWidth();
         double paneHeight = getHeight();
 

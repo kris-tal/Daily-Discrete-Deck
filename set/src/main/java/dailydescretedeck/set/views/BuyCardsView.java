@@ -27,7 +27,6 @@ import static java.lang.Double.min;
 
 public class BuyCardsView extends Pane {
     private BuyCardsViewModel viewModel;
-    private Stage stage;
     private Scenes scenes;
     private double gap;
     private Map<Product, ProductView> productViews = new HashMap<>();
@@ -165,17 +164,6 @@ public class BuyCardsView extends Pane {
         });
 
         getChildren().addAll(backButton, cartButton, previousButton, nextButton);
-    }
-
-    private void openCartView() {
-        CartView cartView = new CartView(viewModel);
-        Scene scene = new Scene(cartView, 400, 600);
-        stage.setScene(scene);
-    }
-
-    private void goBackToBuyCards() {
-        Scene scene = new Scene(new BuyCardsView(viewModel), getWidth(), getHeight());
-        stage.setScene(scene);
     }
 
     private static class ProductView extends StackPane {

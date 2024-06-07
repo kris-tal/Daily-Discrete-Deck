@@ -18,6 +18,8 @@ public class MenuView extends VBox {
 
     private void initializeComponents() {
         System.out.println("MenuView");
+
+        setStyle("-fx-background-color: thistle;");
         Button playSetButton = new MyButton("START");
         playSetButton.setOnAction(event -> menuViewModel.handleInput(MenuViewModel.MenuOptions.PLAY));
 

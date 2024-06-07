@@ -61,13 +61,37 @@ public class SavingService {
     }
 
     public static void saveNumberToFile(String fileName, String text, long number) {
-        LocalDate currentDate = LocalDate.now();
         Path path = Paths.get(fileName);
-        String dataToWrite = "Date: " + currentDate + text + number;
+        String dataToWrite = text + number;
         try {
             Files.write(path, Collections.singletonList(dataToWrite), StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void saveNameToFile(String fileName, String text) {
+        Path path = Paths.get(fileName);
+        String dataToWrite = text;
+        try {
+            Files.write(path, Collections.singletonList(dataToWrite), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static String loadNameFromFile(String fileName) {
+        Path path = Paths.get(fileName);
+        if (Files.exists(path)) {
+            try {
+                List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+                if (!lines.isEmpty()) {
+                    return lines.get(0);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }

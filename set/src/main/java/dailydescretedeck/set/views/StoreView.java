@@ -75,31 +75,34 @@ public class StoreView extends Pane {
 
         Font font = new Font("Comic Sans MS", gap * 2);
 
+        /*
         Label storeLabel = new Label("Store");
         storeLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
         storeLabel.setLayoutX(gap);
         storeLabel.setLayoutY(gap);
         getChildren().add(storeLabel);
 
+         */
+
         Label totalCostLabel = new Label();
         totalCostLabel.textProperty().bind(storeViewModel.getTotalCost().asString("Total Cost: %d"));
         totalCostLabel.setFont(font);
         totalCostLabel.setLayoutX(gap);
-        totalCostLabel.setLayoutY(gap * 4);
+        totalCostLabel.setLayoutY(gap);
         getChildren().add(totalCostLabel);
 
         Label playerMoneyLabel = new Label();
         playerMoneyLabel.textProperty().bind(storeViewModel.getPlayerMoney().asString("Money: %d"));
         playerMoneyLabel.setFont(font);
         playerMoneyLabel.setLayoutX(gap);
-        playerMoneyLabel.setLayoutY(gap * 6);
+        playerMoneyLabel.setLayoutY(gap * 3.5);
         getChildren().add(playerMoneyLabel);
 
         Label selectedProductsLabel = new Label();
         selectedProductsLabel.textProperty().bind(storeViewModel.getSelectedProductsCount().asString("Selected Products: %d"));
         selectedProductsLabel.setFont(font);
         selectedProductsLabel.setLayoutX(gap);
-        selectedProductsLabel.setLayoutY(gap * 8);
+        selectedProductsLabel.setLayoutY(gap * 6);
         getChildren().add(selectedProductsLabel);
 
         Button backButton = new Button("Back to Menu");
@@ -126,23 +129,23 @@ public class StoreView extends Pane {
         getChildren().addAll(backButton);
 
 
-        Button categoryButton = new Button("Category " + (0 + 1));
-        categoryButton.setLayoutX(startX + (0 % 3) * (bigRectWidth / 3));
-        categoryButton.setLayoutY(startY + (0 / 3) * (bigRectHeight / 2));
-        categoryButton.setPrefSize(bigRectWidth / 3 - gap, bigRectHeight / 2 - gap);
-        categoryButton.setFont(Font.font("System", 18));
-        categoryButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 10;");
-        categoryButton.setOnAction(event -> scenes.showBuyCardsView());   //dodac playera
-        getChildren().add(categoryButton);
+        Button miniStoreButton = new Button("Buy Cards");
+        miniStoreButton.setLayoutX(startX );
+        miniStoreButton.setLayoutY(startY + (bigRectHeight / 6)  );
+        miniStoreButton.setPrefSize(1.4 * bigRectWidth / 3 - gap, 1.4 * bigRectHeight / 2 - gap);
+        miniStoreButton.setFont(Font.font("System", 18));
+        miniStoreButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 10;");
+        miniStoreButton.setOnAction(event -> scenes.showBuyCardsView());   //dodac playera
+        getChildren().add(miniStoreButton);
 
-        Button categoryButton2 = new Button("Category " + (1 + 1));
-        categoryButton2.setLayoutX(startX + (1 % 3) * (bigRectWidth / 3));
-        categoryButton2.setLayoutY(startY + (1 / 3) * (bigRectHeight / 2));
-        categoryButton2.setPrefSize(bigRectWidth / 3 - gap, bigRectHeight / 2 - gap);
-        categoryButton2.setFont(Font.font("System", 18));
-        categoryButton2.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 10;");
-        categoryButton2.setOnAction(event -> scenes.showBuyCardsView());   //dodac playera
-        getChildren().add(categoryButton2);
+        Button ownedButton = new Button("Owned");
+        ownedButton.setLayoutX(startX + 1.5 * (bigRectWidth / 3));
+        ownedButton.setLayoutY(startY + (bigRectHeight / 6) );
+        ownedButton.setPrefSize(1.4 * bigRectWidth / 3 - gap, 1.4 * bigRectHeight / 2 - gap);
+        ownedButton.setFont(Font.font("System", 18));
+        ownedButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 10;");
+        ownedButton.setOnAction(event -> scenes.showOwnedCardsView());   //dodac playera
+        getChildren().add(ownedButton);
 
     }
 

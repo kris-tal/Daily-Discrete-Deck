@@ -59,6 +59,14 @@ public class Scenes {
         primaryStage.setScene(scene);
     }
 
+    public void showOwnedCardsView() {
+        OwnedCardsViewModel ownedCardsViewModel = new OwnedCardsViewModel();
+        OwnedCardsView ownedCardsView = new OwnedCardsView(ownedCardsViewModel);
+
+        Scene scene = new Scene(ownedCardsView, 1000, 800);
+        primaryStage.setScene(scene);
+    }
+
     public static void setPrimaryStage(Stage ps) {
         primaryStage = ps;
     }

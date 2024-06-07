@@ -34,11 +34,14 @@ public class CardManager {
 
     public boolean isSetOk(List<Card> cards) {
         Map<Dots, Integer> map = prepareCount(cards);
+        boolean notZero = false;
         for (Integer value : map.values()) {
             if (value % 2 != 0) {
                 return false;
             }
+            if(value != 0) notZero = true;
         }
+        if(!notZero) return false;
         board.incrementSets();
         return true;
     }

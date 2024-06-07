@@ -53,7 +53,7 @@ public class Scenes {
     public void showBuyCardsView() {
         BuyCardsViewModel buyCardsViewModel = new BuyCardsViewModel();
         BuyCardsView buyCardsView = new BuyCardsView(buyCardsViewModel);
-        Scene scene = new Scene(buyCardsView, primaryStage.getHeight(), primaryStage.getWidth());
+        Scene scene = new Scene(buyCardsView, 1000, 800);
         primaryStage.setScene(scene);
     }
 

@@ -36,10 +36,10 @@ public class CardManager {
         Map<Dots, Integer> map = prepareCount(cards);
         boolean notZero = false;
         for (Integer value : map.values()) {
-            if (value % 2 != 0) {
+            if (value.intValue() % 2 != 0) {
                 return false;
             }
-            if(value != 0) notZero = true;
+            if(value.intValue() != 0) notZero = true;
         }
         if(!notZero) return false;
         board.incrementSets();

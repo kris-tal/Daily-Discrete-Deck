@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Date;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SavingService {
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -51,25 +53,24 @@ public class SavingService {
     }
 
     public static long loadNumberFromFile(String fileName) {
-        Path path = Paths.get(fileName);
-        if (Files.exists(path)) {
-            try {
-                List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
-                if (!lines.isEmpty()) {
-                    String line = lines.get(0);
-                    if (line.contains(", ") && line.length() > 16) {
-                        String[] parts = line.split(", ");
-                        if (parts.length > 1) {
-                            return Long.parseLong(parts[1]);
-                        }
-                    }
+    Path path = Paths.get(fileName);
+    if (Files.exists(path)) {
+        try {
+            List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+            if (!lines.isEmpty()) {
+                String line = lines.get(0);
+                Pattern pattern = Pattern.compile("\\d+");
+                Matcher matcher = pattern.matcher(line);
+                if (matcher.find()) {
+                    return Long.parseLong(matcher.group());
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return 0;
     }
+    return 0;
+}
 
     public static void saveNumberToFile(String fileName, long number) {
         Path path = Paths.get(fileName);

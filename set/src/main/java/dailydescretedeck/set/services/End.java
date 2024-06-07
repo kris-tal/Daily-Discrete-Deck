@@ -20,7 +20,7 @@ public class End {
     public void addEnds(long ends) {
         this.ends = SavingService.loadNumberFromFile("ends.txt");
         this.ends += ends;
-        SavingService.saveNumberToFile("ends.txt", ends);
+        SavingService.saveNumberToFile("ends.txt", this.ends);
     }
 
     public long getEnds() {

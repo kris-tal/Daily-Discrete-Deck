@@ -19,7 +19,7 @@ public class SetCollector {
     public void addSets(long sets) {
         this.sets = SavingService.loadNumberFromFile("setsCollected.txt");
         this.sets += sets;
-        SavingService.saveNumberToFile("setsCollected.txt", sets);
+        SavingService.saveNumberToFile("setsCollected.txt", this.sets);
     }
     public void resetsSets() {
         this.sets = 0;

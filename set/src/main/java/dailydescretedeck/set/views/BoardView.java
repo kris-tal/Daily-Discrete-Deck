@@ -210,6 +210,7 @@ public class BoardView extends Pane {
             if (timeline != null) {
                 timeline.stop();
             }
+            CardView.enableCards();
             bylo = true;
             scenes.showMenuView();
         } );

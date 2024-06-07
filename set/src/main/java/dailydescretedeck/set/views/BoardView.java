@@ -220,6 +220,7 @@ public class BoardView extends Pane {
             }
 
             selectedCards.clear();
+            System.out.println(selectedCards.size());
             selectedCards.addAll(boardViewModel.getNotSet());
 
             for (Card card : selectedCards) {

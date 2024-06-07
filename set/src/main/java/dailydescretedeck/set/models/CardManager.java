@@ -50,7 +50,7 @@ public class CardManager {
         List<List<Card>> combinations = new ArrayList<>();
         Feature.fill(combinations, new ArrayList<>(), board.getCards(), 0);
         for (List<Card> combination : combinations) {
-            if (isSetOk(combination) && combination.size() == 3) {
+            if (isSetOk(combination) && combination.size() >= 3) {
                 return combination;
             }
         }

@@ -1,5 +1,6 @@
 package dailydescretedeck.set.models;
 
+import dailydescretedeck.set.viewmodels.CardDesign;
 import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
 
 import java.util.ArrayList;

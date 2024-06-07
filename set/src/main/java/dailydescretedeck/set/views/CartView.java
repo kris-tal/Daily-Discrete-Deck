@@ -15,12 +15,11 @@ import javafx.stage.Stage;
 
 public class CartView extends Pane {
     private StoreViewModel viewModel;
-    private Stage stage;
+    //private Stage stage;
     private Runnable backToStore;
 
-    public CartView(StoreViewModel viewModel, Stage stage, Runnable backToStore) {
+    public CartView(StoreViewModel viewModel) {
         this.viewModel = viewModel;
-        this.stage = stage;
         this.backToStore = backToStore;
         setPrefSize(400, 600);
         initialize();

@@ -8,4 +8,6 @@ module dailydescretedeck.set {
     opens dailydescretedeck.set.models to javafx.fxml;
     exports dailydescretedeck.set;
     exports dailydescretedeck.set.models;
+    exports dailydescretedeck.set.viewmodels;
+    opens dailydescretedeck.set.viewmodels to javafx.fxml;
 }

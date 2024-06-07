@@ -1,19 +1,18 @@
 package dailydescretedeck.set.models;
 
+import dailydescretedeck.set.viewmodels.CardDesign;
 import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
 
 public class Player {
     private final String username;
-    private final String password;
     private int OOPoints;
     private int money;
     private CardDesign cardDesignInUse;
 
     private static int playersCount = 0;
 
-    public Player(String username, String pwd) {
+    public Player(String username) {
         this.username = username;
-        this.password = pwd;
         this.cardDesignInUse = new DefaultCardDesign();
         this.money = 1000;
         playersCount++;
@@ -22,17 +21,12 @@ public class Player {
     public Player(int points, String username, String pwd) {
         this.OOPoints = points;
         this.username = username;
-        this.password = pwd;
         this.money = 1000;
         playersCount++;
     }
 
     public String getUsername() {
         return username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public int getPoints() {

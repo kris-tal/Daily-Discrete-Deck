@@ -18,6 +18,8 @@ public class CartView extends Pane {
     private BuyCardsViewModel buyCardsviewModel;
     private Scenes scenes;
 
+
+
     public CartView(BuyCardsViewModel viewModel) {
         this.buyCardsviewModel = viewModel;
         this.scenes = new Scenes();

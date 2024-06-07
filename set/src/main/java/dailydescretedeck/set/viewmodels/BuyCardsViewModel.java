@@ -62,6 +62,7 @@ public class BuyCardsViewModel {
         }
     }
 
+
     public void removeFromCart(Product product) {
         if (product != null && cartItems.contains(product)) {
             cartItems.remove(product);

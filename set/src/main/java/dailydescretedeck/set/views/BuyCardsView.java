@@ -10,7 +10,9 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -72,12 +74,6 @@ public class BuyCardsView extends Pane {
 
         Font font = new Font("Comic Sans MS", gap * 2);
 
-        Label titleLabel = new Label("Buy Cards");
-        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
-        titleLabel.setLayoutX(gap);
-        titleLabel.setLayoutY(gap);
-        getChildren().add(titleLabel);
-
         Label totalCostLabel = new Label();
         totalCostLabel.textProperty().bind(buyCardsViewModel.getTotalCost().asString("Total Cost: %d"));
         totalCostLabel.setFont(font);
@@ -113,7 +109,7 @@ public class BuyCardsView extends Pane {
                 }
 
                 Product product = products.get(productIndex++);
-                ProductView productView = new ProductView(product, 0, 0, square / 10);
+                ProductView productView = new ProductView(product, buyCardsViewModel,0, 0, square / 10);
                 productViews.put(product, productView);
                 productView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                     if (!selectedProducts.contains(product)) {
@@ -193,7 +189,7 @@ public class BuyCardsView extends Pane {
         private Color originalColor;
         private boolean isSelected = false;
 
-        public ProductView(Product product, double x, double y, double scale) {
+        public ProductView(Product product, BuyCardsViewModel bcvm, double x, double y, double scale) {
             originalColor = Color.valueOf(product.getName().split(" ")[0].toUpperCase());
             circle = new Circle(5 * scale);
             circle.setFill(originalColor);
@@ -205,6 +201,7 @@ public class BuyCardsView extends Pane {
 
             getChildren().addAll(circle);
 
+
             setOnMouseEntered(event -> circle.setFill(darkenColor(originalColor, 0.1)));
             setOnMouseExited(event -> {
                 if (!isSelected) {
@@ -212,7 +209,10 @@ public class BuyCardsView extends Pane {
                 }
             });
 
-            setOnMouseClicked(event -> select());
+            setOnMouseClicked(event -> {
+                bcvm.addToCart(product);
+                select();
+            });
         }
 
         private void select() {
@@ -232,6 +232,36 @@ public class BuyCardsView extends Pane {
 
         private Color darkenColor(Color color, double factor) {
             return color.deriveColor(0, 1, 1 - factor, 1);
+        }
+    }
+
+
+    private static class ProductCell extends ListCell<Product> {
+        private HBox content;
+        private Label nameLabel;
+        private Label priceLabel;
+        private Button addButton;
+
+        public ProductCell(BuyCardsViewModel buyCardsViewModel) {
+            super();
+            nameLabel = new Label();
+            priceLabel = new Label();
+            addButton = new Button("Add to Cart");
+            addButton.setOnAction(event -> buyCardsViewModel.addToCart(getItem()));
+            content = new HBox(nameLabel, priceLabel, addButton);
+            content.setSpacing(10);
+        }
+
+        @Override
+        protected void updateItem(Product product, boolean empty) {
+            super.updateItem(product, empty);
+            if (product != null && !empty) {
+                nameLabel.setText(product.getName());
+                priceLabel.setText(String.valueOf(product.getPrice()));
+                setGraphic(content);
+            } else {
+                setGraphic(null);
+            }
         }
     }
 }

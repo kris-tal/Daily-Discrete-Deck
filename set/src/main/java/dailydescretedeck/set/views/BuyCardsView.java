@@ -2,6 +2,7 @@ package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.Product;
 import dailydescretedeck.set.viewmodels.BuyCardsViewModel;
+import dailydescretedeck.set.viewmodels.Scenes;
 import dailydescretedeck.set.viewmodels.StoreViewModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,6 +29,7 @@ public class BuyCardsView extends Pane {
     private BuyCardsViewModel viewModel;
     private StoreViewModel storeViewModel;
     private Stage stage;
+    private Scenes scenes;
     private Runnable backToStore;
     private double gap;
     private Map<Product, ProductView> productViews = new HashMap<>();
@@ -38,7 +40,7 @@ public class BuyCardsView extends Pane {
     public BuyCardsView(BuyCardsViewModel viewModel, StoreViewModel storeViewModel) {
         this.viewModel = viewModel;
         this.storeViewModel = storeViewModel;
-        this.stage = stage;
+        this.scenes = new Scenes();
         this.backToStore = backToStore;
         setPrefSize(1000, 800);
         redrawView();
@@ -128,7 +130,7 @@ public class BuyCardsView extends Pane {
         backButton.setPrefHeight(40);
         backButton.setFont(Font.font("System", 18));
         backButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        backButton.setOnAction(event -> backToStore.run());
+        backButton.setOnAction(event -> scenes.showStoreView());
 
         Button cartButton = new Button("View Cart");
         cartButton.setLayoutX(gap + bigRectWidth / 3 + gap);
@@ -137,7 +139,7 @@ public class BuyCardsView extends Pane {
         cartButton.setPrefHeight(40);
         cartButton.setFont(Font.font("System", 18));
         cartButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        cartButton.setOnAction(event -> openCartView());
+        cartButton.setOnAction(event -> scenes.showCartView(storeViewModel));
 
         Button previousButton = new Button("Previous");
         previousButton.setLayoutX(bigRectX + bigRectWidth - gap - 200);

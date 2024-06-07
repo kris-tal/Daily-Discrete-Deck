@@ -1,6 +1,7 @@
 package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.Product;
+import dailydescretedeck.set.viewmodels.Scenes;
 import dailydescretedeck.set.viewmodels.StoreViewModel;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -15,12 +16,13 @@ import javafx.stage.Stage;
 
 public class CartView extends Pane {
     private StoreViewModel viewModel;
-    //private Stage stage;
+    private Scenes scenes;
     private Runnable backToStore;
 
     public CartView(StoreViewModel viewModel) {
         this.viewModel = viewModel;
         this.backToStore = backToStore;
+        this.scenes = new Scenes();
         setPrefSize(400, 600);
         initialize();
     }
@@ -35,7 +37,7 @@ public class CartView extends Pane {
         cartListView.setCellFactory(param -> new ProductCell(viewModel));
 
         Button backButton = new Button("Back");
-        backButton.setOnAction(event -> backToStore.run());
+        backButton.setOnAction(event -> scenes.showStoreView());
 
         VBox vbox = new VBox(10, titleLabel, cartListView, backButton);
         vbox.setPadding(new Insets(10));

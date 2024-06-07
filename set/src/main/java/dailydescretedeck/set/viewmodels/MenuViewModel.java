@@ -4,11 +4,9 @@ import dailydescretedeck.set.models.Player;
 
 public class MenuViewModel {
     private Scenes scenes;
-    private Player player;
 
-    public MenuViewModel(Player player) {
+    public MenuViewModel() {
         scenes = new Scenes();
-        this.player = player;
     }
 
     public enum MenuOptions {

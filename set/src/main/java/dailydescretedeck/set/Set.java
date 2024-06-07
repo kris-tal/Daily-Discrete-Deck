@@ -35,13 +35,14 @@ public class Set extends Application {
 
             Optional<String> result = dialog.showAndWait();
             result.ifPresent(name -> {
-            playerName.setName(name); 
-            SavingService.saveNameToFile("name.txt", name); 
-        });
+                playerName.setName(name);
+                SavingService.saveNameToFile("name.txt", name);
+            });
         }
         this.player = new Player(playerName.getName());
         Scenes.setPrimaryStage(primaryStage);
         Scenes scenes = new Scenes();
+        scenes.setPlayer(player);
         scenes.showMenuView();
     }
 

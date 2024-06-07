@@ -8,10 +8,10 @@ import javafx.stage.Stage;
 
 public class Scenes {
     private static Stage primaryStage;
-    private Player player;
+    private static Player player;
 
     public void showMenuView() {
-        MenuViewModel menuViewModel = new MenuViewModel(player);
+        MenuViewModel menuViewModel = new MenuViewModel();
         MenuView menuView = new MenuView(menuViewModel);
         Scene scene = new Scene(menuView, 1000, 800);
         primaryStage.setScene(scene);
@@ -59,5 +59,9 @@ public class Scenes {
 
     public static void setPrimaryStage(Stage ps) {
         primaryStage = ps;
+    }
+
+    public static void setPlayer(Player player) {
+        Scenes.player = player;
     }
 }

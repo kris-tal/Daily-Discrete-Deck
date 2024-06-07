@@ -278,7 +278,7 @@ public class BoardView extends Pane {
                     }
                     end.addEnds(1);
                     Map<LocalDate, Long> endsMap = SavingService.loadMapFromFile("endsMap.txt");
-                    endsMap.put(LocalDate.now(), End.getInstance().getEnds());
+                    endsMap.put(LocalDate.now(), end.getEnds());
                     SavingService.saveMapToFile("endsMap.txt", endsMap);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Koniec gry");

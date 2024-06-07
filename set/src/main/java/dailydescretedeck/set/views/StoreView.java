@@ -2,6 +2,7 @@ package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.Product;
 import dailydescretedeck.set.viewmodels.BuyCardsViewModel;
+import dailydescretedeck.set.viewmodels.Scenes;
 import dailydescretedeck.set.viewmodels.StoreViewModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,12 +31,12 @@ public class StoreView extends Pane {
     private double gap;
     private ObservableList<Product> selectedProducts = FXCollections.observableArrayList();
     private Map<Product, ProductCell> productCells = new HashMap<>();
-    private Runnable backToMenu;
+    private Scenes scenes;
 
     public StoreView(StoreViewModel viewModel) {
         this.viewModel = viewModel;
         this.stage = stage;
-        this.backToMenu = backToMenu;
+        scenes = new Scenes();
         setPrefSize(1000, 800);
         redrawStore();
 
@@ -105,7 +106,7 @@ public class StoreView extends Pane {
         backButton.setPrefHeight(40);
         backButton.setFont(Font.font("System", 18));
         backButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        backButton.setOnAction(event -> backToMenu.run());
+        backButton.setOnAction(event -> scenes.showMenuView());
 
         Button cartButton = new Button("View Cart");
         cartButton.setLayoutX(startX + bigRectWidth / 3 + gap);
@@ -114,7 +115,7 @@ public class StoreView extends Pane {
         cartButton.setPrefHeight(40);
         cartButton.setFont(Font.font("System", 18));
         cartButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        cartButton.setOnAction(event -> openCartView());
+        cartButton.setOnAction(event -> scenes.showCartView(player));   //jak gabi doda playera to powinno dzialac
 
         getChildren().addAll(backButton, cartButton);
 
@@ -127,17 +128,17 @@ public class StoreView extends Pane {
             categoryButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 10;");
             final int categoryIndex = i;
             if (categoryIndex == 0) {
-                categoryButton.setOnAction(event -> openBuyCardsView());
+                categoryButton.setOnAction(event -> scenes.showBuyCardsView(player));   //dodac playera
             }
             getChildren().add(categoryButton);
         }
     }
 
-    private void openCartView() {
-        CartView cartView = new CartView(viewModel);
-        Scene scene = new Scene(cartView, 400, 600);
-        stage.setScene(scene);
-    }
+//    private void openCartView() {
+//        CartView cartView = new CartView(viewModel);
+//        Scene scene = new Scene(cartView, 400, 600);
+//        stage.setScene(scene);
+//    }
 
     private void openBuyCardsView() {
         BuyCardsViewModel buyCardsViewModel = new BuyCardsViewModel();

@@ -240,7 +240,7 @@ public class BoardView extends Pane {
                 System.out.println("Zapisano ilość zebranych SETów: " + setCollector.getSets());
 
                 Map<LocalDate, Long> setsMap = Calendar.getSetsMap();
-                setsMap.put(LocalDate.now(), setCollector.getSets());
+                setsMap.put(LocalDate.now() , setCollector.getSets());
                 Calendar.setSetsMap(setsMap);
         
                 System.out.println("Znaleziono SET");

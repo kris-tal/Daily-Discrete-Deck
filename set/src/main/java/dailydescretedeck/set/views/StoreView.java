@@ -109,6 +109,7 @@ public class StoreView extends Pane {
         backButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
         backButton.setOnAction(event -> scenes.showMenuView());
 
+        /*
         Button cartButton = new Button("View Cart");
         cartButton.setLayoutX(startX + bigRectWidth / 3 + gap);
         cartButton.setLayoutY(startY + bigRectHeight + gap);
@@ -118,7 +119,9 @@ public class StoreView extends Pane {
         cartButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
         cartButton.setOnAction(event -> scenes.showCartView(storeViewModel));   //jak gabi doda playera to powinno dzialac
 
-        getChildren().addAll(backButton, cartButton);
+         */
+
+        getChildren().addAll(backButton);
 
         for (int i = 0; i < 6; i++) {
             Button categoryButton = new Button("Category " + (i + 1));

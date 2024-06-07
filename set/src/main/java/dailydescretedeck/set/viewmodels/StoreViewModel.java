@@ -10,66 +10,13 @@ import javafx.collections.FXCollections;
 
 public class StoreViewModel {
     private Player player;
-    private ListProperty<Product> products;
-    public static ListProperty<Product> cartItems = new SimpleListProperty<>(FXCollections.observableArrayList());
-    private IntegerProperty totalCost;
-    private IntegerProperty selectedProductsCount;
 
     public StoreViewModel(Player player) {
         this.player = player;
-        this.products = new SimpleListProperty<>(FXCollections.observableArrayList());
-        this.totalCost = new SimpleIntegerProperty(0);
-        this.selectedProductsCount = new SimpleIntegerProperty(0);
     }
 
-    public ListProperty<Product> getProducts() {
-        return products;
-    }
 
-    public ListProperty<Product> getCartItems() {
-        return cartItems;
-    }
-
-    public IntegerProperty getTotalCost() {
-        return totalCost;
-    }
-
-    public IntegerProperty getPlayerMoney() {
-        return new SimpleIntegerProperty(player.getPoints());
-    }
-
-    public IntegerProperty getSelectedProductsCount() {
-        return selectedProductsCount;
-    }
-
-    public void addToCart(Product product) {
-        if (product != null && !cartItems.contains(product)) {
-            cartItems.add(product);
-            totalCost.set(totalCost.get() + product.getPrice());
-            selectedProductsCount.set(selectedProductsCount.get() + 1);
-        }
-    }
-
-    public void removeFromCart(Product product) {
-        if (product != null && cartItems.contains(product)) {
-            cartItems.remove(product);
-            totalCost.set(totalCost.get() - product.getPrice());
-            selectedProductsCount.set(selectedProductsCount.get() - 1);
-        }
-    }
-
-    public void checkout() {
-        int playerMoney = player.getPoints();
-        int cost = totalCost.get();
-
-        if (playerMoney >= cost) {
-            player.updatePoints(playerMoney - cost);
-            cartItems.clear();
-            totalCost.set(0);
-            selectedProductsCount.set(0);
-        }
-        else {
-            // alert
-        }
+    public Player getPlayer() {
+        return player;
     }
 }

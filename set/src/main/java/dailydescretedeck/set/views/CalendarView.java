@@ -25,6 +25,7 @@ public class CalendarView extends StackPane {
         this.monthYearLabel = new Label();
         this.setsMap = calendarViewModel.getSetsMap();
         this.endsMap = calendarViewModel.getEndsMap();
+        this.timeMap = calendarViewModel.getTimeMap();
         this.getChildren().add(buildCalendar(currentYearMonth));
     }
 

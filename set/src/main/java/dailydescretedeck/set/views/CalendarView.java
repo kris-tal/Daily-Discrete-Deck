@@ -30,7 +30,8 @@ public class CalendarView extends StackPane {
 
     private GridPane buildCalendar(YearMonth yearMonth) {
         monthYearLabel.setText(yearMonth.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH) + " " + yearMonth.getYear());
-
+        this.setsMap = calendarViewModel.getSetsMap();
+        this.endsMap = calendarViewModel.getEndsMap();
         GridPane gridPane = new GridPane();
         gridPane.setHgap(8);
         gridPane.setVgap(8);

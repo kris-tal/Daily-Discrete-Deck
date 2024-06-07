@@ -3,7 +3,9 @@ package dailydescretedeck.set.views;
 import dailydescretedeck.set.models.Calendar;
 import dailydescretedeck.set.models.Card;
 import dailydescretedeck.set.services.End;
+import dailydescretedeck.set.services.SavingService;
 import dailydescretedeck.set.services.SetCollector;
+import dailydescretedeck.set.services.TheBestTime;
 import dailydescretedeck.set.viewmodels.BoardViewModel;
 import dailydescretedeck.set.viewmodels.Scenes;
 import javafx.animation.KeyFrame;
@@ -235,25 +237,48 @@ public class BoardView extends Pane {
         });
 
         confirmButton.setOnAction(event -> {
+            System.out.println(LocalDate.now());
             if (boardViewModel.isSetOk(selectedCards)) {
-                boolean ok = boardViewModel.removeCards(selectedCards);
                 SetCollector setCollector = SetCollector.getInstance();
+                End end = End.getInstance();
+                TheBestTime theBestTime = TheBestTime.getInstance();
+                if(SavingService.loadDateFromFile("Date.txt") == null) {
+                    SavingService.saveDateToFile("Date.txt", LocalDate.now());
+                    setCollector.resetsSets();
+                    end.resetEnds();
+                    theBestTime.resetTime();
+                }
+                else if(!SavingService.loadDateFromFile("Date.txt").equals(LocalDate.now()))
+                {
+                    System.out.println(SavingService.loadDateFromFile("Date.txt"));
+                    SavingService.saveDateToFile("Date.txt", LocalDate.now());
+                    setCollector.resetsSets();
+                    end.resetEnds();
+                    theBestTime.resetTime();
+                }
+
+                boolean ok = boardViewModel.removeCards(selectedCards);
                 setCollector.addSets(1);
                 System.out.println("Zapisano ilość zebranych SETów: " + setCollector.getSets());
 
-                Map<LocalDate, Long> setsMap = Calendar.getSetsMap();
+                Map<LocalDate, Long> setsMap = SavingService.loadMapFromFile("setsMap.txt");
                 setsMap.put(LocalDate.now() , setCollector.getSets());
-                Calendar.setSetsMap(setsMap);
+                SavingService.saveMapToFile("setsMap.txt", setsMap);
         
                 System.out.println("Znaleziono SET");
                 if(!ok){
                     if (timeline != null) {
                         timeline.stop();
                     }
-                    End.getInstance().addEnds(1);
-                    Map<LocalDate, Long> endsMap = Calendar.getEndsMap();
+                    long t = SavingService.loadNumberFromFile("theBestTime.txt");
+                    if(t == 0 || t > System.currentTimeMillis() - startTime) {
+                        theBestTime.newTime(System.currentTimeMillis() - startTime);
+                        SavingService.saveNumberToFile("theBestTime.txt", System.currentTimeMillis() - startTime);
+                    }
+                    end.addEnds(1);
+                    Map<LocalDate, Long> endsMap = SavingService.loadMapFromFile("endsMap.txt");
                     endsMap.put(LocalDate.now(), End.getInstance().getEnds());
-                     Calendar.setEndsMap(endsMap);
+                    SavingService.saveMapToFile("endsMap.txt", endsMap);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Koniec gry");
                     alert.setHeaderText(null);

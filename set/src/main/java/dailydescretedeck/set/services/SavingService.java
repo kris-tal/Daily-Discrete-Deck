@@ -5,13 +5,19 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Date;
 import java.util.Map;
 
 public class SavingService {
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     public static void saveMapToFile(String name, Map<LocalDate, Long> map) {
         File file = new File(name);
         try {
@@ -50,8 +56,13 @@ public class SavingService {
             try {
                 List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
                 if (!lines.isEmpty()) {
-                    String[] parts = lines.get(0).split(", ");
-                    return Long.parseLong(parts[1].substring(16));
+                    String line = lines.get(0);
+                    if (line.contains(", ") && line.length() > 16) {
+                        String[] parts = line.split(", ");
+                        if (parts.length > 1) {
+                            return Long.parseLong(parts[1]);
+                        }
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -60,9 +71,9 @@ public class SavingService {
         return 0;
     }
 
-    public static void saveNumberToFile(String fileName, String text, long number) {
+    public static void saveNumberToFile(String fileName, long number) {
         Path path = Paths.get(fileName);
-        String dataToWrite = text + number;
+        String dataToWrite = number +"";
         try {
             Files.write(path, Collections.singletonList(dataToWrite), StandardCharsets.UTF_8);
         } catch (IOException e) {
@@ -87,6 +98,30 @@ public class SavingService {
                 List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
                 if (!lines.isEmpty()) {
                     return lines.get(0);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+    public static void saveDateToFile(String fileName, LocalDate localDate) {
+        Path path = Paths.get(fileName);
+        String dataToWrite = dateTimeFormatter.format(localDate);
+        try {
+            Files.write(path, Collections.singletonList(dataToWrite), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static LocalDate loadDateFromFile(String fileName) {
+        Path path = Paths.get(fileName);
+        if (Files.exists(path)) {
+            try {
+                List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+                if (!lines.isEmpty()) {
+                    return LocalDate.parse(lines.get(0), dateTimeFormatter);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

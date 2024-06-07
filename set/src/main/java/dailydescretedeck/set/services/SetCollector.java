@@ -1,15 +1,11 @@
 package dailydescretedeck.set.services;
-import java.time.*;
-import java.util.concurrent.*;
 
 public class SetCollector {
-    private static SetCollector instance;
+    private static SetCollector instance = null;
     private long sets;
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     private SetCollector() {
         sets = SavingService.loadNumberFromFile("setsCollected.txt");
-        resetSetsAtMidnight();
     }
 
     public static SetCollector getInstance() {
@@ -21,23 +17,16 @@ public class SetCollector {
     }
 
     public void addSets(long sets) {
+        this.sets = SavingService.loadNumberFromFile("setsCollected.txt");
         this.sets += sets;
-        SavingService.saveNumberToFile("setsCollected.txt", ", Sets Collected: ", sets);
+        SavingService.saveNumberToFile("setsCollected.txt", sets);
+    }
+    public void resetsSets() {
+        this.sets = 0;
+        SavingService.saveNumberToFile("setsCollected.txt", 0);
     }
 
     public long getSets() {
         return sets;
-    }
-
-    private void resetSetsAtMidnight() {
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime nextMidnight = now.toLocalDate().plusDays(1).atStartOfDay();
-        Duration duration = Duration.between(now, nextMidnight);
-        long initialDelay = duration.getSeconds();
-
-        scheduler.scheduleAtFixedRate(() -> {
-            sets = 0;
-            SavingService.saveNumberToFile("setsCollected.txt", ", Sets Collected: ", sets);
-        }, initialDelay, TimeUnit.DAYS.toSeconds(1), TimeUnit.SECONDS);
     }
 }

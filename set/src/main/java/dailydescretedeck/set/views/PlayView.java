@@ -24,11 +24,14 @@ public class PlayView extends StackPane {
         // Dodaj BoardView
         getChildren().add(boardView);
 
+        /*
         // Dodaj przycisk powrotu do menu
         Button backButton = new Button("Back to Menu");
         backButton.setOnAction(event -> onMenu.run());
         StackPane.setAlignment(backButton, Pos.TOP_LEFT); // Ustawienie przycisku w lewym górnym rogu
         getChildren().add(backButton);
+
+         */
     }
 
     public void display(Stage stage) {

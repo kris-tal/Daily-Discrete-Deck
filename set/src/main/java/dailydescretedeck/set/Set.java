@@ -7,7 +7,7 @@ import dailydescretedeck.set.models.SimpleBoardState;
 import dailydescretedeck.set.services.PlayerName;
 import dailydescretedeck.set.services.SavingService;
 import dailydescretedeck.set.viewmodels.ProfileViewModel;
-//import dailydescretedeck.set.viewmodels.Scenes;
+import dailydescretedeck.set.viewmodels.Scenes;
 import dailydescretedeck.set.viewmodels.StoreViewModel;
 import dailydescretedeck.set.views.MenuView;
 import dailydescretedeck.set.views.PlayView;
@@ -39,10 +39,10 @@ public class Set extends Application {
             SavingService.saveNameToFile("name.txt", name); 
         });
         }
-        //this.player = new Player(playerName.getName());
-       // Scenes.setPrimaryStage(primaryStage);
-        //Scenes scenes = new Scenes();
-        //scenes.showMenuView();
+        this.player = new Player(playerName.getName());
+        Scenes.setPrimaryStage(primaryStage);
+        Scenes scenes = new Scenes();
+        scenes.showMenuView();
     }
 
     public static void main(String[] args) {

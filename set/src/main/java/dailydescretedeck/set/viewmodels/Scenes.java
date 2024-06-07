@@ -4,12 +4,11 @@ import dailydescretedeck.set.models.Player;
 import dailydescretedeck.set.models.SimpleBoardState;
 import dailydescretedeck.set.views.*;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Scenes {
     private static Stage primaryStage;
-    private static Player player;
+    public static Player player;
 
     public void showMenuView() {
         MenuViewModel menuViewModel = new MenuViewModel();
@@ -51,8 +50,8 @@ public class Scenes {
         primaryStage.setScene(scene);
     }
 
-    public void showBuyCardsView() {
-        BuyCardsViewModel buyCardsViewModel = new BuyCardsViewModel();
+    public void showBuyCardsView(Player player) {
+        BuyCardsViewModel buyCardsViewModel = new BuyCardsViewModel(Scenes.player);
         BuyCardsView buyCardsView = new BuyCardsView(buyCardsViewModel);
 
         Scene scene = new Scene(buyCardsView, 1000, 800);
@@ -73,5 +72,9 @@ public class Scenes {
 
     public static void setPlayer(Player player) {
         Scenes.player = player;
+    }
+
+    public static Player getPlayer() {
+        return player;
     }
 }

@@ -26,7 +26,7 @@ import java.util.Map;
 import static java.lang.Double.min;
 
 public class BuyCardsView extends Pane {
-    private BuyCardsViewModel viewModel;
+    private BuyCardsViewModel buyCardsViewModel;
     private Scenes scenes;
     private double gap;
     private Map<Product, ProductView> productViews = new HashMap<>();
@@ -35,7 +35,7 @@ public class BuyCardsView extends Pane {
     private final int itemsPerPage = 6;
 
     public BuyCardsView(BuyCardsViewModel viewModel) {
-        this.viewModel = viewModel;
+        this.buyCardsViewModel = viewModel;
         this.scenes = new Scenes();
         setPrefSize(1000, 800);
         redrawView();
@@ -78,8 +78,29 @@ public class BuyCardsView extends Pane {
         titleLabel.setLayoutY(gap);
         getChildren().add(titleLabel);
 
-        List<Product> products = viewModel.getProducts().subList(currentPage * itemsPerPage,
-                Math.min((currentPage + 1) * itemsPerPage, viewModel.getProducts().size()));
+        Label totalCostLabel = new Label();
+        totalCostLabel.textProperty().bind(buyCardsViewModel.getTotalCost().asString("Total Cost: %d"));
+        totalCostLabel.setFont(font);
+        totalCostLabel.setLayoutX(gap);
+        totalCostLabel.setLayoutY(gap);
+        getChildren().add(totalCostLabel);
+
+        Label playerMoneyLabel = new Label();
+        playerMoneyLabel.textProperty().bind(buyCardsViewModel.getPlayerMoney().asString("Money: %d"));
+        playerMoneyLabel.setFont(font);
+        playerMoneyLabel.setLayoutX(gap);
+        playerMoneyLabel.setLayoutY(gap * 3.5);
+        getChildren().add(playerMoneyLabel);
+
+        Label selectedProductsLabel = new Label();
+        selectedProductsLabel.textProperty().bind(buyCardsViewModel.getSelectedProductsCount().asString("Selected Products: %d"));
+        selectedProductsLabel.setFont(font);
+        selectedProductsLabel.setLayoutX(gap);
+        selectedProductsLabel.setLayoutY(gap * 6);
+        getChildren().add(selectedProductsLabel);
+
+        List<Product> products = buyCardsViewModel.getProducts().subList(currentPage * itemsPerPage,
+                Math.min((currentPage + 1) * itemsPerPage, buyCardsViewModel.getProducts().size()));
 
         int productIndex = 0;
 
@@ -133,7 +154,7 @@ public class BuyCardsView extends Pane {
         cartButton.setPrefHeight(40);
         cartButton.setFont(Font.font("System", 18));
         cartButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        cartButton.setOnAction(event -> scenes.showCartView(viewModel));
+        cartButton.setOnAction(event -> scenes.showCartView(buyCardsViewModel));
 
         Button previousButton = new Button("Previous");
         previousButton.setLayoutX(bigRectX + bigRectWidth - gap - 200);
@@ -157,7 +178,7 @@ public class BuyCardsView extends Pane {
         nextButton.setFont(Font.font("System", 18));
         nextButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
         nextButton.setOnAction(event -> {
-            if ((currentPage + 1) * itemsPerPage < viewModel.getProducts().size()) {
+            if ((currentPage + 1) * itemsPerPage < buyCardsViewModel.getProducts().size()) {
                 currentPage++;
                 redrawView();
             }

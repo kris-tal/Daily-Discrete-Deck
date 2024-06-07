@@ -23,14 +23,15 @@ import javafx.stage.StageStyle;
 import java.util.HashMap;
 import java.util.Map;
 
+import static dailydescretedeck.set.viewmodels.Scenes.*;
 import static java.lang.Double.min;
 
 public class StoreView extends Pane {
     private StoreViewModel storeViewModel;
     private Stage stage;
     private double gap;
-    private ObservableList<Product> selectedProducts = FXCollections.observableArrayList();
-    private Map<Product, ProductCell> productCells = new HashMap<>();
+    //private ObservableList<Product> selectedProducts = FXCollections.observableArrayList();
+    //private Map<Product, ProductCell> productCells = new HashMap<>();
     private Scenes scenes;
 
 
@@ -84,26 +85,7 @@ public class StoreView extends Pane {
 
          */
 
-        Label totalCostLabel = new Label();
-        totalCostLabel.textProperty().bind(storeViewModel.getTotalCost().asString("Total Cost: %d"));
-        totalCostLabel.setFont(font);
-        totalCostLabel.setLayoutX(gap);
-        totalCostLabel.setLayoutY(gap);
-        getChildren().add(totalCostLabel);
 
-        Label playerMoneyLabel = new Label();
-        playerMoneyLabel.textProperty().bind(storeViewModel.getPlayerMoney().asString("Money: %d"));
-        playerMoneyLabel.setFont(font);
-        playerMoneyLabel.setLayoutX(gap);
-        playerMoneyLabel.setLayoutY(gap * 3.5);
-        getChildren().add(playerMoneyLabel);
-
-        Label selectedProductsLabel = new Label();
-        selectedProductsLabel.textProperty().bind(storeViewModel.getSelectedProductsCount().asString("Selected Products: %d"));
-        selectedProductsLabel.setFont(font);
-        selectedProductsLabel.setLayoutX(gap);
-        selectedProductsLabel.setLayoutY(gap * 6);
-        getChildren().add(selectedProductsLabel);
 
         Button backButton = new Button("Back to Menu");
         backButton.setLayoutX(startX);
@@ -135,7 +117,7 @@ public class StoreView extends Pane {
         miniStoreButton.setPrefSize(1.4 * bigRectWidth / 3 - gap, 1.4 * bigRectHeight / 2 - gap);
         miniStoreButton.setFont(Font.font("System", 18));
         miniStoreButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 10;");
-        miniStoreButton.setOnAction(event -> scenes.showBuyCardsView());   //dodac playera
+        miniStoreButton.setOnAction(event -> scenes.showBuyCardsView(getPlayer()));   //dodac playera
         getChildren().add(miniStoreButton);
 
         Button ownedButton = new Button("Owned");
@@ -155,8 +137,9 @@ public class StoreView extends Pane {
 //        stage.setScene(scene);
 //    }
 
+
     private void openBuyCardsView() {
-        BuyCardsViewModel buyCardsViewModel = new BuyCardsViewModel();
+        BuyCardsViewModel buyCardsViewModel = new BuyCardsViewModel(storeViewModel.getPlayer());
         BuyCardsView buyCardsView = new BuyCardsView(buyCardsViewModel);
         Scene scene = new Scene(buyCardsView, getWidth(), getHeight());
         stage.setScene(scene);
@@ -167,6 +150,7 @@ public class StoreView extends Pane {
         stage.setScene(scene);
     }
 
+    /*
     private static class ProductCell extends ListCell<Product> {
         private HBox content;
         private Label nameLabel;
@@ -195,4 +179,6 @@ public class StoreView extends Pane {
             }
         }
     }
+
+     */
 }

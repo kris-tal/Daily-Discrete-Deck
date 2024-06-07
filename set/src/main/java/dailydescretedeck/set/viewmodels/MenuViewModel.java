@@ -27,7 +27,7 @@ public class MenuViewModel {
                 scenes.showProfileView();
                 break;
             case STORE:
-                scenes.showStoreView(player);
+                scenes.showStoreView();
                 break;
             case INSTRUCTIONS:
                 break;

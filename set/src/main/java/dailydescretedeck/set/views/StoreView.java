@@ -26,15 +26,16 @@ import java.util.Map;
 import static java.lang.Double.min;
 
 public class StoreView extends Pane {
-    private StoreViewModel viewModel;
+    private StoreViewModel storeViewModel;
     private Stage stage;
     private double gap;
     private ObservableList<Product> selectedProducts = FXCollections.observableArrayList();
     private Map<Product, ProductCell> productCells = new HashMap<>();
     private Scenes scenes;
 
-    public StoreView(StoreViewModel viewModel) {
-        this.viewModel = viewModel;
+
+    public StoreView(StoreViewModel storeViewModel) {
+        this.storeViewModel = storeViewModel;
         this.stage = stage;
         scenes = new Scenes();
         setPrefSize(1000, 800);
@@ -79,21 +80,21 @@ public class StoreView extends Pane {
         getChildren().add(storeLabel);
 
         Label totalCostLabel = new Label();
-        totalCostLabel.textProperty().bind(viewModel.getTotalCost().asString("Total Cost: %d"));
+        totalCostLabel.textProperty().bind(storeViewModel.getTotalCost().asString("Total Cost: %d"));
         totalCostLabel.setFont(font);
         totalCostLabel.setLayoutX(gap);
         totalCostLabel.setLayoutY(gap * 4);
         getChildren().add(totalCostLabel);
 
         Label playerMoneyLabel = new Label();
-        playerMoneyLabel.textProperty().bind(viewModel.getPlayerMoney().asString("Money: %d"));
+        playerMoneyLabel.textProperty().bind(storeViewModel.getPlayerMoney().asString("Money: %d"));
         playerMoneyLabel.setFont(font);
         playerMoneyLabel.setLayoutX(gap);
         playerMoneyLabel.setLayoutY(gap * 6);
         getChildren().add(playerMoneyLabel);
 
         Label selectedProductsLabel = new Label();
-        selectedProductsLabel.textProperty().bind(viewModel.getSelectedProductsCount().asString("Selected Products: %d"));
+        selectedProductsLabel.textProperty().bind(storeViewModel.getSelectedProductsCount().asString("Selected Products: %d"));
         selectedProductsLabel.setFont(font);
         selectedProductsLabel.setLayoutX(gap);
         selectedProductsLabel.setLayoutY(gap * 8);
@@ -115,7 +116,7 @@ public class StoreView extends Pane {
         cartButton.setPrefHeight(40);
         cartButton.setFont(Font.font("System", 18));
         cartButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        cartButton.setOnAction(event -> scenes.showCartView(player));   //jak gabi doda playera to powinno dzialac
+        cartButton.setOnAction(event -> scenes.showCartView(storeViewModel));   //jak gabi doda playera to powinno dzialac
 
         getChildren().addAll(backButton, cartButton);
 
@@ -128,27 +129,27 @@ public class StoreView extends Pane {
             categoryButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 10;");
             final int categoryIndex = i;
             if (categoryIndex == 0) {
-                categoryButton.setOnAction(event -> scenes.showBuyCardsView(player));   //dodac playera
+                categoryButton.setOnAction(event -> scenes.showBuyCardsView(storeViewModel));   //dodac playera
             }
             getChildren().add(categoryButton);
         }
     }
 
 //    private void openCartView() {
-//        CartView cartView = new CartView(viewModel);
+//        CartView cartView = new CartView(storeViewModel);
 //        Scene scene = new Scene(cartView, 400, 600);
 //        stage.setScene(scene);
 //    }
 
     private void openBuyCardsView() {
         BuyCardsViewModel buyCardsViewModel = new BuyCardsViewModel();
-        BuyCardsView buyCardsView = new BuyCardsView(buyCardsViewModel, viewModel);
+        BuyCardsView buyCardsView = new BuyCardsView(buyCardsViewModel, storeViewModel);
         Scene scene = new Scene(buyCardsView, getWidth(), getHeight());
         stage.setScene(scene);
     }
 
     private void goBackToStore() {
-        Scene scene = new Scene(new StoreView(viewModel), getWidth(), getHeight());
+        Scene scene = new Scene(new StoreView(storeViewModel), getWidth(), getHeight());
         stage.setScene(scene);
     }
 
@@ -158,12 +159,12 @@ public class StoreView extends Pane {
         private Label priceLabel;
         private Button addButton;
 
-        public ProductCell(StoreViewModel viewModel) {
+        public ProductCell(StoreViewModel storeViewModel) {
             super();
             nameLabel = new Label();
             priceLabel = new Label();
             addButton = new Button("Add to Cart");
-            addButton.setOnAction(event -> viewModel.addToCart(getItem()));
+            addButton.setOnAction(event -> storeViewModel.addToCart(getItem()));
             content = new HBox(nameLabel, priceLabel, addButton);
             content.setSpacing(10);
         }

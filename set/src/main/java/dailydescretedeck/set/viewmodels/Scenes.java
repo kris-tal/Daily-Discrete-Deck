@@ -36,7 +36,7 @@ public class Scenes {
         primaryStage.setTitle("Profile");
     }
 
-    public void showStoreView(Player player) {
+    public void showStoreView() {
         StoreViewModel storeViewModel = new StoreViewModel(player);
         StoreView storeView = new StoreView(storeViewModel);
         Scene scene = new Scene(storeView, 1000, 800);

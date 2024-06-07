@@ -44,15 +44,15 @@ public class Scenes {
         primaryStage.setTitle("Store");
     }
 
-    public void showCartView(StoreViewModel storeViewModel) {
-        CartView cartView = new CartView(storeViewModel);
+    public void showCartView(BuyCardsViewModel buyCardsViewModel) {
+        CartView cartView = new CartView(buyCardsViewModel);
         Scene scene = new Scene(cartView, 400, 600);
         primaryStage.setScene(scene);
     }
 
-    public void showBuyCardsView(StoreViewModel storeViewModel) {
+    public void showBuyCardsView() {
         BuyCardsViewModel buyCardsViewModel = new BuyCardsViewModel();
-        BuyCardsView buyCardsView = new BuyCardsView(buyCardsViewModel, storeViewModel);
+        BuyCardsView buyCardsView = new BuyCardsView(buyCardsViewModel);
         Scene scene = new Scene(buyCardsView, primaryStage.getHeight(), primaryStage.getWidth());
         primaryStage.setScene(scene);
     }

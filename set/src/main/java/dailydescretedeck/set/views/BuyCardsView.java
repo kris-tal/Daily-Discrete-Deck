@@ -27,21 +27,17 @@ import static java.lang.Double.min;
 
 public class BuyCardsView extends Pane {
     private BuyCardsViewModel viewModel;
-    private StoreViewModel storeViewModel;
     private Stage stage;
     private Scenes scenes;
-    private Runnable backToStore;
     private double gap;
     private Map<Product, ProductView> productViews = new HashMap<>();
     private ObservableList<Product> selectedProducts = FXCollections.observableArrayList();
     private int currentPage = 0;
     private final int itemsPerPage = 6;
 
-    public BuyCardsView(BuyCardsViewModel viewModel, StoreViewModel storeViewModel) {
+    public BuyCardsView(BuyCardsViewModel viewModel) {
         this.viewModel = viewModel;
-        this.storeViewModel = storeViewModel;
         this.scenes = new Scenes();
-        this.backToStore = backToStore;
         setPrefSize(1000, 800);
         redrawView();
 
@@ -103,7 +99,6 @@ public class BuyCardsView extends Pane {
                     if (!selectedProducts.contains(product)) {
                         selectedProducts.add(product);
                         productView.select();
-                        storeViewModel.addToCart(product);
                     }
                 });
 
@@ -139,7 +134,7 @@ public class BuyCardsView extends Pane {
         cartButton.setPrefHeight(40);
         cartButton.setFont(Font.font("System", 18));
         cartButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        cartButton.setOnAction(event -> scenes.showCartView(storeViewModel));
+        cartButton.setOnAction(event -> scenes.showCartView(viewModel));
 
         Button previousButton = new Button("Previous");
         previousButton.setLayoutX(bigRectX + bigRectWidth - gap - 200);
@@ -173,13 +168,13 @@ public class BuyCardsView extends Pane {
     }
 
     private void openCartView() {
-        CartView cartView = new CartView(storeViewModel);
+        CartView cartView = new CartView(viewModel);
         Scene scene = new Scene(cartView, 400, 600);
         stage.setScene(scene);
     }
 
     private void goBackToBuyCards() {
-        Scene scene = new Scene(new BuyCardsView(viewModel, storeViewModel), getWidth(), getHeight());
+        Scene scene = new Scene(new BuyCardsView(viewModel), getWidth(), getHeight());
         stage.setScene(scene);
     }
 

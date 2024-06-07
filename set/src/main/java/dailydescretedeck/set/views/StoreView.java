@@ -132,7 +132,7 @@ public class StoreView extends Pane {
             categoryButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 10;");
             final int categoryIndex = i;
             if (categoryIndex == 0) {
-                categoryButton.setOnAction(event -> scenes.showBuyCardsView(storeViewModel));   //dodac playera
+                categoryButton.setOnAction(event -> scenes.showBuyCardsView());   //dodac playera
             }
             getChildren().add(categoryButton);
         }
@@ -146,7 +146,7 @@ public class StoreView extends Pane {
 
     private void openBuyCardsView() {
         BuyCardsViewModel buyCardsViewModel = new BuyCardsViewModel();
-        BuyCardsView buyCardsView = new BuyCardsView(buyCardsViewModel, storeViewModel);
+        BuyCardsView buyCardsView = new BuyCardsView(buyCardsViewModel);
         Scene scene = new Scene(buyCardsView, getWidth(), getHeight());
         stage.setScene(scene);
     }

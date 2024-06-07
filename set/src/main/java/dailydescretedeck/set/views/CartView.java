@@ -1,10 +1,9 @@
 package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.Product;
+import dailydescretedeck.set.viewmodels.BuyCardsViewModel;
 import dailydescretedeck.set.viewmodels.Scenes;
-import dailydescretedeck.set.viewmodels.StoreViewModel;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -12,16 +11,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class CartView extends Pane {
-    private StoreViewModel viewModel;
+    private BuyCardsViewModel viewModel;
     private Scenes scenes;
-    private Runnable backToStore;
 
-    public CartView(StoreViewModel viewModel) {
+    public CartView(BuyCardsViewModel viewModel) {
         this.viewModel = viewModel;
-        this.backToStore = backToStore;
         this.scenes = new Scenes();
         setPrefSize(400, 600);
         initialize();
@@ -37,7 +33,7 @@ public class CartView extends Pane {
         cartListView.setCellFactory(param -> new ProductCell(viewModel));
 
         Button backButton = new Button("Back");
-        backButton.setOnAction(event -> scenes.showStoreView());
+        backButton.setOnAction(event -> scenes.showBuyCardsView());
 
         VBox vbox = new VBox(10, titleLabel, cartListView, backButton);
         vbox.setPadding(new Insets(10));
@@ -51,7 +47,7 @@ public class CartView extends Pane {
         private Label priceLabel;
         private Button removeButton;
 
-        public ProductCell(StoreViewModel viewModel) {
+        public ProductCell(BuyCardsViewModel viewModel) {
             super();
             nameLabel = new Label();
             priceLabel = new Label();

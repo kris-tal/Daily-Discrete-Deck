@@ -7,7 +7,6 @@ import dailydescretedeck.set.models.SimpleBoardState;
 import dailydescretedeck.set.services.PlayerName;
 import dailydescretedeck.set.services.SavingService;
 import dailydescretedeck.set.viewmodels.ProfileViewModel;
-
 import dailydescretedeck.set.viewmodels.Scenes;
 import dailydescretedeck.set.viewmodels.StoreViewModel;
 import dailydescretedeck.set.views.MenuView;

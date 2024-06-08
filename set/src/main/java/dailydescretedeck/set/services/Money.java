@@ -8,7 +8,7 @@ public class Money {
         money = SavingService.loadNumberFromFile("money.txt");
     }
 
-    void addMoney(long money) {
+    public void addMoney(long money) {
         this.money = SavingService.loadNumberFromFile("money.txt");
         this.money += money;
         SavingService.saveNumberToFile("money.txt", this.money);

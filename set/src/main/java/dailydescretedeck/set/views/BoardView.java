@@ -3,6 +3,7 @@ package dailydescretedeck.set.views;
 import dailydescretedeck.set.models.Calendar;
 import dailydescretedeck.set.models.Card;
 import dailydescretedeck.set.services.End;
+import dailydescretedeck.set.services.Money;
 import dailydescretedeck.set.services.SavingService;
 import dailydescretedeck.set.services.SetCollector;
 import dailydescretedeck.set.services.TheBestTime;
@@ -41,10 +42,12 @@ public class BoardView extends Pane {
     private static Timeline timeline;
     private static boolean bylo = false;
     private Scenes scenes;
+    private Money money;
 
     public BoardView(BoardViewModel boardViewModel) {
         this.boardViewModel = boardViewModel;
         this.scenes = new Scenes();
+        this.money = new Money();
         redrawBoard();
 
         widthProperty().addListener((observable, oldValue, newValue) -> redrawBoard());
@@ -252,10 +255,12 @@ public class BoardView extends Pane {
                     setCollector.resetsSets();
                     end.resetEnds();
                     theBestTime.resetTime();
+                    money.addMoney(5);
                 }
 
                 boolean ok = boardViewModel.removeCards(selectedCards);
                 setCollector.addSets(1);
+                money.addMoney(1);
                 System.out.println("Zapisano ilość zebranych SETów: " + setCollector.getSets());
 
                 Map<LocalDate, Long> setsMap = SavingService.loadMapFromFile("setsMap.txt");
@@ -271,6 +276,7 @@ public class BoardView extends Pane {
                     if(t == 0 || t > System.currentTimeMillis() - startTime) {
                         theBestTime.newTime(System.currentTimeMillis() - startTime);
                         SavingService.saveNumberToFile("theBestTime.txt", System.currentTimeMillis() - startTime);
+                        money.addMoney(10);
                     }
                     end.addEnds(1);
                     Map<LocalDate, Long> endsMap = SavingService.loadMapFromFile("endsMap.txt");

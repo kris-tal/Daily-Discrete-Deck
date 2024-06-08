@@ -19,7 +19,6 @@ public class Set extends Application {
     @Override
     public void start(Stage stage) {
         this.primaryStage = stage;
-        //wczytaj playera, jesli nie ma to okienko z imieniem i stworz nowego
         PlayerName playerName = new PlayerName();
         if(playerName.getName() == null){
             TextInputDialog dialog = new TextInputDialog();

@@ -5,17 +5,20 @@ import dailydescretedeck.set.viewmodels.BuyCardsViewModel;
 import dailydescretedeck.set.viewmodels.Scenes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +55,7 @@ public class BuyCardsView extends Pane {
             return;
         }
 
-        double square = min(paneWidth, paneHeight) * 0.05;
+        double square = min(paneWidth, paneHeight) * 0.09;
         double bigRectWidth = square * 9;
         double bigRectHeight = square * 7;
 
@@ -137,7 +140,13 @@ public class BuyCardsView extends Pane {
         backButton.setPrefHeight(40);
         backButton.setFont(Font.font("System", 18));
         backButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        backButton.setOnAction(event -> scenes.showStoreView());
+        backButton.setOnAction(event -> {
+            if (buyCardsViewModel.hasItemsInCart()) {
+                AestheticAlert.showAlert("Error", "You cannot leave, because there are still products in your cart.");
+            } else {
+                scenes.showStoreView();
+            }
+        });
 
         Button cartButton = new Button("View Cart");
         cartButton.setLayoutX(gap + bigRectWidth / 3 + gap);

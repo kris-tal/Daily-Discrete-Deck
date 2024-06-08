@@ -86,4 +86,8 @@ public class BuyCardsViewModel {
             // alert
         }
     }
+
+    public boolean hasItemsInCart() {
+        return !cartItems.isEmpty();
+    }
 }

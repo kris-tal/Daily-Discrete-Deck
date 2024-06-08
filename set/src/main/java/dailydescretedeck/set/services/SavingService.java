@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class SavingService {
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -124,6 +125,36 @@ public class SavingService {
                 if (!lines.isEmpty()) {
                     return LocalDate.parse(lines.get(0), dateTimeFormatter);
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public static void saveClassesToFile(String fileName, List<Class<?>> classes) {
+    Path path = Paths.get(fileName);
+    List<String> classNames = classes.stream().map(Class::getName).collect(Collectors.toList());
+    try {
+        Files.write(path, classNames, StandardCharsets.UTF_8);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    }
+
+    public static List<Class<?>> loadClassesFromFile(String fileName) {
+        Path path = Paths.get(fileName);
+        if (Files.exists(path)) {
+            try {
+                List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+                return lines.stream().map(line -> {
+                    try {
+                        return Class.forName(line);
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }).collect(Collectors.toList());
             } catch (IOException e) {
                 e.printStackTrace();
             }

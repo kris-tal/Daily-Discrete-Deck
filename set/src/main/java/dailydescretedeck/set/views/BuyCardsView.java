@@ -3,23 +3,19 @@ package dailydescretedeck.set.views;
 import dailydescretedeck.set.models.Product;
 import dailydescretedeck.set.viewmodels.BuyCardsViewModel;
 import dailydescretedeck.set.viewmodels.Scenes;
-import dailydescretedeck.set.viewmodels.StoreViewModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
 import java.util.HashMap;
 import java.util.List;
@@ -150,7 +146,7 @@ public class BuyCardsView extends Pane {
         cartButton.setPrefHeight(40);
         cartButton.setFont(Font.font("System", 18));
         cartButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        cartButton.setOnAction(event -> scenes.showCartView(buyCardsViewModel));
+        cartButton.setOnAction(event -> scenes.showCartView());
 
         Button previousButton = new Button("Previous");
         previousButton.setLayoutX(bigRectX + bigRectWidth - gap - 200);
@@ -201,7 +197,6 @@ public class BuyCardsView extends Pane {
 
             getChildren().addAll(circle);
 
-
             setOnMouseEntered(event -> circle.setFill(darkenColor(originalColor, 0.1)));
             setOnMouseExited(event -> {
                 if (!isSelected) {
@@ -232,36 +227,6 @@ public class BuyCardsView extends Pane {
 
         private Color darkenColor(Color color, double factor) {
             return color.deriveColor(0, 1, 1 - factor, 1);
-        }
-    }
-
-
-    private static class ProductCell extends ListCell<Product> {
-        private HBox content;
-        private Label nameLabel;
-        private Label priceLabel;
-        private Button addButton;
-
-        public ProductCell(BuyCardsViewModel buyCardsViewModel) {
-            super();
-            nameLabel = new Label();
-            priceLabel = new Label();
-            addButton = new Button("Add to Cart");
-            addButton.setOnAction(event -> buyCardsViewModel.addToCart(getItem()));
-            content = new HBox(nameLabel, priceLabel, addButton);
-            content.setSpacing(10);
-        }
-
-        @Override
-        protected void updateItem(Product product, boolean empty) {
-            super.updateItem(product, empty);
-            if (product != null && !empty) {
-                nameLabel.setText(product.getName());
-                priceLabel.setText(String.valueOf(product.getPrice()));
-                setGraphic(content);
-            } else {
-                setGraphic(null);
-            }
         }
     }
 }

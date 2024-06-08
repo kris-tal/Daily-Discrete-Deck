@@ -2,13 +2,15 @@ package dailydescretedeck.set.viewmodels;
 
 import dailydescretedeck.set.models.Player;
 import dailydescretedeck.set.models.SimpleBoardState;
+import dailydescretedeck.set.viewmodels.OwnedCardsViewModel;
 import dailydescretedeck.set.views.*;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Scenes {
     private static Stage primaryStage;
-    public static Player player;
+    private static Player player;
+    private static BuyCardsViewModel buyCardsViewModel;
 
     public void showMenuView() {
         MenuViewModel menuViewModel = new MenuViewModel();
@@ -44,16 +46,20 @@ public class Scenes {
         primaryStage.setTitle("Store");
     }
 
-    public void showCartView(BuyCardsViewModel buyCardsViewModel) {
+    public void showCartView() {
+        if (buyCardsViewModel == null) {
+            buyCardsViewModel = new BuyCardsViewModel(player);
+        }
         CartView cartView = new CartView(buyCardsViewModel);
         Scene scene = new Scene(cartView, 400, 600);
         primaryStage.setScene(scene);
     }
 
-    public void showBuyCardsView(Player player) {
-        BuyCardsViewModel buyCardsViewModel = new BuyCardsViewModel(Scenes.player);
+    public void showBuyCardsView() {
+        if (buyCardsViewModel == null) {
+            buyCardsViewModel = new BuyCardsViewModel(player);
+        }
         BuyCardsView buyCardsView = new BuyCardsView(buyCardsViewModel);
-
         Scene scene = new Scene(buyCardsView, 1000, 800);
         primaryStage.setScene(scene);
     }
@@ -61,7 +67,6 @@ public class Scenes {
     public void showOwnedCardsView() {
         OwnedCardsViewModel ownedCardsViewModel = new OwnedCardsViewModel();
         OwnedCardsView ownedCardsView = new OwnedCardsView(ownedCardsViewModel);
-
         Scene scene = new Scene(ownedCardsView, 1000, 800);
         primaryStage.setScene(scene);
     }

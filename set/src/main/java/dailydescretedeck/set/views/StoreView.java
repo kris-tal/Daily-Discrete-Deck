@@ -117,7 +117,7 @@ public class StoreView extends Pane {
         miniStoreButton.setPrefSize(1.4 * bigRectWidth / 3 - gap, 1.4 * bigRectHeight / 2 - gap);
         miniStoreButton.setFont(Font.font("System", 18));
         miniStoreButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 10;");
-        miniStoreButton.setOnAction(event -> scenes.showBuyCardsView(getPlayer()));   //dodac playera
+        miniStoreButton.setOnAction(event -> scenes.showBuyCardsView());   //dodac playera
         getChildren().add(miniStoreButton);
 
         Button ownedButton = new Button("Owned");

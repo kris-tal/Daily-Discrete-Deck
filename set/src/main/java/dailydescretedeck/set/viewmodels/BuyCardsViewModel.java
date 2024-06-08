@@ -1,5 +1,6 @@
 package dailydescretedeck.set.viewmodels;
 
+import dailydescretedeck.set.models.Cart;
 import dailydescretedeck.set.models.Player;
 import dailydescretedeck.set.models.Product;
 import javafx.beans.property.IntegerProperty;
@@ -9,21 +10,21 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
 public class BuyCardsViewModel {
-    Player player;
+    private Player player;
     private ListProperty<Product> products;
+    private Cart cart;
     public static ListProperty<Product> cartItems = new SimpleListProperty<>(FXCollections.observableArrayList());
     private IntegerProperty totalCost;
     private IntegerProperty selectedProductsCount;
 
     public BuyCardsViewModel(Player player) {
         this.player = player;
+        this.cart = new Cart();
         this.products = new SimpleListProperty<>(FXCollections.observableArrayList());
-        this.totalCost = new SimpleIntegerProperty(0);
-        this.selectedProductsCount = new SimpleIntegerProperty(0);
+        this.totalCost = new SimpleIntegerProperty(cart.getTotalPrice());
+        this.selectedProductsCount = new SimpleIntegerProperty(cartItems.size());
 
-        this.products = new SimpleListProperty<>(FXCollections.observableArrayList());
-
-        // example
+        // example products
         products.add(new Product("Red Dots", 10));
         products.add(new Product("Blue Dots", 15));
         products.add(new Product("Green Dots", 20));
@@ -57,15 +58,16 @@ public class BuyCardsViewModel {
     public void addToCart(Product product) {
         if (product != null && !cartItems.contains(product)) {
             cartItems.add(product);
+            cart.addProduct(product);
             totalCost.set(totalCost.get() + product.getPrice());
             selectedProductsCount.set(selectedProductsCount.get() + 1);
         }
     }
 
-
     public void removeFromCart(Product product) {
         if (product != null && cartItems.contains(product)) {
             cartItems.remove(product);
+            cart.getItems().remove(product);
             totalCost.set(totalCost.get() - product.getPrice());
             selectedProductsCount.set(selectedProductsCount.get() - 1);
         }
@@ -80,8 +82,7 @@ public class BuyCardsViewModel {
             cartItems.clear();
             totalCost.set(0);
             selectedProductsCount.set(0);
-        }
-        else {
+        } else {
             // alert
         }
     }

@@ -12,16 +12,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-import static dailydescretedeck.set.viewmodels.Scenes.getPlayer;
-
 public class CartView extends Pane {
-    private BuyCardsViewModel buyCardsviewModel;
+    private BuyCardsViewModel buyCardsViewModel;
     private Scenes scenes;
 
-
-
     public CartView(BuyCardsViewModel viewModel) {
-        this.buyCardsviewModel = viewModel;
+        this.buyCardsViewModel = viewModel;
         this.scenes = new Scenes();
         setPrefSize(400, 600);
         initialize();
@@ -33,11 +29,11 @@ public class CartView extends Pane {
         Label titleLabel = new Label("Cart");
         titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
-        ListView<Product> cartListView = new ListView<>(buyCardsviewModel.getCartItems());
-        cartListView.setCellFactory(parameter -> new ProductCell(buyCardsviewModel));
+        ListView<Product> cartListView = new ListView<>(buyCardsViewModel.getCartItems());
+        cartListView.setCellFactory(parameter -> new ProductCell(buyCardsViewModel));
 
         Button backButton = new Button("Back");
-        backButton.setOnAction(event -> scenes.showBuyCardsView(getPlayer()));
+        backButton.setOnAction(event -> scenes.showBuyCardsView());
 
         VBox vbox = new VBox(10, titleLabel, cartListView, backButton);
         vbox.setPadding(new Insets(10));

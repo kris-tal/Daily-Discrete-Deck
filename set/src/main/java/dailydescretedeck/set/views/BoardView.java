@@ -230,12 +230,7 @@ public class BoardView extends Pane {
             }
             CardView.disableCards();
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Game Over");
-            alert.setHeaderText(null);
-            alert.setContentText("You lost!");
-            alert.initModality(Modality.APPLICATION_MODAL);
-            alert.showAndWait();
+            AestheticAlert.showAlert("Game Over", "You lost!");
         });
 
         confirmButton.setOnAction(event -> {
@@ -281,12 +276,8 @@ public class BoardView extends Pane {
                     Map<LocalDate, Long> endsMap = SavingService.loadMapFromFile("endsMap.txt");
                     endsMap.put(LocalDate.now(), end.getEnds());
                     SavingService.saveMapToFile("endsMap.txt", endsMap);
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Koniec gry");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Wygrałeś!");
-                    alert.initModality(Modality.APPLICATION_MODAL);
-                    alert.showAndWait();
+
+                    AestheticAlert.showAlert("Game over", "You won!");
                 }
 
                 BoardView newBoardView = new BoardView(boardViewModel);

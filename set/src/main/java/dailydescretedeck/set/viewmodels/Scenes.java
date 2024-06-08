@@ -2,7 +2,6 @@ package dailydescretedeck.set.viewmodels;
 
 import dailydescretedeck.set.models.Player;
 import dailydescretedeck.set.models.SimpleBoardState;
-import dailydescretedeck.set.viewmodels.OwnedCardsViewModel;
 import dailydescretedeck.set.views.*;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -81,5 +80,9 @@ public class Scenes {
 
     public static Player getPlayer() {
         return player;
+    }
+
+    public boolean hasItemsInCart() {
+        return buyCardsViewModel != null && buyCardsViewModel.hasItemsInCart();
     }
 }

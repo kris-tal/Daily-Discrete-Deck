@@ -2,9 +2,14 @@ package dailydescretedeck.set.viewmodels;
 
 import dailydescretedeck.set.models.Player;
 import dailydescretedeck.set.models.SimpleBoardState;
+import dailydescretedeck.set.services.PlayerName;
+import dailydescretedeck.set.services.SavingService;
 import dailydescretedeck.set.views.*;
 import javafx.scene.Scene;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
+
+import java.util.Optional;
 
 public class Scenes {
     private static Stage primaryStage;
@@ -78,6 +83,16 @@ public class Scenes {
         OwnedCardsView ownedCardsView = new OwnedCardsView(ownedCardsViewModel);
         Scene scene = new Scene(ownedCardsView, 1000, 800);
         primaryStage.setScene(scene);
+    }
+
+    public void showUsernameAlert() {
+        UsernameAlert usernameAlert = new UsernameAlert();
+        Scene scene = new Scene(usernameAlert, 300, 200);
+        Stage newWindow = new Stage();
+        newWindow.setScene(scene);
+        newWindow.setResizable(false);
+        newWindow.setTitle("Set");
+        newWindow.showAndWait();
     }
 
     public static void setPrimaryStage(Stage ps) {

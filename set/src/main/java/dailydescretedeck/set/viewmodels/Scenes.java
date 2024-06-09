@@ -37,6 +37,16 @@ public class Scenes {
         primaryStage.setTitle("Profile");
     }
 
+    public void showInstructionsView() {
+        InstructionsView instructionsView = new InstructionsView();
+        Scene scene = new Scene(instructionsView, 520, 720);
+        Stage newWindow = new Stage();
+        newWindow.setScene(scene);
+        newWindow.setResizable(false);
+        newWindow.setTitle("Instructions");
+        newWindow.show();
+    }
+
     public void showStoreView() {
         StoreViewModel storeViewModel = new StoreViewModel(player);
         StoreView storeView = new StoreView(storeViewModel);

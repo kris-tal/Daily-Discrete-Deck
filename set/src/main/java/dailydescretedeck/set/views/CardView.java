@@ -11,22 +11,32 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CardView extends Pane {
     private final Card card;
-    private final Group group;
+    private Group group;
     private double width;
     private double height;
     private boolean clicked;
     static private boolean disabled = false;
     private boolean thiscarddisabled;
 
-    public final Rectangle cardBackground;
-    private final ArrayList<Shape> fields;
+    public Rectangle cardBackground;
+    private ArrayList<Shape> fields;
 
     public CardView(Card card, double X, double Y, double sq) {
         this.card = card;
         thiscarddisabled = false;
+        buildCard(X, Y, sq);
+    }
+    public CardView(List<Dots> existingFields, double X, double Y, double sq) {
+        this.card = new Card(existingFields);
+        thiscarddisabled = false;
+        buildCard(X, Y, sq);
+    }
+
+    private void buildCard(double X, double Y, double sq) {
         this.group = new Group();
         this.width = 120 * sq;
         this.height = 180 * sq;

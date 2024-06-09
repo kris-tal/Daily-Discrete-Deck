@@ -29,9 +29,12 @@ public class MenuView extends VBox {
         Button profileButton = new MyButton("PROFILE");
         profileButton.setOnAction(event -> menuViewModel.handleInput(MenuViewModel.MenuOptions.PROFILE));
 
+        Button instructionsButton = new MyButton("HOW TO PLAY");
+        instructionsButton.setOnAction(event -> menuViewModel.handleInput(MenuViewModel.MenuOptions.INSTRUCTIONS));
+
         setSpacing(20);
         setAlignment(Pos.CENTER);
-        getChildren().addAll(playSetButton, storeButton, profileButton);
+        getChildren().addAll(playSetButton, storeButton, profileButton, instructionsButton);
     }
 
 

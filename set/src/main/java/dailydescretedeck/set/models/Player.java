@@ -2,17 +2,24 @@ package dailydescretedeck.set.models;
 
 import dailydescretedeck.set.viewmodels.CardDesign;
 import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
+import javafx.beans.property.ListProperty;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
     private final String username;
     private static int OOPoints;
     private static int money;
     private CardDesign cardDesignInUse;
+    private List<CardDesign> ownedDesigns;
 
     public Player(String username) {
         this.username = username;
         this.cardDesignInUse = new DefaultCardDesign();
         this.money = 1000;
+        this.ownedDesigns = new ArrayList<>();
+        this.ownedDesigns.add(cardDesignInUse);
     }
 
     public Player(int points, String username, String pwd) {
@@ -51,5 +58,11 @@ public class Player {
             return true;
         }
         return false;
+    }
+
+    public void addDesigns(ListProperty<Product> cartItems) {
+        for (Product p : cartItems) {
+            ownedDesigns.add(p.getDesign());
+        }
     }
 }

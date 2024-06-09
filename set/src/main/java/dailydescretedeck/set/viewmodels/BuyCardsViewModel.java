@@ -107,4 +107,10 @@ public class BuyCardsViewModel {
     public List<Product> getPurchasedProducts() {
         return purchasedProducts;
     }
+
+    public void removeAllFromCart() {
+        cartItems.clear();
+        totalCost.set(0);
+        selectedProductsCount.set(0);
+    }
 }

@@ -1,10 +1,11 @@
 package dailydescretedeck.set.views.carddesignes;
 
+import dailydescretedeck.set.viewmodels.CardDesign;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
-public class PSCardDesign {
+public class PSCardDesign implements CardDesign {
     private static final Color[]colors = {
             Color.rgb(39, 139, 242),
             Color.rgb(250, 80, 182),
@@ -19,6 +20,7 @@ public class PSCardDesign {
     public Color getColor(int idx) {
         return colors[idx - 1];
     }
+
 
     public Shape getShape(double sq) {
         return new Circle(15 * sq);

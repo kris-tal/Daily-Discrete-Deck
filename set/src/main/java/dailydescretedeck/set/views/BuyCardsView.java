@@ -2,24 +2,24 @@ package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.Product;
 import dailydescretedeck.set.viewmodels.BuyCardsViewModel;
+import dailydescretedeck.set.viewmodels.CardDesign;
 import dailydescretedeck.set.viewmodels.Scenes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.util.HashMap;
 import java.util.List;
@@ -67,7 +67,7 @@ public class BuyCardsView extends Pane {
         double bigRectY = (paneHeight - bigRectHeight) / 2;
 
         Rectangle bigRect = new Rectangle(bigRectX, bigRectY, bigRectWidth, bigRectHeight);
-        bigRect.setFill(WHITE);
+        bigRect.setFill(THISTLE);
         getChildren().add(bigRect);
 
         gap = square / 5;
@@ -103,16 +103,16 @@ public class BuyCardsView extends Pane {
 
         int productIndex = 0;
 
-        for (int row = 0; row < 2; row++) {
-            double rowY = startY + row * (square * 2 + gap);
+        for (int row = 0; row < 3; row++) {
+            double rowY = startY + row * (square * 2.4 + gap);
 
-            for (int col = 0; col < 3; col++) {
+            for (int col = 0; col < 2; col++) {
                 if (productIndex >= products.size()) {
                     break;
                 }
 
                 Product product = products.get(productIndex++);
-                ProductView productView = new ProductView(product, buyCardsViewModel,0, 0, square / 10);
+                ProductView productView = new ProductView(product, buyCardsViewModel, square / 8.5);
                 productViews.put(product, productView);
                 productView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                     if (!selectedProducts.contains(product)) {
@@ -124,52 +124,49 @@ public class BuyCardsView extends Pane {
                 StackPane productPane = new StackPane();
                 productPane.getChildren().add(productView);
 
-                productPane.setLayoutX(startX + col * (square * 2 + gap));
+                productPane.setLayoutX(startX + col * (square * 4.5 + gap));
                 productPane.setLayoutY(rowY);
 
                 getChildren().add(productPane);
 
                 Label priceLabel = new Label(String.valueOf(product.getPrice()));
-                priceLabel.setFont(Font.font("Comic Sans MS", gap * 1.5));
-                priceLabel.setLayoutX(startX + col * (square * 2 + gap));
+                priceLabel.setFont(Font.font("Comic Sans MS", gap * 2.0));
+                priceLabel.setLayoutX(startX + col * (square * 4.5 + gap));
                 priceLabel.setLayoutY(rowY + square + gap / 2);
                 getChildren().add(priceLabel);
+
+                Label nameLabel = new Label(String.valueOf(product.getName()));
+                nameLabel.setFont(Font.font("Comic Sans MS", gap * 2.0));
+                nameLabel.setLayoutX(startX + col * (square * 4.5 + gap));
+                nameLabel.setLayoutY(rowY + 0.5 * square + gap / 2);
+                getChildren().add(nameLabel);
             }
         }
-
-        double buttonWidth = (bigRectWidth - 50) / 5;
-        double buttonHeight = bigRectHeight / 10;
 
         Button backButton = new Button("Back to Store");
         backButton.setLayoutX(gap);
         backButton.setLayoutY(bigRectY + bigRectHeight + gap);
-        backButton.setPrefWidth(buttonWidth);
-        backButton.setPrefHeight(buttonHeight);
-        backButton.setFont(Font.font("System", gap * 1.8));
+        backButton.setPrefWidth(bigRectWidth / 3 - gap);
+        backButton.setPrefHeight(40);
+        backButton.setFont(Font.font("System", 18));
         backButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        backButton.setOnAction(event -> {
-            if (buyCardsViewModel.hasItemsInCart()) {
-                AestheticAlert.showAlert("Error", "You cannot leave, because there are still products in your cart.");
-            } else {
-                scenes.showStoreView();
-            }
-        });
+        backButton.setOnAction(event -> scenes.showStoreView());
 
         Button cartButton = new Button("View Cart");
         cartButton.setLayoutX(gap + bigRectWidth / 3 + gap);
         cartButton.setLayoutY(bigRectY + bigRectHeight + gap);
-        cartButton.setPrefWidth(buttonWidth);
-        cartButton.setPrefHeight(buttonHeight);
-        cartButton.setFont(Font.font("System", gap * 1.8));
+        cartButton.setPrefWidth(bigRectWidth / 3 - gap);
+        cartButton.setPrefHeight(40);
+        cartButton.setFont(Font.font("System", 18));
         cartButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
         cartButton.setOnAction(event -> scenes.showCartView());
 
         Button previousButton = new Button("Previous");
-        previousButton.setLayoutX(bigRectX + 3*bigRectWidth/4 - gap);
+        previousButton.setLayoutX(bigRectX + bigRectWidth - gap - 200);
         previousButton.setLayoutY(bigRectY + bigRectHeight + gap);
-        previousButton.setPrefWidth(buttonWidth);
-        previousButton.setPrefHeight(buttonHeight);
-        previousButton.setFont(Font.font("System", gap * 1.8));
+        previousButton.setPrefWidth(100);
+        previousButton.setPrefHeight(40);
+        previousButton.setFont(Font.font("System", 18));
         previousButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
         previousButton.setOnAction(event -> {
             if (currentPage > 0) {
@@ -179,11 +176,11 @@ public class BuyCardsView extends Pane {
         });
 
         Button nextButton = new Button("Next");
-        nextButton.setLayoutX(bigRectX + 3*bigRectWidth/4 - gap + buttonWidth);
+        nextButton.setLayoutX(bigRectX + bigRectWidth - gap - 100);
         nextButton.setLayoutY(bigRectY + bigRectHeight + gap);
-        nextButton.setPrefWidth(buttonWidth);
-        nextButton.setPrefHeight(buttonHeight);
-        nextButton.setFont(Font.font("System", gap * 1.8));
+        nextButton.setPrefWidth(100);
+        nextButton.setPrefHeight(40);
+        nextButton.setFont(Font.font("System", 18));
         nextButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
         nextButton.setOnAction(event -> {
             if ((currentPage + 1) * itemsPerPage < buyCardsViewModel.getProducts().size()) {
@@ -196,27 +193,27 @@ public class BuyCardsView extends Pane {
     }
 
     private static class ProductView extends StackPane {
-        private Circle circle;
-        private Label nameLabel;
+        private Circle[] circles;
         private Color originalColor;
         private boolean isSelected = false;
 
-        public ProductView(Product product, BuyCardsViewModel bcvm, double x, double y, double scale) {
-            originalColor = Color.valueOf(product.getName().split(" ")[0].toUpperCase());
-            circle = new Circle(5 * scale);
-            circle.setFill(originalColor);
-            circle.setLayoutX(x);
-            circle.setLayoutY(y);
+        public ProductView(Product product, BuyCardsViewModel bcvm, double scale) {
+            circles = new Circle[6];
+            CardDesign design = product.getDesign();
+            HBox hbox = new HBox(5); // spacing between circles
 
-            nameLabel = new Label(product.getName());
-            nameLabel.setFont(Font.font("Comic Sans MS", 10 * scale));
+            for (int i = 0; i < circles.length; i++) {
+                circles[i] = new Circle(2.5 * scale);
+                circles[i].setFill(design.getColor(i + 1));
+                hbox.getChildren().add(circles[i]);
+            }
 
-            getChildren().addAll(circle);
+            getChildren().addAll(hbox);
 
-            setOnMouseEntered(event -> circle.setFill(darkenColor(originalColor, 0.1)));
+            setOnMouseEntered(event -> setCirclesColor(darkenColor(design.getColor(1), 0.1)));
             setOnMouseExited(event -> {
                 if (!isSelected) {
-                    circle.setFill(originalColor);
+                    setCirclesColor(design.getColor(1));
                 }
             });
 
@@ -226,9 +223,15 @@ public class BuyCardsView extends Pane {
             });
         }
 
+        private void setCirclesColor(Color color) {
+            for (Circle circle : circles) {
+                circle.setFill(color);
+            }
+        }
+
         private void select() {
             if (!isSelected) {
-                circle.setFill(darkenColor(originalColor, 0.3));
+                setCirclesColor(darkenColor(originalColor, 0.3));
                 isSelected = true;
                 new Thread(() -> {
                     try {
@@ -236,7 +239,7 @@ public class BuyCardsView extends Pane {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    circle.setFill(originalColor);
+                    setCirclesColor(originalColor);
                 }).start();
             }
         }

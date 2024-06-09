@@ -3,6 +3,7 @@ package dailydescretedeck.set.viewmodels;
 import dailydescretedeck.set.models.Cart;
 import dailydescretedeck.set.models.Player;
 import dailydescretedeck.set.models.Product;
+import dailydescretedeck.set.views.carddesignes.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -30,14 +31,11 @@ public class BuyCardsViewModel {
         this.purchasedProducts = new ArrayList<>();
 
         // example products
-        products.add(new Product("Red Dots", 10));
-        products.add(new Product("Blue Dots", 15));
-        products.add(new Product("Green Dots", 20));
-        products.add(new Product("Gold Dots", 35));
-        products.add(new Product("Yellow Dots", 100));
-        products.add(new Product("Orange Dots", 15));
-        products.add(new Product("Olive Dots", 20));
-        products.add(new Product("Brown Dots", 35));
+        products.add(new Product("Blue", 10, new BlueCardDesign()));
+        products.add(new Product("Emo", 20, new EmoCardDesign()));
+        products.add(new Product("JH", 35, new JHCardDesign()));
+        products.add(new Product("PS", 100, new PSCardDesign()));
+        products.add(new Product("Red", 15, new RedCardDesign()));
     }
 
     public ListProperty<Product> getProducts() {

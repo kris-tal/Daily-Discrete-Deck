@@ -51,7 +51,7 @@ public class CartView extends Pane {
         } else if (purchaseState == 1) {
             AestheticAlert.showAlert("Purchase Failed", "You do not have enough money to complete this purchase.");
         } else {
-            scenes.showStoreView();
+            scenes.showBuyCardsView();
         }
     }
 

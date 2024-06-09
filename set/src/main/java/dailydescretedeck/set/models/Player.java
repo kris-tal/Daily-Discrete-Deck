@@ -6,7 +6,7 @@ import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
 public class Player {
     private final String username;
     private static int OOPoints;
-    private static int money = 1000;
+    private static int money;
     private CardDesign cardDesignInUse;
 
     public Player(String username) {

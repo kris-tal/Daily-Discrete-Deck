@@ -34,7 +34,7 @@ public class BuyCardsViewModel {
         products.add(new Product("Blue", 10, new BlueCardDesign()));
         products.add(new Product("Emo", 20, new EmoCardDesign()));
         products.add(new Product("JH", 35, new JHCardDesign()));
-        products.add(new Product("PS", 100, new PSCardDesign()));
+        products.add(new Product("PS", 10, new PSCardDesign()));
         products.add(new Product("Red", 15, new RedCardDesign()));
     }
 
@@ -82,7 +82,7 @@ public class BuyCardsViewModel {
 
         if (cost == 0) return 0;
         if (playerMoney >= cost) {
-            player.spendMoney(playerMoney - cost);
+            player.spendMoney(cost);
             purchasedProducts.addAll(cartItems);
             products.removeAll(cartItems);
             cartItems.clear();

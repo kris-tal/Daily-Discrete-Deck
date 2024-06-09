@@ -150,7 +150,13 @@ public class BuyCardsView extends Pane {
         backButton.setPrefHeight(40);
         backButton.setFont(Font.font("System", 18));
         backButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        backButton.setOnAction(event -> scenes.showStoreView());
+        backButton.setOnAction(event -> {
+            if (buyCardsViewModel.hasItemsInCart()) {
+                AestheticAlert.showAlert("Error", "Please finalize your purchase or empty your cart before leaving.");
+            } else {
+                scenes.showStoreView();
+            }
+        });
 
         Button cartButton = new Button("View Cart");
         cartButton.setLayoutX(gap + bigRectWidth / 3 + gap);
@@ -191,61 +197,72 @@ public class BuyCardsView extends Pane {
 
         getChildren().addAll(backButton, cartButton, previousButton, nextButton);
     }
+    
 
     private static class ProductView extends StackPane {
         private Circle[] circles;
-        private Color originalColor;
+        private Color[] originalColors;
         private boolean isSelected = false;
 
         public ProductView(Product product, BuyCardsViewModel bcvm, double scale) {
             circles = new Circle[6];
+            originalColors = new Color[6];
             CardDesign design = product.getDesign();
             HBox hbox = new HBox(5); // spacing between circles
 
             for (int i = 0; i < circles.length; i++) {
                 circles[i] = new Circle(2.5 * scale);
-                circles[i].setFill(design.getColor(i + 1));
+                originalColors[i] = design.getColor(i + 1);
+                circles[i].setFill(originalColors[i]);
                 hbox.getChildren().add(circles[i]);
             }
 
-            getChildren().addAll(hbox);
+            getChildren().add(hbox);
 
-            setOnMouseEntered(event -> setCirclesColor(darkenColor(design.getColor(1), 0.1)));
+            setOnMouseEntered(event -> setCirclesColor(0.1));
             setOnMouseExited(event -> {
                 if (!isSelected) {
-                    setCirclesColor(design.getColor(1));
+                    resetCirclesColor();
                 }
             });
 
             setOnMouseClicked(event -> {
-                bcvm.addToCart(product);
-                select();
+                if (isSelected) {
+                    bcvm.addToCart(product);
+                    selectPermanently();
+                } else {
+                    bcvm.addToCart(product);
+                    select();
+                }
             });
         }
 
-        private void setCirclesColor(Color color) {
-            for (Circle circle : circles) {
-                circle.setFill(color);
+        private void setCirclesColor(double factor) {
+            for (int i = 0; i < circles.length; i++) {
+                circles[i].setFill(darkenColor(originalColors[i], factor));
+            }
+        }
+
+        private void resetCirclesColor() {
+            for (int i = 0; i < circles.length; i++) {
+                circles[i].setFill(originalColors[i]);
             }
         }
 
         private void select() {
             if (!isSelected) {
-                setCirclesColor(darkenColor(originalColor, 0.3));
+                setCirclesColor(0.3);
                 isSelected = true;
-                new Thread(() -> {
-                    try {
-                        Thread.sleep(500); // Wait for 500 milliseconds
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    setCirclesColor(originalColor);
-                }).start();
             }
+        }
+
+        private void selectPermanently() {
+            setCirclesColor(0.3);
         }
 
         private Color darkenColor(Color color, double factor) {
             return color.deriveColor(0, 1, 1 - factor, 1);
         }
     }
+
 }

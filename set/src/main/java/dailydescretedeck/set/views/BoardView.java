@@ -216,18 +216,15 @@ public class BoardView extends Pane {
         showButton.setPrefHeight(buttonHeight);
         showButton.setFont(Font.font("System", gap * 1.8));
         showButton.setOnAction(event ->{
-            /*
-            boardViewModel.shuffleCards();
-            BoardView newBoardView = new BoardView(boardViewModel);
-            StackPane parent = (StackPane) getParent();
-            parent.getChildren().add(newBoardView);
-
-             */
+            selectedCards.clear();
+            selectedCards.addAll(boardViewModel.getSet());
 
             for (Card card : selectedCards) {
                 CardView cardView = cardViews.get(card);
+                cardView.clicked();
                 cardView.selectNotSelected();
             }
+
         } );
 
         xorButton.setLayoutX(paneWidth - buttonWidth / 2 - gap);

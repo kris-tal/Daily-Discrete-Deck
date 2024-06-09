@@ -75,4 +75,8 @@ public class BoardViewModel {
     public void shuffleCards() {
         Collections.shuffle(cards);
     }
+
+    public List<Card> getSet() {
+        return cardManager.getSet();
+    }
 }

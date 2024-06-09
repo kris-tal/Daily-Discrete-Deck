@@ -45,6 +45,11 @@ public class CardView extends Pane {
         buildCard(X, Y, sq);
     }
 
+    public CardView(CardViewModel cardViewModel, CardViewModel cardViewModel1) {
+        this.cardViewModel = cardViewModel1;
+        new CardView(cardViewModel.getDesign(), 0, 0, 1);
+    }
+
     private void buildCard(double X, double Y, double sq) {
         this.group = new Group();
         this.width = 120 * sq;

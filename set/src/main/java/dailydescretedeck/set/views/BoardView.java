@@ -20,7 +20,6 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -30,19 +29,20 @@ public class BoardView extends Pane {
     private BoardViewModel boardViewModel;
     private double gap;
     private ObservableList<CardViewModel> selectedCards = FXCollections.observableArrayList();
-    private Map<CardViewModel, CardView> cardViews = new HashMap<>();
     private static long startTime = System.currentTimeMillis();
     private static Timeline timeline;
     private static boolean bylo = false;
     private Scenes scenes;
     private Money money;
     private boolean showSet;
+    private ObservableList<CardViewModel> cardViewModels;
 
     public BoardView(BoardViewModel boardViewModel) {
         this.boardViewModel = boardViewModel;
         this.scenes = new Scenes();
         this.money = new Money();
         this.showSet = false;
+        this.cardViewModels = boardViewModel.cardsProperty();
         display();
 
         widthProperty().addListener((observable, oldValue, newValue) -> display());
@@ -131,14 +131,13 @@ public class BoardView extends Pane {
             startX += row * square;
 
             for (int col = 0; col < 4; col++) {
-                if (cardIndex >= boardViewModel.cardsProperty().size()) {
+                if (cardIndex >= cardViewModels.size()) {
                     break;
                 }
 
-                CardViewModel cardViewModel = boardViewModel.cardsProperty().get(cardIndex++);
+                CardViewModel cardViewModel = cardViewModels.get(cardIndex++);
 
                 CardView cardView = new CardView(cardViewModel, 0, 0, square / 60);
-                cardViews.put(cardViewModel, cardView);
                 cardView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                     if (selectedCards.contains(cardViewModel)) {
                         selectedCards.remove(cardViewModel);
@@ -200,6 +199,7 @@ public class BoardView extends Pane {
             boardViewModel.shuffleCards();
             BoardView newBoardView = new BoardView(boardViewModel);
             StackPane parent = (StackPane) getParent();
+            parent.getChildren().remove(this);
             parent.getChildren().add(newBoardView);
         });
 
@@ -209,15 +209,12 @@ public class BoardView extends Pane {
         showButton.setPrefHeight(buttonHeight);
         showButton.setFont(Font.font("System", gap * 1.8));
         showButton.setOnAction(event -> {
-            System.out.println(boardViewModel.getBoard().getNumberSets());
             selectedCards.clear();
             selectedCards.addAll(boardViewModel.getSet());
-            System.out.println(boardViewModel.getBoard().getNumberSets());
             showSet = true;
             for (CardViewModel cardViewModel : selectedCards) {
-                CardView cardView = cardViews.get(cardViewModel);
-                cardView.clicked();
-                cardView.selectNotSelected();
+                cardViewModel.getView().clicked();
+                cardViewModel.getView().selectNotSelected();
             }
         });
 
@@ -247,12 +244,11 @@ public class BoardView extends Pane {
             }
 
             selectedCards.clear();
-            System.out.println(selectedCards.size());
             selectedCards.addAll(boardViewModel.getNotSet());
 
             for (CardViewModel cardViewModel : selectedCards) {
-                CardView cardView = cardViews.get(cardViewModel);
-                cardView.selectNotSelected();
+                CardView cv = cardViewModel.getView();
+                cardViewModel.getView().selectNotSelected();
             }
             CardView.disableCards();
             confirmButton.setDisable(true);
@@ -266,7 +262,6 @@ public class BoardView extends Pane {
         });
 
         confirmButton.setOnAction(event -> {
-            System.out.println(LocalDate.now());
             if (boardViewModel.isSetOk(selectedCards, true)) {
                 SetCollector setCollector = SetCollector.getInstance();
                 End end = End.getInstance();
@@ -277,7 +272,6 @@ public class BoardView extends Pane {
                     end.resetEnds();
                     theBestTime.resetTime();
                 } else if (!SavingService.loadDateFromFile("saves/Date.txt").equals(LocalDate.now())) {
-                    System.out.println(SavingService.loadDateFromFile("saves/Date.txt"));
                     SavingService.saveDateToFile("saves/Date.txt", LocalDate.now());
                     setCollector.resetsSets();
                     end.resetEnds();
@@ -290,13 +284,11 @@ public class BoardView extends Pane {
                     money.addMoney(1);
                     setCollector.addSets(1);
                 } else showSet = false;
-                System.out.println("Zapisano ilość zebranych SETów: " + setCollector.getSets());
 
                 Map<LocalDate, Long> setsMap = SavingService.loadMapFromFile("saves/setsMap.txt");
                 setsMap.put(LocalDate.now(), setCollector.getSets());
                 SavingService.saveMapToFile("saves/setsMap.txt", setsMap);
 
-                System.out.println("Znaleziono SET");
                 if (!ok) {
                     if (timeline != null) {
                         timeline.stop();
@@ -316,7 +308,6 @@ public class BoardView extends Pane {
                     endsMap.put(LocalDate.now(), end.getEnds());
                     SavingService.saveMapToFile("saves/endsMap.txt", endsMap);
 
-
                     confirmButton.setDisable(true);
                     showButton.setDisable(true);
                     surrenderButton.setDisable(true);
@@ -335,10 +326,8 @@ public class BoardView extends Pane {
                 CardView.enableCards();
                 selectedCards.clear();
             } else {
-                System.out.println("Nie znaleziono SET");
-                for (CardViewModel cardViewModel : boardViewModel.cardsProperty()) {
-                    CardView cardView = cardViews.get(cardViewModel);
-                    cardView.unclick();
+                for (CardViewModel cardViewModel : cardViewModels) {
+                    cardViewModel.getView().unclick();
                 }
                 CardView.enableCards();
                 selectedCards.clear();
@@ -346,9 +335,8 @@ public class BoardView extends Pane {
         });
 
         cancelButton.setOnAction(event -> {
-            for (CardViewModel cardViewModel : boardViewModel.cardsProperty()) {
-                CardView cardView = cardViews.get(cardViewModel);
-                cardView.unclick();
+            for (CardViewModel cardViewModel : cardViewModels) {
+                cardViewModel.getView().unclick();
             }
             CardView.enableCards();
             selectedCards.clear();

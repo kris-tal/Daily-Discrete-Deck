@@ -18,7 +18,7 @@ public class BoardViewModel {
 
     public BoardViewModel(Board board) {
         this.board = board;
-        cardManager = new CardManager(board);
+        this.cardManager = new CardManager(board);
         this.cards = new SimpleListProperty<>(FXCollections.observableArrayList(
                 board.getCards().stream().map(CardViewModel::new).collect(Collectors.toList())
         ));

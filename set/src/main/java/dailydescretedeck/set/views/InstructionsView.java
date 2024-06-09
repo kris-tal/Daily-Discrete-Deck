@@ -42,7 +42,7 @@ public class InstructionsView extends HBox {
         Label instructions = new Label();
         instructions.setFont(new javafx.scene.text.Font("System", 16));
         instructions.setWrapText(true);
-        instructions.setText("Instructions:\n" +
+        instructions.setText(
                 "Setup:\n" +
                 "- There are 63 unique cards\n" +
                 "- Each card may have one dot in one of six different colors, or no dot at all\n" +

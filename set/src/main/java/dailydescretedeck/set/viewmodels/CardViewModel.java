@@ -10,16 +10,16 @@ import java.util.List;
 
 public class CardViewModel {
     private Card card;
-    private ObjectProperty<CardView> cardView;
+    private CardView cardView;
 
     public CardViewModel(Card card) {
         this.card = card;
-        this.cardView = new SimpleObjectProperty<>(new CardView(this, 0, 0, 1));
+        this.cardView = new CardView(this, 0, 0, 2);
     }
 
     public CardViewModel(List<Dots> existingFields, CardDesign design) {
         this.card = new Card(existingFields, design);
-        this.cardView = new SimpleObjectProperty<>(new CardView(this, 0, 0, 1));
+        this.cardView = new CardView(this, 0, 0, 2);
     }
 
     public List<Dots> getFields() {
@@ -31,34 +31,40 @@ public class CardViewModel {
     }
 
     public CardView getView() {
-        return cardView.get();
+        return cardView;
     }
 
     public void setViewScale(double sq) {
-        cardView.get().updateScale(sq);
+        cardView.updateScale(sq);
     }
 
     public void click() {
-        cardView.get().clicked();
+        cardView.clicked();
     }
 
     public void unclick() {
-        cardView.get().unclick();
+        cardView.unclick();
     }
 
     public void selectNotSelected() {
-        cardView.get().selectNotSelected();
+        cardView.selectNotSelected();
     }
 
     public void disableThisCard() {
-        cardView.get().disableThisCard();
+        cardView.disableThisCard();
     }
 
     public Card getCard() {
         return card;
     }
 
+
+
     public List<Dots> dotsProperty() {
         return card.getFields();
+    }
+
+    public void setCardView(CardView cardView) {
+        this.cardView = cardView;
     }
 }

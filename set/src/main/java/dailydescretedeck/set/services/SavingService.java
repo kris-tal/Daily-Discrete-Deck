@@ -93,7 +93,7 @@ public class SavingService {
         }
     }
 
-    static String loadNameFromFile(String fileName) {
+    public static String loadNameFromFile(String fileName) {
         Path path = Paths.get(fileName);
         if (Files.exists(path)) {
             try {

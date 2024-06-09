@@ -320,6 +320,8 @@ public class BoardView extends Pane {
                     Map<LocalDate, Long> endsMap = SavingService.loadMapFromFile("endsMap.txt");
                     endsMap.put(LocalDate.now(), end.getEnds());
                     SavingService.saveMapToFile("endsMap.txt", endsMap);
+
+                    
                     confirmButton.setDisable(true);
                     showButton.setDisable(true);
                     surrenderButton.setDisable(true);
@@ -328,6 +330,7 @@ public class BoardView extends Pane {
                     shuffleButton.setDisable(true);
 
                     AestheticAlert.showAlert("Game over", "You won!");
+                    return;
                 }
 
                 BoardView newBoardView = new BoardView(boardViewModel);

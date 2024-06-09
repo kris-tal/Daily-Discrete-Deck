@@ -1,5 +1,6 @@
 package dailydescretedeck.set;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import dailydescretedeck.set.models.Player;
@@ -9,6 +10,7 @@ import dailydescretedeck.set.viewmodels.Scenes;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Set extends Application {
@@ -34,6 +36,10 @@ public class Set extends Application {
         }
         this.player = new Player(playerName.getName());
         System.out.println("Player: " + playerName.getName());
+        try {
+            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/icon.png")));
+            stage.getIcons().add(icon);
+        } catch(RuntimeException image) { System.out.println("Image not found"); }
         Scenes.setPrimaryStage(primaryStage);
         scenes = new Scenes();
         scenes.setPlayer(player);

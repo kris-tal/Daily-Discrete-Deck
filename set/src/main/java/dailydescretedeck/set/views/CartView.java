@@ -36,7 +36,7 @@ public class CartView extends Pane {
         backButton.setOnAction(event -> scenes.showBuyCardsView());
 
         Button finaliseButton = new Button("Finalise Purchase");
-        backButton.setOnAction(event -> scenes.showBuyCardsView());
+        backButton.setOnAction(event -> finalisePurchase());
 
         VBox vbox = new VBox(10, titleLabel, cartListView, backButton, finaliseButton);
         vbox.setPadding(new Insets(10));

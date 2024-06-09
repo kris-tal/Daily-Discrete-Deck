@@ -73,7 +73,7 @@ public class BoardViewModel {
 
     public CardViewModel getXor(List<CardViewModel> selectedCardViewModels) {
         List<Card> selectedCards = selectedCardViewModels.stream().map(CardViewModel::getCard).collect(Collectors.toList());
-        return new CardViewModel(cardManager.getXor(selectedCards));
+        return new CardViewModel(cardManager.xor(selectedCards));
     }
 
     public List<CardViewModel> getSet() {
@@ -86,5 +86,8 @@ public class BoardViewModel {
 
     public int getNumberSets() {
         return board.getNumberSets();
+    }
+
+    public void shuffleCards() {
     }
 }

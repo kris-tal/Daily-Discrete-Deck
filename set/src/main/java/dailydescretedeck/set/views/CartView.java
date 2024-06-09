@@ -17,9 +17,10 @@ import javafx.scene.text.Font;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Collections.min;
 import static javafx.scene.paint.Color.THISTLE;
 
-public class CartView extends Pane {
+public class CartView extends BorderPane {
     private BuyCardsViewModel buyCardsViewModel;
     private Scenes scenes;
     private VBox cardDesignBox;
@@ -27,8 +28,8 @@ public class CartView extends Pane {
     public CartView(BuyCardsViewModel viewModel) {
         this.buyCardsViewModel = viewModel;
         this.scenes = new Scenes();
-        setBackground(Background.fill(THISTLE));
-        setPrefSize(600, 600); 
+        setBackground(new Background(new BackgroundFill(THISTLE, CornerRadii.EMPTY, Insets.EMPTY)));
+        setPrefSize(600, 600);
         initialize();
     }
 
@@ -41,6 +42,10 @@ public class CartView extends Pane {
         ListView<Product> cartListView = new ListView<>(buyCardsViewModel.getCartItems());
         cartListView.setCellFactory(parameter -> new ProductCell(buyCardsViewModel, this));
         cartListView.setStyle("-fx-background-color: THISTLE;");
+        VBox.setVgrow(cartListView, Priority.ALWAYS);
+
+        Button removeAllButton = new MyButton("Remove All");
+        removeAllButton.setOnAction(event -> removeAll());
 
         Button backButton = new MyButton("Back");
         backButton.setOnAction(event -> scenes.showBuyCardsView());
@@ -50,14 +55,25 @@ public class CartView extends Pane {
 
         cardDesignBox = new VBox();
         cardDesignBox.setPrefWidth(200);
-        cardDesignBox.setBackground(Background.fill(THISTLE));
+        cardDesignBox.setBackground(new Background(new BackgroundFill(THISTLE, CornerRadii.EMPTY, Insets.EMPTY)));
         cardDesignBox.setPadding(new Insets(10));
+        VBox.setVgrow(cardDesignBox, Priority.ALWAYS);
 
-        HBox mainBox = new HBox(10, cartListView, cardDesignBox);
-        VBox vbox = new VBox(15, titleLabel, mainBox, backButton, finaliseButton);
+        VBox vbox = new VBox(15, titleLabel, cartListView, removeAllButton, backButton, finaliseButton);
         vbox.setPadding(new Insets(10));
-        vbox.setPrefSize(600, 600);
-        getChildren().add(vbox);
+        VBox.setVgrow(cartListView, Priority.ALWAYS);
+        VBox.setVgrow(vbox, Priority.ALWAYS);
+
+        HBox mainBox = new HBox(10, vbox, cardDesignBox);
+        HBox.setHgrow(vbox, Priority.ALWAYS);
+        HBox.setHgrow(cardDesignBox, Priority.ALWAYS);
+
+        setCenter(mainBox);
+
+        vbox.prefHeightProperty().bind(heightProperty());
+        vbox.prefWidthProperty().bind(widthProperty().multiply(0.6));
+        cardDesignBox.prefHeightProperty().bind(heightProperty());
+        cardDesignBox.prefWidthProperty().bind(widthProperty().multiply(0.4));
     }
 
     private void finalisePurchase() {
@@ -69,6 +85,10 @@ public class CartView extends Pane {
         } else {
             scenes.showBuyCardsView();
         }
+    }
+
+    private void removeAll() {
+        buyCardsViewModel.removeAllFromCart();
     }
 
     public void displayCardDesign(Product product) {
@@ -83,8 +103,13 @@ public class CartView extends Pane {
             existingFields.add(Dots.B2);
             existingFields.add(Dots.C1);
             existingFields.add(Dots.C2);
-            CardView cardView = new CardView(existingFields, design, 0, 0, 2);
+            double sq = Math.min(cardDesignBox.getWidth(), cardDesignBox.getHeight()) / 180;
+            CardView cardView = new CardView(existingFields, design, 0, 0, sq);
+            cardView.disableThisCard();
             cardDesignBox.getChildren().add(cardView);
+
+            cardView.prefHeightProperty().bind(cardDesignBox.heightProperty());
+            cardView.prefWidthProperty().bind(cardDesignBox.widthProperty());
         }
     }
 
@@ -106,6 +131,9 @@ public class CartView extends Pane {
             removeButton.setOnAction(event -> viewModel.removeFromCart(getItem()));
             content = new HBox(10, nameLabel, priceLabel, removeButton);
             content.setStyle("-fx-background-color: #f0f0f0; -fx-padding: 10px; -fx-border-color: #cccccc; -fx-border-width: 1px; -fx-border-radius: 5px;");
+            HBox.setHgrow(nameLabel, Priority.ALWAYS);
+            HBox.setHgrow(priceLabel, Priority.ALWAYS);
+            HBox.setHgrow(removeButton, Priority.ALWAYS);
 
             setOnMouseClicked(event -> {
                 if (!isEmpty()) {

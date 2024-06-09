@@ -26,7 +26,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class OwnedCardsView extends Pane {
-    /*private Scenes scenes;
+    private Scenes scenes;
     private OwnedCardsViewModel ownedCardsViewModel;
     private int currentDesign = 0;
 
@@ -37,7 +37,7 @@ public class OwnedCardsView extends Pane {
     }
 
     public void display() {
-        HBox cardsHBox = new HBox();
+        /*HBox cardsHBox = new HBox();
         cardsHBox.setSpacing(60);
         cardsHBox.setAlignment(Pos.CENTER);
 
@@ -112,6 +112,6 @@ public class OwnedCardsView extends Pane {
 
         getChildren().addAll(titleLabel, cardsHBox);
         Scene scene = new Scene(this, getWidth(), getHeight());
-        scene.getRoot().setStyle("-fx-background-color: thistle;");
-    }*/
+        scene.getRoot().setStyle("-fx-background-color: thistle;");*/
+    }
 }

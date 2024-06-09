@@ -2,6 +2,7 @@ package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.Card;
 import dailydescretedeck.set.models.Dots;
+import dailydescretedeck.set.viewmodels.CardDesign;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -30,6 +31,20 @@ public class CardView extends Pane {
         thiscarddisabled = false;
         buildCard(X, Y, sq);
     }
+    public CardView(List<Dots> existingFields, CardDesign design, double X, double Y, double sq) {
+        this.card = new Card(existingFields, design);
+        thiscarddisabled = false;
+        buildCard(X, Y, sq);
+    }
+    /*
+    public CardView(CardDesign design, double X, double Y, double sq) {
+        ArrayList<Dots> dots = new ArrayList<>();
+        dots = design.getColors();
+        this.card = new Card(dots);
+        thiscarddisabled = false;
+        buildCard(X, Y, sq);
+    }
+    */
     public CardView(List<Dots> existingFields, double X, double Y, double sq) {
         this.card = new Card(existingFields);
         thiscarddisabled = false;

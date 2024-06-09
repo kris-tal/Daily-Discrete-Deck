@@ -14,6 +14,10 @@ public class Card {
         this.fields = (ArrayList<Dots>) existingFields;
         this.design = Player.getCardDesignInUse();
     }
+    public Card(List<Dots> existingFields, CardDesign design) {
+        this.fields = (ArrayList<Dots>) existingFields;
+        this.design = design;
+    }
 
     public List<Dots> getFields() {
         return this.fields;

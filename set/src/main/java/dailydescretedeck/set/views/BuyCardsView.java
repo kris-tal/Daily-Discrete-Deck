@@ -133,12 +133,15 @@ public class BuyCardsView extends Pane {
             }
         }
 
+        double buttonWidth = (bigRectWidth - 50) / 5;
+        double buttonHeight = bigRectHeight / 10;
+
         Button backButton = new Button("Back to Store");
         backButton.setLayoutX(gap);
         backButton.setLayoutY(bigRectY + bigRectHeight + gap);
-        backButton.setPrefWidth(bigRectWidth / 3 - gap);
-        backButton.setPrefHeight(40);
-        backButton.setFont(Font.font("System", 18));
+        backButton.setPrefWidth(buttonWidth);
+        backButton.setPrefHeight(buttonHeight);
+        backButton.setFont(Font.font("System", gap * 1.8));
         backButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
         backButton.setOnAction(event -> {
             if (buyCardsViewModel.hasItemsInCart()) {
@@ -151,18 +154,18 @@ public class BuyCardsView extends Pane {
         Button cartButton = new Button("View Cart");
         cartButton.setLayoutX(gap + bigRectWidth / 3 + gap);
         cartButton.setLayoutY(bigRectY + bigRectHeight + gap);
-        cartButton.setPrefWidth(bigRectWidth / 3 - gap);
-        cartButton.setPrefHeight(40);
-        cartButton.setFont(Font.font("System", 18));
+        cartButton.setPrefWidth(buttonWidth);
+        cartButton.setPrefHeight(buttonHeight);
+        cartButton.setFont(Font.font("System", gap * 1.8));
         cartButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
         cartButton.setOnAction(event -> scenes.showCartView());
 
         Button previousButton = new Button("Previous");
-        previousButton.setLayoutX(bigRectX + bigRectWidth - gap - 200);
+        previousButton.setLayoutX(bigRectX + 3*bigRectWidth/4 - gap);
         previousButton.setLayoutY(bigRectY + bigRectHeight + gap);
-        previousButton.setPrefWidth(100);
-        previousButton.setPrefHeight(40);
-        previousButton.setFont(Font.font("System", 18));
+        previousButton.setPrefWidth(buttonWidth);
+        previousButton.setPrefHeight(buttonHeight);
+        previousButton.setFont(Font.font("System", gap * 1.8));
         previousButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
         previousButton.setOnAction(event -> {
             if (currentPage > 0) {
@@ -172,11 +175,11 @@ public class BuyCardsView extends Pane {
         });
 
         Button nextButton = new Button("Next");
-        nextButton.setLayoutX(bigRectX + bigRectWidth - gap - 100);
+        nextButton.setLayoutX(bigRectX + 3*bigRectWidth/4 - gap + buttonWidth);
         nextButton.setLayoutY(bigRectY + bigRectHeight + gap);
-        nextButton.setPrefWidth(100);
-        nextButton.setPrefHeight(40);
-        nextButton.setFont(Font.font("System", 18));
+        nextButton.setPrefWidth(buttonWidth);
+        nextButton.setPrefHeight(buttonHeight);
+        nextButton.setFont(Font.font("System", gap * 1.8));
         nextButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
         nextButton.setOnAction(event -> {
             if ((currentPage + 1) * itemsPerPage < buyCardsViewModel.getProducts().size()) {

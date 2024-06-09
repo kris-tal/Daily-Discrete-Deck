@@ -21,19 +21,11 @@ public class Set extends Application {
 
     @Override
     public void start(Stage stage) {
+        scenes = new Scenes();
         this.primaryStage = stage;
         PlayerName playerName = new PlayerName();
         if(playerName.getName() == null){
-            TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Wprowadź imię");
-            dialog.setHeaderText("Witaj w grze!");
-            dialog.setContentText("Proszę wprowadź swoje imię:");
-
-            Optional<String> result = dialog.showAndWait();
-            result.ifPresent(name -> {
-                playerName.setName(name);
-                SavingService.saveNameToFile("name.txt", name);
-            });
+            scenes.showUsernameAlert();
         }
         this.player = new Player(playerName.getName());
         System.out.println("Player: " + playerName.getName());
@@ -42,7 +34,7 @@ public class Set extends Application {
             stage.getIcons().add(icon);
         } catch(RuntimeException image) { System.out.println("Image not found"); }
         Scenes.setPrimaryStage(primaryStage);
-        scenes = new Scenes();
+
         scenes.setPlayer(player);
         scenes.showMenuView();
 

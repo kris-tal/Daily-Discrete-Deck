@@ -37,8 +37,9 @@ public class BuyCardsViewModel {
         products.add(new Product("PS", 10, new PSCardDesign()));
         products.add(new Product("Red", 15, new RedCardDesign()));
         products.add(new Product("Galaxy", 15, new GalaxyCardDesign()));
-        products.add(new Product("Adventure", 15, new AdventureCardDesign()));
-        products.add(new Product("Fantasy", 15, new FantasyCardDesign()));
+        products.add(new Product("Adventure", 500, new AdventureCardDesign()));
+        products.add(new Product("Fantasy", 1000, new FantasyCardDesign()));
+        products.add(new Product("Witcher", 2000, new WitcherCardDesign()));
     }
 
     public ListProperty<Product> getProducts() {

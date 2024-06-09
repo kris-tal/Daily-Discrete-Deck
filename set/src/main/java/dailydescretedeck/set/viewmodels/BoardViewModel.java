@@ -7,6 +7,7 @@ import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
+import java.util.Collections;
 import java.util.List;
 
 public class BoardViewModel {
@@ -48,6 +49,7 @@ public class BoardViewModel {
         return ok;
     }
 
+
     public void reset() {
         board.reset();
         cards.set(FXCollections.observableArrayList(board.getCards()));
@@ -68,5 +70,9 @@ public class BoardViewModel {
 
     public Board getBoard() {
         return board;
+    }
+
+    public void shuffleCards() {
+        Collections.shuffle(cards);
     }
 }

@@ -36,12 +36,23 @@ public class CartView extends Pane {
         backButton.setOnAction(event -> scenes.showBuyCardsView());
 
         Button finaliseButton = new Button("Finalise Purchase");
-        backButton.setOnAction(event -> finalisePurchase());
+        finaliseButton.setOnAction(event -> finalisePurchase());
 
         VBox vbox = new VBox(10, titleLabel, cartListView, backButton, finaliseButton);
         vbox.setPadding(new Insets(10));
         vbox.setPrefSize(400, 600);
         getChildren().add(vbox);
+    }
+
+    private void finalisePurchase() {
+        int purchaseState = buyCardsViewModel.checkout();
+        if (purchaseState == 0) {
+            AestheticAlert.showAlert("Cart Empty", "Your cart is empty. Please add items to your cart before finalising the purchase.");
+        } else if (purchaseState == 1) {
+            AestheticAlert.showAlert("Purchase Failed", "You do not have enough money to complete this purchase.");
+        } else {
+            scenes.showStoreView();
+        }
     }
 
     private static class ProductCell extends ListCell<Product> {

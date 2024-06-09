@@ -9,6 +9,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BuyCardsViewModel {
     private Player player;
     private ListProperty<Product> products;
@@ -16,6 +19,7 @@ public class BuyCardsViewModel {
     public static ListProperty<Product> cartItems = new SimpleListProperty<>(FXCollections.observableArrayList());
     private IntegerProperty totalCost;
     private IntegerProperty selectedProductsCount;
+    private List<Product> purchasedProducts;
 
     public BuyCardsViewModel(Player player) {
         this.player = player;
@@ -23,6 +27,7 @@ public class BuyCardsViewModel {
         this.products = new SimpleListProperty<>(FXCollections.observableArrayList());
         this.totalCost = new SimpleIntegerProperty(cart.getTotalPrice());
         this.selectedProductsCount = new SimpleIntegerProperty(cartItems.size());
+        this.purchasedProducts = new ArrayList<>();
 
         // example products
         products.add(new Product("Red Dots", 10));
@@ -73,21 +78,29 @@ public class BuyCardsViewModel {
         }
     }
 
-    public void checkout() {
+    public int checkout() {
         int playerMoney = player.getPoints();
         int cost = totalCost.get();
 
+        if (cost == 0) return 0;
         if (playerMoney >= cost) {
             player.updatePoints(playerMoney - cost);
+            purchasedProducts.addAll(cartItems);
+            products.removeAll(cartItems);
             cartItems.clear();
             totalCost.set(0);
             selectedProductsCount.set(0);
+            return 2;
         } else {
-            // alert
+            return 1;
         }
     }
 
     public boolean hasItemsInCart() {
         return !cartItems.isEmpty();
+    }
+
+    public List<Product> getPurchasedProducts() {
+        return purchasedProducts;
     }
 }

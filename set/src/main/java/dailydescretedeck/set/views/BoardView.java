@@ -168,9 +168,11 @@ public class BoardView extends Pane {
         Button cancelButton = new MyButton("Cancel");
         Button xorButton = new MyButton("XOR");
         Button backButton = new MyButton("Back to Menu");
+        Button shuffleButton = new MyButton("Shuffle Cards");
+        Button showButton = new MyButton("Show SET");
 
         Pane buttonsPane = new Pane();
-        buttonsPane.getChildren().addAll(surrenderButton, confirmButton, cancelButton, xorButton, backButton);
+        buttonsPane.getChildren().addAll(surrenderButton, confirmButton, cancelButton, shuffleButton, showButton, xorButton, backButton);
         buttonsPane.setPrefWidth(bigRectWidth);
         buttonsPane.setLayoutX(bigRectX);
         buttonsPane.setLayoutY(bigRectY + bigRectHeight + gap);
@@ -196,6 +198,29 @@ public class BoardView extends Pane {
         cancelButton.setPrefHeight(buttonHeight);
         cancelButton.setFont(Font.font("System", gap * 1.8));
 
+        shuffleButton.setLayoutX(40 + 3 * buttonWidth);
+        shuffleButton.setLayoutY(0);
+        shuffleButton.setPrefWidth(buttonWidth);
+        shuffleButton.setPrefHeight(buttonHeight);
+        shuffleButton.setFont(Font.font("System", gap * 1.8));
+        shuffleButton.setOnAction(event ->{
+            boardViewModel.shuffleCards();
+            BoardView newBoardView = new BoardView(boardViewModel);
+            StackPane parent = (StackPane) getParent();
+            parent.getChildren().add(newBoardView);
+        } );
+
+        showButton.setLayoutX(50 + 4 * buttonWidth);
+        showButton.setLayoutY(0);
+        showButton.setPrefWidth(buttonWidth);
+        showButton.setPrefHeight(buttonHeight);
+        showButton.setFont(Font.font("System", gap * 1.8));
+        showButton.setOnAction(event ->{
+            boardViewModel.shuffleCards();
+            BoardView newBoardView = new BoardView(boardViewModel);
+            StackPane parent = (StackPane) getParent();
+            parent.getChildren().add(newBoardView);
+        } );
 
         xorButton.setLayoutX(paneWidth - buttonWidth / 2 - gap);
         xorButton.setLayoutY(gap);

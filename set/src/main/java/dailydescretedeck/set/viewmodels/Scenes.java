@@ -68,7 +68,6 @@ public class Scenes {
         Scene scene = new Scene(cartView, 600, 700);
         Stage newWindow = new Stage();
         newWindow.setScene(scene);
-        newWindow.setResizable(false);
         newWindow.setTitle("Shopping Cart");
         newWindow.show();
 

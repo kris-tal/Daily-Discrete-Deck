@@ -25,10 +25,4 @@ public class CalendarViewModel {
         return calendar.getSetsMap();
     }
 
-    public Map<LocalDate, Long> getEndsMap() {
-        return calendar.getEndsMap();
-    }
-    public Map<LocalDate, Long> getTimeMap() {
-        return calendar.getTimeMap();
-    }
 }

@@ -25,15 +25,12 @@ public class CalendarView extends StackPane {
         this.currentYearMonth = calendarViewModel.getCurrentYearMonth();
         this.monthYearLabel = new Label();
         this.setsMap = calendarViewModel.getSetsMap();
-        this.endsMap = calendarViewModel.getEndsMap();
-        this.timeMap = calendarViewModel.getTimeMap();
         this.getChildren().add(buildCalendar(currentYearMonth));
     }
 
     private GridPane buildCalendar(YearMonth yearMonth) {
         monthYearLabel.setText(yearMonth.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH) + " " + yearMonth.getYear());
         this.setsMap = calendarViewModel.getSetsMap();
-        this.endsMap = calendarViewModel.getEndsMap();
         GridPane gridPane = new GridPane();
         gridPane.setHgap(8);
         gridPane.setVgap(8);

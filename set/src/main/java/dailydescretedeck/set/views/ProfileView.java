@@ -37,7 +37,8 @@ public class ProfileView extends StackPane {
 
         setStyle("-fx-background-color: thistle;");
 
-        CalendarView calendarView = new CalendarView();
+        CalendarStats stats = new CalendarStats();
+        CalendarView calendarView = new CalendarView(stats);
         VBox calendarContainer = new VBox(calendarView);
         calendarContainer.setSpacing(10);
         calendarContainer.setAlignment(Pos.TOP_CENTER);

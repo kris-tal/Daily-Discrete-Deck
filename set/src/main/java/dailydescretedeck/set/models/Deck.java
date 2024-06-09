@@ -17,7 +17,7 @@ public class Deck {
         List<Dots> colors = Arrays.asList(Dots.values());
         Feature.fill(everything, new ArrayList<>(), colors, 0);
         for (List<Dots> list : everything) {
-            cards.add(new Card((ArrayList<Dots>)list));
+            cards.add(new Card(list));
         }
         shuffle();
     }

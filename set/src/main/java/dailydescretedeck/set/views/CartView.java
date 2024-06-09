@@ -8,9 +8,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+
+import static javafx.scene.paint.Color.THISTLE;
 
 public class CartView extends Pane {
     private BuyCardsViewModel buyCardsViewModel;
@@ -19,6 +23,7 @@ public class CartView extends Pane {
     public CartView(BuyCardsViewModel viewModel) {
         this.buyCardsViewModel = viewModel;
         this.scenes = new Scenes();
+        setBackground(Background.fill(THISTLE));
         setPrefSize(400, 600);
         initialize();
     }
@@ -65,7 +70,9 @@ public class CartView extends Pane {
             super();
             nameLabel = new Label();
             priceLabel = new Label();
-            removeButton = new Button("Remove");
+            removeButton = new MyButton("Remove");
+            removeButton.setStyle("-fx-background-color: THISTLE; -fx-text-fill: #746174; -fx-background-radius: 20;");
+            removeButton.setFont(Font.font("System", 12));
             removeButton.setOnAction(event -> viewModel.removeFromCart(getItem()));
             content = new HBox(10, nameLabel, priceLabel, removeButton);
         }
@@ -80,6 +87,7 @@ public class CartView extends Pane {
             } else {
                 setGraphic(null);
             }
+            setStyle("-fx-border-color: transparent; -fx-background-color: #E6D4E6;");
         }
     }
 }

@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class Set extends Application {
     private Scenes scenes;
@@ -36,7 +37,16 @@ public class Set extends Application {
 
         scenes.setPlayer(player);
         scenes.showMenuView();
+
+       /*primaryStage.setOnCloseRequest(event -> {
+            event.consume(); 
+            handleClosing(primaryStage, event);
+        });*/
     }
+
+    /*private void handleClosing(Stage stage, WindowEvent event) {
+        
+    }*/
 
     public static void main(String[] args) {
         launch();

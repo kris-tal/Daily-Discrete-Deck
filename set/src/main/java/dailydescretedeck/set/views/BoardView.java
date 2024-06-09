@@ -216,8 +216,10 @@ public class BoardView extends Pane {
         showButton.setPrefHeight(buttonHeight);
         showButton.setFont(Font.font("System", gap * 1.8));
         showButton.setOnAction(event ->{
+            System.out.println(boardViewModel.getBoard().getNumberSets());
             selectedCards.clear();
             selectedCards.addAll(boardViewModel.getSet());
+            System.out.println(boardViewModel.getBoard().getNumberSets());
 
             for (Card card : selectedCards) {
                 CardView cardView = cardViews.get(card);
@@ -268,7 +270,7 @@ public class BoardView extends Pane {
 
         confirmButton.setOnAction(event -> {
             System.out.println(LocalDate.now());
-            if (boardViewModel.isSetOk(selectedCards)) {
+            if (boardViewModel.isSetOk(selectedCards,true)) {
                 SetCollector setCollector = SetCollector.getInstance();
                 End end = End.getInstance();
                 TheBestTime theBestTime = TheBestTime.getInstance();

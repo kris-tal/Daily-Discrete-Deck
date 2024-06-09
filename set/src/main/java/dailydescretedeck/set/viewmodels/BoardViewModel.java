@@ -39,8 +39,8 @@ public class BoardViewModel {
         cards.set(FXCollections.observableArrayList(board.getCards()));
     }
 
-    public boolean isSetOk(List<Card> selectedCards) {
-        return cardManager.isSetOk(selectedCards);
+    public boolean isSetOk(List<Card> selectedCards, boolean set) {
+        return cardManager.isSetOk(selectedCards, set);
     }
 
     public boolean removeCards(List<Card> selectedCards) {

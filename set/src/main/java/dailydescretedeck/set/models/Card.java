@@ -13,6 +13,12 @@ public class Card {
         this.fields = (ArrayList<Dots>) existingFields;
         this.design = Player.getCardDesignInUse();
     }
+
+    public Card() {
+        this.fields = new ArrayList<>(List.of(Dots.A1, Dots.A2, Dots.B1, Dots.B2, Dots.C1, Dots.C2));
+        this.design = Player.getCardDesignInUse();
+    }
+
     public Card(List<Dots> existingFields, CardDesign design) {
         this.fields = (ArrayList<Dots>) existingFields;
         this.design = design;

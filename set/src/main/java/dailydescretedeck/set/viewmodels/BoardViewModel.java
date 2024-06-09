@@ -2,6 +2,7 @@ package dailydescretedeck.set.viewmodels;
 
 import dailydescretedeck.set.models.Board;
 import dailydescretedeck.set.models.Card;
+import dailydescretedeck.set.models.CardManager;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 public class BoardViewModel {
     private Board board;
     private ListProperty<CardViewModel> cards;
+    private CardManager cardManager;
 
     public BoardViewModel(Board board) {
         this.board = board;
@@ -41,12 +43,12 @@ public class BoardViewModel {
 
     public boolean isSetOk(List<CardViewModel> selectedCardViewModels, boolean set) {
         List<Card> selectedCards = selectedCardViewModels.stream().map(CardViewModel::getCard).collect(Collectors.toList());
-        return board.isSetOk(selectedCards, set);
+        return cardManager.isSetOk(selectedCards, set);
     }
 
     public boolean removeCards(List<CardViewModel> selectedCardViewModels) {
         List<Card> selectedCards = selectedCardViewModels.stream().map(CardViewModel::getCard).collect(Collectors.toList());
-        boolean ok = board.removeCards(selectedCards);
+        boolean ok = cardManager.removeCards(selectedCards);
         cards.removeAll(selectedCardViewModels);
         return ok;
     }
@@ -66,16 +68,16 @@ public class BoardViewModel {
     }
 
     public List<CardViewModel> getNotSet() {
-        return board.getNotSet().stream().map(CardViewModel::new).collect(Collectors.toList());
+        return cardManager.getNotSet().stream().map(CardViewModel::new).collect(Collectors.toList());
     }
 
     public CardViewModel getXor(List<CardViewModel> selectedCardViewModels) {
         List<Card> selectedCards = selectedCardViewModels.stream().map(CardViewModel::getCard).collect(Collectors.toList());
-        return new CardViewModel(board.getXor(selectedCards));
+        return new CardViewModel(cardManager.getXor(selectedCards));
     }
 
     public List<CardViewModel> getSet() {
-        return board.getSet().stream().map(CardViewModel::new).collect(Collectors.toList());
+        return cardManager.getSet().stream().map(CardViewModel::new).collect(Collectors.toList());
     }
 
     public Board getBoard() {

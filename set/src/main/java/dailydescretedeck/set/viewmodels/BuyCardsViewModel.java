@@ -77,12 +77,12 @@ public class BuyCardsViewModel {
     }
 
     public int checkout() {
-        int playerMoney = player.getPoints();
+        int playerMoney = player.getMoney();
         int cost = totalCost.get();
 
         if (cost == 0) return 0;
         if (playerMoney >= cost) {
-            player.updatePoints(playerMoney - cost);
+            player.spendMoney(playerMoney - cost);
             purchasedProducts.addAll(cartItems);
             products.removeAll(cartItems);
             cartItems.clear();

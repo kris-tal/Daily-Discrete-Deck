@@ -264,6 +264,12 @@ public class BoardView extends Pane {
                 cardView.selectNotSelected();
             }
             CardView.disableCards();
+            confirmButton.setDisable(true);
+            showButton.setDisable(true);
+            surrenderButton.setDisable(true);
+            cancelButton.setDisable(true);
+            xorButton.setDisable(true);
+            shuffleButton.setDisable(true);
 
             AestheticAlert.showAlert("Game Over", "You lost!");
         });
@@ -274,16 +280,16 @@ public class BoardView extends Pane {
                 SetCollector setCollector = SetCollector.getInstance();
                 End end = End.getInstance();
                 TheBestTime theBestTime = TheBestTime.getInstance();
-                if(SavingService.loadDateFromFile("Date.txt") == null) {
-                    SavingService.saveDateToFile("Date.txt", LocalDate.now());
+                if(SavingService.loadDateFromFile("saves/Date.txt") == null) {
+                    SavingService.saveDateToFile("saves/Date.txt", LocalDate.now());
                     setCollector.resetsSets();
                     end.resetEnds();
                     theBestTime.resetTime();
                 }
-                else if(!SavingService.loadDateFromFile("Date.txt").equals(LocalDate.now()))
+                else if(!SavingService.loadDateFromFile("saves/Date.txt").equals(LocalDate.now()))
                 {
-                    System.out.println(SavingService.loadDateFromFile("Date.txt"));
-                    SavingService.saveDateToFile("Date.txt", LocalDate.now());
+                    System.out.println(SavingService.loadDateFromFile("saves/Date.txt"));
+                    SavingService.saveDateToFile("saves/Date.txt", LocalDate.now());
                     setCollector.resetsSets();
                     end.resetEnds();
                     theBestTime.resetTime();
@@ -295,27 +301,36 @@ public class BoardView extends Pane {
                 money.addMoney(1);
                 System.out.println("Zapisano ilość zebranych SETów: " + setCollector.getSets());
 
-                Map<LocalDate, Long> setsMap = SavingService.loadMapFromFile("setsMap.txt");
+                Map<LocalDate, Long> setsMap = SavingService.loadMapFromFile("saves/setsMap.txt");
                 setsMap.put(LocalDate.now() , setCollector.getSets());
-                SavingService.saveMapToFile("setsMap.txt", setsMap);
+                SavingService.saveMapToFile("saves/setsMap.txt", setsMap);
         
                 System.out.println("Znaleziono SET");
                 if(!ok){
                     if (timeline != null) {
                         timeline.stop();
                     }
-                    long t = SavingService.loadNumberFromFile("theBestTime.txt");
+                    long t = SavingService.loadNumberFromFile("saves/theBestTime.txt");
                     if(t == 0 || t > System.currentTimeMillis() - startTime) {
                         theBestTime.newTime(System.currentTimeMillis() - startTime);
-                        SavingService.saveNumberToFile("theBestTime.txt", System.currentTimeMillis() - startTime);
+                        SavingService.saveNumberToFile("saves/theBestTime.txt", System.currentTimeMillis() - startTime);
                         money.addMoney(10);
                     }
                     end.addEnds(1);
-                    Map<LocalDate, Long> endsMap = SavingService.loadMapFromFile("endsMap.txt");
+                    Map<LocalDate, Long> endsMap = SavingService.loadMapFromFile("saves/endsMap.txt");
                     endsMap.put(LocalDate.now(), end.getEnds());
-                    SavingService.saveMapToFile("endsMap.txt", endsMap);
+                    SavingService.saveMapToFile("saves/endsMap.txt", endsMap);
+
+                    
+                    confirmButton.setDisable(true);
+                    showButton.setDisable(true);
+                    surrenderButton.setDisable(true);
+                    cancelButton.setDisable(true);
+                    xorButton.setDisable(true);
+                    shuffleButton.setDisable(true);
 
                     AestheticAlert.showAlert("Game over", "You won!");
+                    return;
                 }
 
                 BoardView newBoardView = new BoardView(boardViewModel);

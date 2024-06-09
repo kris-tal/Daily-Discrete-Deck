@@ -49,7 +49,7 @@ public class UsernameAlert extends VBox {
             }
             else {
                 playerName.setName(result);
-                SavingService.saveNameToFile("name.txt", result);
+                SavingService.saveNameToFile("saves/name.txt", result);
                 System.out.println("Username: " + playerName.getName());
                 ((Stage)submitButton.getScene().getWindow()).close();
             }

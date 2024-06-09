@@ -4,7 +4,7 @@ package dailydescretedeck.set.services;
 public class PlayerName {
     private String name;
     public PlayerName() {
-        name = SavingService.loadNameFromFile("name.txt");
+        name = SavingService.loadNameFromFile("saves/name.txt");
     }
     public String getName() {
         return name;

@@ -15,9 +15,9 @@ public class Calendar {
 
     public Calendar() {
         this.currentYearMonth = YearMonth.now();
-        setsMap = SavingService.loadMapFromFile("setsMap.txt");
-        endsMap = SavingService.loadMapFromFile("endsMap.txt");
-        timeMap = SavingService.loadMapFromFile("timeMap.txt");
+        setsMap = SavingService.loadMapFromFile("saves/setsMap.txt");
+        endsMap = SavingService.loadMapFromFile("saves/endsMap.txt");
+        timeMap = SavingService.loadMapFromFile("saves/timeMap.txt");
     }
 
     public YearMonth getCurrentYearMonth() {
@@ -29,16 +29,16 @@ public class Calendar {
     }
 
     public Map<LocalDate, Long> getSetsMap() {
-        setsMap = SavingService.loadMapFromFile("setsMap.txt");
+        setsMap = SavingService.loadMapFromFile("saves/setsMap.txt");
         return setsMap;
     }
 
     public Map<LocalDate, Long> getEndsMap() {
-        endsMap = SavingService.loadMapFromFile("endsMap.txt");
+        endsMap = SavingService.loadMapFromFile("saves/endsMap.txt");
         return endsMap;
     }
     public Map<LocalDate, Long> getTimeMap() {
-        timeMap = SavingService.loadMapFromFile("timeMap.txt");
+        timeMap = SavingService.loadMapFromFile("saves/timeMap.txt");
         return timeMap;
     }
 }

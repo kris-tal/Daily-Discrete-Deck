@@ -21,6 +21,10 @@ public class RedCardDesign implements CardDesign {
         return colors[idx - 1];
     }
 
+    public Color[] getColors(int idx) {
+        return colors;
+    }
+
 
     public Shape getShape(double sq) {
         return new Circle(15 * sq);

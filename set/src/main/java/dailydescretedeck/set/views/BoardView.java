@@ -43,11 +43,13 @@ public class BoardView extends Pane {
     private static boolean bylo = false;
     private Scenes scenes;
     private Money money;
+    private boolean showSet;
 
     public BoardView(BoardViewModel boardViewModel) {
         this.boardViewModel = boardViewModel;
         this.scenes = new Scenes();
         this.money = new Money();
+        this.showSet = false;
         display();
 
         widthProperty().addListener((observable, oldValue, newValue) -> display());
@@ -220,7 +222,7 @@ public class BoardView extends Pane {
             selectedCards.clear();
             selectedCards.addAll(boardViewModel.getSet());
             System.out.println(boardViewModel.getBoard().getNumberSets());
-
+            showSet = true;
             for (Card card : selectedCards) {
                 CardView cardView = cardViews.get(card);
                 cardView.clicked();
@@ -297,8 +299,12 @@ public class BoardView extends Pane {
                 }
 
                 boolean ok = boardViewModel.removeCards(selectedCards);
-                setCollector.addSets(1);
-                money.addMoney(1);
+                if(!showSet)
+                {
+                    money.addMoney(1);
+                    setCollector.addSets(1);
+                } 
+                else showSet = false;
                 System.out.println("Zapisano ilość zebranych SETów: " + setCollector.getSets());
 
                 Map<LocalDate, Long> setsMap = SavingService.loadMapFromFile("saves/setsMap.txt");
@@ -311,9 +317,13 @@ public class BoardView extends Pane {
                         timeline.stop();
                     }
                     long t = SavingService.loadNumberFromFile("saves/theBestTime.txt");
-                    if(t == 0 || t > System.currentTimeMillis() - startTime) {
-                        theBestTime.newTime(System.currentTimeMillis() - startTime);
-                        SavingService.saveNumberToFile("saves/theBestTime.txt", System.currentTimeMillis() - startTime);
+                    long timeNow = System.currentTimeMillis() - startTime;
+                    if(t == 0 || t > timeNow) {
+                        theBestTime.newTime(timeNow);
+                        SavingService.saveNumberToFile("saves/theBestTime.txt", timeNow);
+                        Map<LocalDate, Long> timeMap = SavingService.loadMapFromFile("saves/timeMap.txt");
+                        timeMap.put(LocalDate.now(), timeNow);
+                        SavingService.saveMapToFile("saves/timeMap.txt", timeMap);
                         money.addMoney(10);
                     }
                     end.addEnds(1);

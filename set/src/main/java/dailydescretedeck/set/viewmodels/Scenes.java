@@ -64,23 +64,10 @@ public class Scenes {
         if (buyCardsViewModel == null) {
             buyCardsViewModel = new BuyCardsViewModel(player);
         }
-        /*
-        CartView cartView = new CartView(buyCardsViewModel);
-        Scene scene = new Scene(cartView, 600, 700);
-        Stage newWindow = new Stage();
-        newWindow.setScene(scene);
-        newWindow.setTitle("Shopping Cart");
-        newWindow.show();
-
-         */
-
-
-
         CartView cartView = new CartView(buyCardsViewModel);
         Scene scene = new Scene(cartView, 1000, 800);
         primaryStage.setScene(scene);
-
-
+        primaryStage.setTitle("Cart");
     }
 
     public void showBuyCardsView() {

@@ -2,6 +2,7 @@ package dailydescretedeck.set.models;
 
 import dailydescretedeck.set.viewmodels.CardDesign;
 import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
+import dailydescretedeck.set.views.carddesignes.*;
 import javafx.beans.property.ListProperty;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class Player {
     private final String username;
     private static int OOPoints;
     private static int money;
-    private CardDesign cardDesignInUse;
+    private static CardDesign cardDesignInUse;
     private List<CardDesign> ownedDesigns;
 
     public Player(String username) {
@@ -36,7 +37,7 @@ public class Player {
         return OOPoints;
     }
 
-    public CardDesign getCardDesignInUse() {
+    public static CardDesign getCardDesignInUse() {
         return cardDesignInUse;
     }
 

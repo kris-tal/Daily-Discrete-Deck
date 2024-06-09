@@ -12,7 +12,7 @@ public class Card {
 
     public Card(List<Dots> existingFields) {
         this.fields = (ArrayList<Dots>) existingFields;
-        this.design = new DefaultCardDesign();
+        this.design = Player.getCardDesignInUse();
     }
 
     public List<Dots> getFields() {

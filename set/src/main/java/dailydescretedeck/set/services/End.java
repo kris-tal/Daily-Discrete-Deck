@@ -6,21 +6,21 @@ public class End {
     private long ends;
 
     private End() {
-        ends = SavingService.loadNumberFromFile("ends.txt");
+        ends = SavingService.loadNumberFromFile("saves/ends.txt");
     }
 
     public static End getInstance() {
         if (instance == null) {
             instance = new End();
-            instance.ends = SavingService.loadNumberFromFile("ends.txt");
+            instance.ends = SavingService.loadNumberFromFile("saves/ends.txt");
         }
         return instance;
     }
 
     public void addEnds(long ends) {
-        this.ends = SavingService.loadNumberFromFile("ends.txt");
+        this.ends = SavingService.loadNumberFromFile("saves/ends.txt");
         this.ends += ends;
-        SavingService.saveNumberToFile("ends.txt", this.ends);
+        SavingService.saveNumberToFile("saves/ends.txt", this.ends);
     }
 
     public long getEnds() {
@@ -28,6 +28,6 @@ public class End {
     }
     public void resetEnds() {
         this.ends = 0;
-        SavingService.saveNumberToFile("ends.txt", 0);
+        SavingService.saveNumberToFile("saves/ends.txt", 0);
     }
 }

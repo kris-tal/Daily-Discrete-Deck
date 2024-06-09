@@ -20,4 +20,16 @@ public class CardViewModel {
     public CardViewModel(List<Dots> dots, CardDesign design){
         this.card = new Card(dots, design);
     }
+
+    public List<Dots> getFields() {
+        return card.getFields();
+    }
+
+
+    /*
+    public Dots[] getFields() {
+        return card.getFields().toArray(new Dots[0]);
+    }
+
+     */
 }

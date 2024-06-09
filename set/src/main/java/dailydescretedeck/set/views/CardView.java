@@ -61,37 +61,37 @@ public class CardView extends Pane {
         this.cardBackground.setStroke(Color.rgb(116, 97, 116));
         this.group.getChildren().add(cardBackground);
         this.fields = new ArrayList<>();
-        for (Dots field : card.getFields()) {
-            Shape shape = card.getDesign().getShape(sq);
+        for (Dots field : cardViewModel.getFields()) {
+            Shape shape = cardViewModel.getDesign().getShape(sq);
             if (field == Dots.A1) {
                 shape.setLayoutX(X + this.width / 120 * 34);
                 shape.setLayoutY(Y + this.height / 180 * 36);
-                shape.setFill(card.getDesign().getColor(1));
+                shape.setFill(cardViewModel.getDesign().getColor(1));
                 this.fields.add(shape);
             } else if (field == Dots.A2) {
                 shape.setLayoutX(X + this.width / 120 * 86);
                 shape.setLayoutY(Y + this.height / 180 * 36);
-                shape.setFill(card.getDesign().getColor(2));
+                shape.setFill(cardViewModel.getDesign().getColor(2));
                 this.fields.add(shape);
             } else if (field == Dots.B1) {
                 shape.setLayoutX(X + this.width / 120 * 34);
                 shape.setLayoutY(Y + this.height / 180 * 90);
-                shape.setFill(card.getDesign().getColor(3));
+                shape.setFill(cardViewModel.getDesign().getColor(3));
                 this.fields.add(shape);
             } else if (field == Dots.B2) {
                 shape.setLayoutX(X + this.width / 120 * 86);
                 shape.setLayoutY(Y + this.height / 180 * 90);
-                shape.setFill(card.getDesign().getColor(4));
+                shape.setFill(cardViewModel.getDesign().getColor(4));
                 this.fields.add(shape);
             } else if (field == Dots.C1) {
                 shape.setLayoutX(X + this.width / 120 * 34);
                 shape.setLayoutY(Y + this.height / 180 * 144);
-                shape.setFill(card.getDesign().getColor(5));
+                shape.setFill(cardViewModel.getDesign().getColor(5));
                 this.fields.add(shape);
             } else if (field == Dots.C2) {
                 shape.setLayoutX(X + this.width / 120 * 86);
                 shape.setLayoutY(Y + this.height / 180 * 144);
-                shape.setFill(card.getDesign().getColor(6));
+                shape.setFill(cardViewModel.getDesign().getColor(6));
                 this.fields.add(shape);
             }
         }

@@ -82,7 +82,7 @@ public class BuyCardsViewModel {
     }
 
     public int checkout() {
-        int playerMoney = player.getMoney();
+        long playerMoney = player.getMoney();
         int cost = totalCost.get();
 
         if (cost == 0) return 0;

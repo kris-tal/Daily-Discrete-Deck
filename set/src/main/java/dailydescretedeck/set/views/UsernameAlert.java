@@ -1,6 +1,7 @@
 package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.Dots;
+import dailydescretedeck.set.models.Player;
 import dailydescretedeck.set.services.PlayerName;
 import dailydescretedeck.set.services.SavingService;
 import javafx.geometry.Pos;
@@ -41,16 +42,15 @@ public class UsernameAlert extends VBox {
         submitButton.setFont(new javafx.scene.text.Font("System", 18));
 
         PlayerName playerName = new PlayerName();
-        String result = usernameField.getText();
 
         submitButton.setOnAction(event -> {
             if(usernameField.getText().isEmpty()) {
                 return;
             }
             else {
+                String result = usernameField.getText();
                 playerName.setName(result);
                 SavingService.saveNameToFile("saves/name.txt", result);
-                System.out.println("Username: " + playerName.getName());
                 ((Stage)submitButton.getScene().getWindow()).close();
             }
         });

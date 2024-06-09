@@ -48,13 +48,13 @@ public class BoardView extends Pane {
         this.boardViewModel = boardViewModel;
         this.scenes = new Scenes();
         this.money = new Money();
-        redrawBoard();
+        display();
 
-        widthProperty().addListener((observable, oldValue, newValue) -> redrawBoard());
-        heightProperty().addListener((observable, oldValue, newValue) -> redrawBoard());
+        widthProperty().addListener((observable, oldValue, newValue) -> display());
+        heightProperty().addListener((observable, oldValue, newValue) -> display());
     }
 
-    private void redrawBoard() {
+    private void display() {
         getChildren().clear();
 
         setStyle("-fx-background-color: thistle;");

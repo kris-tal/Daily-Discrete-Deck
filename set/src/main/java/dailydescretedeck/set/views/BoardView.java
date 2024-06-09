@@ -264,6 +264,12 @@ public class BoardView extends Pane {
                 cardView.selectNotSelected();
             }
             CardView.disableCards();
+            confirmButton.setDisable(true);
+            showButton.setDisable(true);
+            surrenderButton.setDisable(true);
+            cancelButton.setDisable(true);
+            xorButton.setDisable(true);
+            shuffleButton.setDisable(true);
 
             AestheticAlert.showAlert("Game Over", "You lost!");
         });
@@ -314,6 +320,12 @@ public class BoardView extends Pane {
                     Map<LocalDate, Long> endsMap = SavingService.loadMapFromFile("endsMap.txt");
                     endsMap.put(LocalDate.now(), end.getEnds());
                     SavingService.saveMapToFile("endsMap.txt", endsMap);
+                    confirmButton.setDisable(true);
+                    showButton.setDisable(true);
+                    surrenderButton.setDisable(true);
+                    cancelButton.setDisable(true);
+                    xorButton.setDisable(true);
+                    shuffleButton.setDisable(true);
 
                     AestheticAlert.showAlert("Game over", "You won!");
                 }

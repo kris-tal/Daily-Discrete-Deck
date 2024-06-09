@@ -65,8 +65,12 @@ public class Scenes {
             buyCardsViewModel = new BuyCardsViewModel(player);
         }
         CartView cartView = new CartView(buyCardsViewModel);
-        Scene scene = new Scene(cartView, 1000, 800);
-        primaryStage.setScene(scene);
+        Scene scene = new Scene(cartView, 600, 700);
+        Stage newWindow = new Stage();
+        newWindow.setScene(scene);
+        newWindow.setResizable(false);
+        newWindow.setTitle("Shopping Cart");
+        newWindow.show();
     }
 
     public void showBuyCardsView() {

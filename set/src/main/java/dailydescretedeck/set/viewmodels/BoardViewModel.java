@@ -2,26 +2,26 @@ package dailydescretedeck.set.viewmodels;
 
 import dailydescretedeck.set.models.Board;
 import dailydescretedeck.set.models.Card;
-import dailydescretedeck.set.models.CardManager;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BoardViewModel {
     private Board board;
-    private CardManager cardManager;
-    private ListProperty<Card> cards;
+    private ListProperty<CardViewModel> cards;
 
     public BoardViewModel(Board board) {
         this.board = board;
-        this.cardManager = new CardManager(board);
-        this.cards = new SimpleListProperty<>(FXCollections.observableArrayList(board.getCards()));
+        this.cards = new SimpleListProperty<>(FXCollections.observableArrayList(
+                board.getCards().stream().map(CardViewModel::new).collect(Collectors.toList())
+        ));
     }
 
-    public ListProperty<Card> cardsProperty() {
+    public ListProperty<CardViewModel> cardsProperty() {
         return cards;
     }
 
@@ -31,52 +31,58 @@ public class BoardViewModel {
 
     public void addCard(Card card) {
         board.addCard(card);
-        cards.set(FXCollections.observableArrayList(board.getCards()));
+        cards.add(new CardViewModel(card));
     }
 
     public void removeCard(Card card) {
         board.removeCard(card);
-        cards.set(FXCollections.observableArrayList(board.getCards()));
+        cards.removeIf(cardViewModel -> cardViewModel.getCard().equals(card));
     }
 
-    public boolean isSetOk(List<Card> selectedCards, boolean set) {
-        return cardManager.isSetOk(selectedCards, set);
+    public boolean isSetOk(List<CardViewModel> selectedCardViewModels, boolean set) {
+        List<Card> selectedCards = selectedCardViewModels.stream().map(CardViewModel::getCard).collect(Collectors.toList());
+        return board.isSetOk(selectedCards, set);
     }
 
-    public boolean removeCards(List<Card> selectedCards) {
-        boolean ok = cardManager.removeCards(selectedCards);
-        cards.set(FXCollections.observableArrayList(board.getCards()));
+    public boolean removeCards(List<CardViewModel> selectedCardViewModels) {
+        List<Card> selectedCards = selectedCardViewModels.stream().map(CardViewModel::getCard).collect(Collectors.toList());
+        boolean ok = board.removeCards(selectedCards);
+        cards.removeAll(selectedCardViewModels);
         return ok;
     }
 
-
     public void reset() {
         board.reset();
-        cards.set(FXCollections.observableArrayList(board.getCards()));
+        cards.set(FXCollections.observableArrayList(
+                board.getCards().stream().map(CardViewModel::new).collect(Collectors.toList())
+        ));
     }
 
     public void update() {
         board.update();
-        cards.set(FXCollections.observableArrayList(board.getCards()));
+        cards.set(FXCollections.observableArrayList(
+                board.getCards().stream().map(CardViewModel::new).collect(Collectors.toList())
+        ));
     }
 
-    public List<Card> getNotSet() {
-        return cardManager.getNotSet();
+    public List<CardViewModel> getNotSet() {
+        return board.getNotSet().stream().map(CardViewModel::new).collect(Collectors.toList());
     }
 
-    public Card getXor(List<Card> selectedCards) {
-        return cardManager.xor(selectedCards);
+    public CardViewModel getXor(List<CardViewModel> selectedCardViewModels) {
+        List<Card> selectedCards = selectedCardViewModels.stream().map(CardViewModel::getCard).collect(Collectors.toList());
+        return new CardViewModel(board.getXor(selectedCards));
+    }
+
+    public List<CardViewModel> getSet() {
+        return board.getSet().stream().map(CardViewModel::new).collect(Collectors.toList());
     }
 
     public Board getBoard() {
         return board;
     }
 
-    public void shuffleCards() {
-        Collections.shuffle(cards);
-    }
-
-    public List<Card> getSet() {
-        return cardManager.getSet();
+    public int getNumberSets() {
+        return board.getNumberSets();
     }
 }

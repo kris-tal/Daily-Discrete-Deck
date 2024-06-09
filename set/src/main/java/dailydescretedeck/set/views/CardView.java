@@ -1,6 +1,5 @@
 package dailydescretedeck.set.views;
 
-import dailydescretedeck.set.models.Card;
 import dailydescretedeck.set.models.Dots;
 import dailydescretedeck.set.viewmodels.CardDesign;
 import dailydescretedeck.set.viewmodels.CardViewModel;
@@ -29,20 +28,20 @@ public class CardView extends Pane {
 
     public CardView(CardViewModel cardViewModel, double X, double Y, double sq) {
         this.cardViewModel = cardViewModel;
-        thiscarddisabled = false;
+        this.thiscarddisabled = false;
         buildCard(X, Y, sq);
     }
 
     public CardView(CardDesign design, double X, double Y, double sq) {
         List<Dots> dots = design.getDotPositions();
         this.cardViewModel = new CardViewModel(dots, design);
-        thiscarddisabled = false;
+        this.thiscarddisabled = false;
         buildCard(X, Y, sq);
     }
 
     public CardView(List<Dots> existingFields, CardDesign design, double X, double Y, double sq) {
         this.cardViewModel = new CardViewModel(existingFields, design);
-        thiscarddisabled = false;
+        this.thiscarddisabled = false;
         buildCard(X, Y, sq);
     }
 
@@ -61,7 +60,7 @@ public class CardView extends Pane {
         this.cardBackground.setStroke(Color.rgb(116, 97, 116));
         this.group.getChildren().add(cardBackground);
         this.fields = new ArrayList<>();
-        for (Dots field : cardViewModel.getFields()) {
+        for (Dots field : cardViewModel.dotsProperty()) {
             Shape shape = cardViewModel.getDesign().getShape(sq);
             if (field == Dots.A1) {
                 shape.setLayoutX(X + this.width / 120 * 34);
@@ -175,8 +174,8 @@ public class CardView extends Pane {
                 shape.setLayoutX(this.width / 120 * 86);
                 shape.setLayoutY(this.height / 180 * 144);
             }
-            shape.setScaleX(sq/2.2);
-            shape.setScaleY(sq/2.2);
+            shape.setScaleX(sq / 2.2);
+            shape.setScaleY(sq / 2.2);
         }
     }
 }

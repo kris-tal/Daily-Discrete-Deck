@@ -1,35 +1,36 @@
 package dailydescretedeck.set.viewmodels;
 
-import dailydescretedeck.set.models.Board;
 import dailydescretedeck.set.models.Card;
 import dailydescretedeck.set.models.Dots;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 
 import java.util.List;
 
 public class CardViewModel {
     private Card card;
+    private ListProperty<Dots> dots;
 
-    CardViewModel(Card card) {
+    public CardViewModel(Card card) {
         this.card = card;
+        this.dots = new SimpleListProperty<>(FXCollections.observableArrayList(card.getFields()));
     }
 
-    public CardDesign getDesign(){
+    public CardViewModel(List<Dots> dots, CardDesign design) {
+        this.card = new Card(dots, design);
+        this.dots = new SimpleListProperty<>(FXCollections.observableArrayList(dots));
+    }
+
+    public CardDesign getDesign() {
         return card.getDesign();
     }
 
-    public CardViewModel(List<Dots> dots, CardDesign design){
-        this.card = new Card(dots, design);
+    public Card getCard() {
+        return card;
     }
 
-    public List<Dots> getFields() {
-        return card.getFields();
+    public ListProperty<Dots> dotsProperty() {
+        return dots;
     }
-
-
-    /*
-    public Dots[] getFields() {
-        return card.getFields().toArray(new Dots[0]);
-    }
-
-     */
 }

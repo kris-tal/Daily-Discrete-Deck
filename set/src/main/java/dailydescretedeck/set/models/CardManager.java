@@ -32,7 +32,7 @@ public class CardManager {
         return new Card(new ArrayList<>(numbers));
     }
 
-    public boolean isSetOk(List<Card> cards) {
+    public boolean isSetOk(List<Card> cards, boolean set) {
         Map<Dots, Integer> map = prepareCount(cards);
         boolean notZero = false;
         for (Integer value : map.values()) {
@@ -42,7 +42,7 @@ public class CardManager {
             if(value.intValue() != 0) notZero = true;
         }
         if(!notZero) return false;
-        board.incrementSets();
+        if(set) board.incrementSets();
         return true;
     }
 
@@ -50,7 +50,7 @@ public class CardManager {
         List<List<Card>> combinations = new ArrayList<>();
         Feature.fill(combinations, new ArrayList<>(), board.getCards(), 0);
         for (List<Card> combination : combinations) {
-            if (isSetOk(combination) && combination.size() >= 3) {
+            if (isSetOk(combination, false) && combination.size() >= 3) {
                 return combination;
             }
         }

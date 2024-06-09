@@ -81,5 +81,4 @@ public class InstructionsView extends HBox {
 
 
     }
-
 }

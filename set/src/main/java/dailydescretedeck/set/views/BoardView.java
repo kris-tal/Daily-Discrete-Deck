@@ -216,8 +216,10 @@ public class BoardView extends Pane {
         showButton.setPrefHeight(buttonHeight);
         showButton.setFont(Font.font("System", gap * 1.8));
         showButton.setOnAction(event ->{
+            System.out.println(boardViewModel.getBoard().getNumberSets());
             selectedCards.clear();
             selectedCards.addAll(boardViewModel.getSet());
+            System.out.println(boardViewModel.getBoard().getNumberSets());
 
             for (Card card : selectedCards) {
                 CardView cardView = cardViews.get(card);
@@ -262,13 +264,19 @@ public class BoardView extends Pane {
                 cardView.selectNotSelected();
             }
             CardView.disableCards();
+            confirmButton.setDisable(true);
+            showButton.setDisable(true);
+            surrenderButton.setDisable(true);
+            cancelButton.setDisable(true);
+            xorButton.setDisable(true);
+            shuffleButton.setDisable(true);
 
             AestheticAlert.showAlert("Game Over", "You lost!");
         });
 
         confirmButton.setOnAction(event -> {
             System.out.println(LocalDate.now());
-            if (boardViewModel.isSetOk(selectedCards)) {
+            if (boardViewModel.isSetOk(selectedCards,true)) {
                 SetCollector setCollector = SetCollector.getInstance();
                 End end = End.getInstance();
                 TheBestTime theBestTime = TheBestTime.getInstance();
@@ -312,6 +320,12 @@ public class BoardView extends Pane {
                     Map<LocalDate, Long> endsMap = SavingService.loadMapFromFile("endsMap.txt");
                     endsMap.put(LocalDate.now(), end.getEnds());
                     SavingService.saveMapToFile("endsMap.txt", endsMap);
+                    confirmButton.setDisable(true);
+                    showButton.setDisable(true);
+                    surrenderButton.setDisable(true);
+                    cancelButton.setDisable(true);
+                    xorButton.setDisable(true);
+                    shuffleButton.setDisable(true);
 
                     AestheticAlert.showAlert("Game over", "You won!");
                 }

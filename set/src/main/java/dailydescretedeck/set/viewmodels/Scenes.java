@@ -60,7 +60,7 @@ public class Scenes {
             buyCardsViewModel = new BuyCardsViewModel(player);
         }
         CartView cartView = new CartView(buyCardsViewModel);
-        Scene scene = new Scene(cartView, 400, 600);
+        Scene scene = new Scene(cartView, 1000, 800);
         primaryStage.setScene(scene);
     }
 

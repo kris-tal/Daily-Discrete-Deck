@@ -4,6 +4,7 @@ import dailydescretedeck.set.models.Product;
 import dailydescretedeck.set.viewmodels.BuyCardsViewModel;
 import dailydescretedeck.set.viewmodels.CardDesign;
 import dailydescretedeck.set.viewmodels.Scenes;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -25,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static dailydescretedeck.set.viewmodels.Scenes.player;
 import static java.lang.Double.min;
 import static javafx.scene.paint.Color.THISTLE;
 import static javafx.scene.paint.Color.WHITE;
@@ -84,8 +86,18 @@ public class BuyCardsView extends Pane {
         totalCostLabel.setLayoutY(gap);
         getChildren().add(totalCostLabel);
 
+        /*
         Label playerMoneyLabel = new Label();
         playerMoneyLabel.textProperty().bind(buyCardsViewModel.getPlayerMoney().asString("Money: %d"));
+        playerMoneyLabel.setFont(font);
+        playerMoneyLabel.setLayoutX(gap);
+        playerMoneyLabel.setLayoutY(gap * 3.5);
+        getChildren().add(playerMoneyLabel);
+
+         */
+
+        Label playerMoneyLabel = new Label();
+        playerMoneyLabel.setText("Money: " + player.getMoney());
         playerMoneyLabel.setFont(font);
         playerMoneyLabel.setLayoutX(gap);
         playerMoneyLabel.setLayoutY(gap * 3.5);
@@ -197,7 +209,7 @@ public class BuyCardsView extends Pane {
 
         getChildren().addAll(backButton, cartButton, previousButton, nextButton);
     }
-    
+
 
     private static class ProductView extends StackPane {
         private Circle[] circles;

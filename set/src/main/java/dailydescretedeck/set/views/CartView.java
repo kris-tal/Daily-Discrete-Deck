@@ -32,13 +32,13 @@ public class CartView extends Pane {
         ListView<Product> cartListView = new ListView<>(buyCardsViewModel.getCartItems());
         cartListView.setCellFactory(parameter -> new ProductCell(buyCardsViewModel));
 
-        Button backButton = new Button("Back");
+        Button backButton = new MyButton("Back");
         backButton.setOnAction(event -> scenes.showBuyCardsView());
 
-        Button finaliseButton = new Button("Finalise Purchase");
+        Button finaliseButton = new MyButton("Finalise Purchase");
         finaliseButton.setOnAction(event -> finalisePurchase());
 
-        VBox vbox = new VBox(10, titleLabel, cartListView, backButton, finaliseButton);
+        VBox vbox = new VBox(15, titleLabel, cartListView, backButton, finaliseButton);
         vbox.setPadding(new Insets(10));
         vbox.setPrefSize(400, 600);
         getChildren().add(vbox);

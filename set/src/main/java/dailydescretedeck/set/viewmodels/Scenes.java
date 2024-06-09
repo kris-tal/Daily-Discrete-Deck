@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 public class Scenes {
     private static Stage primaryStage;
-    private static Player player;
+    public static Player player;
     private static BuyCardsViewModel buyCardsViewModel;
 
     public void showMenuView() {

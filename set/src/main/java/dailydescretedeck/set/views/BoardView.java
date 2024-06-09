@@ -8,6 +8,8 @@ import dailydescretedeck.set.services.SavingService;
 import dailydescretedeck.set.services.SetCollector;
 import dailydescretedeck.set.services.TheBestTime;
 import dailydescretedeck.set.viewmodels.BoardViewModel;
+import dailydescretedeck.set.viewmodels.CardDesign;
+import dailydescretedeck.set.viewmodels.CardViewModel;
 import dailydescretedeck.set.viewmodels.Scenes;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -144,15 +146,15 @@ public class BoardView extends Pane {
                     break;
                 }
 
-                Card card = boardViewModel.cardsProperty().get(cardIndex++);
+                CardViewModel cardViewModel = boardViewModel.cardsProperty().get(cardIndex++);
 
-                CardView cardView = new CardView(card, 0, 0, square / 60);
-                cardViews.put(card, cardView);
+                CardView cardView = new CardView(cardViewModel, 0, 0, square / 60);
+                cardViews.put(cardViewModel, cardView);
                 cardView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    if (selectedCards.contains(card)) {
-                        selectedCards.remove(card);
+                    if (selectedCards.contains(cardViewModel)) {
+                        selectedCards.remove(cardViewModel);
                     } else {
-                        selectedCards.add(card);
+                        selectedCards.add(cardViewModel);
                     }
                 });
                 StackPane cardPane = new StackPane();
@@ -371,7 +373,7 @@ public class BoardView extends Pane {
 
         xorButton.setOnAction(event -> {
             Card card = boardViewModel.getXor(selectedCards);
-            CardView cardView = new CardView(card, 0, 0, square/(2 * 60));
+            CardView cardView = new CardView((CardDesign) card, 0, 0, square/(2 * 60));
             cardView.disableThisCard();
             StackPane cardPane = new StackPane();
             cardPane.getChildren().add(cardView);

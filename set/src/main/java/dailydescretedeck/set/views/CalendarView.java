@@ -15,11 +15,12 @@ public class CalendarView extends StackPane {
     private final CalendarViewModel calendarViewModel;
     private YearMonth currentYearMonth;
     private Label monthYearLabel;
+    CalendarStats calendarStats;
     private Map<java.time.LocalDate, Long> setsMap = new HashMap<>();
     private Map<java.time.LocalDate, Long> endsMap = new HashMap<>();
     private Map<java.time.LocalDate, Long> timeMap = new HashMap<>();
 
-    public CalendarView() {
+    public CalendarView(CalendarStats calendarStats) {
         this.calendarViewModel = new CalendarViewModel();
         this.currentYearMonth = calendarViewModel.getCurrentYearMonth();
         this.monthYearLabel = new Label();

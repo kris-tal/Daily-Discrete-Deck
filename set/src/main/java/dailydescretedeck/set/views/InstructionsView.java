@@ -2,6 +2,7 @@ package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.Card;
 import dailydescretedeck.set.models.Dots;
+import dailydescretedeck.set.viewmodels.CardDesign;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
@@ -72,11 +73,14 @@ public class InstructionsView extends HBox {
         cardContainer.setPadding(new javafx.geometry.Insets(20));
         cardContainer.setAlignment(Pos.BASELINE_CENTER);
 
-        cards.add(new CardView(new ArrayList<>(Arrays.asList(Dots.A1, Dots.B2, Dots.B1)), 0, 0, 1));
-        cards.add(new CardView(new ArrayList<>(Arrays.asList(Dots.A2, Dots.B2, Dots.C1, Dots.C2)),0 , 0, 1));
-        cards.add(new CardView(new ArrayList<>(Arrays.asList(Dots.A1, Dots.A2, Dots.B1, Dots.C1, Dots.C2)), 0, 0, 1));
+        /*
+        cards.add(new CardView((CardDesign) new ArrayList<>(Arrays.asList(Dots.A1, Dots.B2, Dots.B1)), 0, 0, 1));
+        cards.add(new CardView((CardDesign) new ArrayList<>(Arrays.asList(Dots.A2, Dots.B2, Dots.C1, Dots.C2)),0 , 0, 1));
+        cards.add(new CardView((CardDesign) new ArrayList<>(Arrays.asList(Dots.A1, Dots.A2, Dots.B1, Dots.C1, Dots.C2)), 0, 0, 1));
         cardContainer.getChildren().addAll(cards);
         rightPane.getChildren().add(cardContainer);
+
+         */
         getChildren().add(gridPane);
 
 

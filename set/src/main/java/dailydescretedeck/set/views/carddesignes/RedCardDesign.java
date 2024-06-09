@@ -1,9 +1,13 @@
 package dailydescretedeck.set.views.carddesignes;
 
+import dailydescretedeck.set.models.Dots;
 import dailydescretedeck.set.viewmodels.CardDesign;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class RedCardDesign implements CardDesign {
     private static final Color[]colors = {
@@ -31,5 +35,8 @@ public class RedCardDesign implements CardDesign {
     }
     public Color getBackgroundColor() {
         return backgroundColor;
+    }
+    public List<Dots> getDotPositions() {
+        return Arrays.asList(Dots.A1, Dots.A2, Dots.B1, Dots.B2, Dots.C1, Dots.C2);
     }
 }

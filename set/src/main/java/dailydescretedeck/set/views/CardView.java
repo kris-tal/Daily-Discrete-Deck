@@ -31,22 +31,16 @@ public class CardView extends Pane {
         thiscarddisabled = false;
         buildCard(X, Y, sq);
     }
+
+    public CardView(CardDesign design, double X, double Y, double sq) {
+        List<Dots> dots = design.getDotPositions();
+        this.card = new Card(dots, design);
+        thiscarddisabled = false;
+        buildCard(X, Y, sq);
+    }
+
     public CardView(List<Dots> existingFields, CardDesign design, double X, double Y, double sq) {
         this.card = new Card(existingFields, design);
-        thiscarddisabled = false;
-        buildCard(X, Y, sq);
-    }
-    /*
-    public CardView(CardDesign design, double X, double Y, double sq) {
-        ArrayList<Dots> dots = new ArrayList<>();
-        dots = design.getColors();
-        this.card = new Card(dots);
-        thiscarddisabled = false;
-        buildCard(X, Y, sq);
-    }
-    */
-    public CardView(List<Dots> existingFields, double X, double Y, double sq) {
-        this.card = new Card(existingFields);
         thiscarddisabled = false;
         buildCard(X, Y, sq);
     }
@@ -66,45 +60,39 @@ public class CardView extends Pane {
         this.cardBackground.setStroke(Color.rgb(116, 97, 116));
         this.group.getChildren().add(cardBackground);
         this.fields = new ArrayList<>();
-        for(Dots field : card.getFields()) {
+        for (Dots field : card.getFields()) {
             Shape shape = card.getDesign().getShape(sq);
-            if(field == Dots.A1) {
+            if (field == Dots.A1) {
                 shape.setLayoutX(X + this.width / 120 * 34);
                 shape.setLayoutY(Y + this.height / 180 * 36);
                 shape.setFill(card.getDesign().getColor(1));
                 this.fields.add(shape);
-            }
-            else if(field == Dots.A2) {
+            } else if (field == Dots.A2) {
                 shape.setLayoutX(X + this.width / 120 * 86);
                 shape.setLayoutY(Y + this.height / 180 * 36);
                 shape.setFill(card.getDesign().getColor(2));
                 this.fields.add(shape);
-            }
-            else if(field == Dots.B1) {
+            } else if (field == Dots.B1) {
                 shape.setLayoutX(X + this.width / 120 * 34);
                 shape.setLayoutY(Y + this.height / 180 * 90);
                 shape.setFill(card.getDesign().getColor(3));
                 this.fields.add(shape);
-            }
-            else if(field == Dots.B2) {
+            } else if (field == Dots.B2) {
                 shape.setLayoutX(X + this.width / 120 * 86);
                 shape.setLayoutY(Y + this.height / 180 * 90);
                 shape.setFill(card.getDesign().getColor(4));
                 this.fields.add(shape);
-            }
-            else if(field == Dots.C1) {
+            } else if (field == Dots.C1) {
                 shape.setLayoutX(X + this.width / 120 * 34);
                 shape.setLayoutY(Y + this.height / 180 * 144);
                 shape.setFill(card.getDesign().getColor(5));
                 this.fields.add(shape);
-            }
-            else if(field == Dots.C2) {
+            } else if (field == Dots.C2) {
                 shape.setLayoutX(X + this.width / 120 * 86);
                 shape.setLayoutY(Y + this.height / 180 * 144);
                 shape.setFill(card.getDesign().getColor(6));
                 this.fields.add(shape);
             }
-
         }
         this.group.getChildren().addAll(fields);
         super.getChildren().add(this.group);
@@ -113,14 +101,13 @@ public class CardView extends Pane {
     }
 
     public void clicked() {
-        if(disabled) return;
-        if(thiscarddisabled) return;
-        if(!this.clicked) {
+        if (disabled) return;
+        if (thiscarddisabled) return;
+        if (!this.clicked) {
             this.cardBackground.setStrokeWidth(3.0);
             this.cardBackground.setStroke(Color.rgb(116, 97, 116));
             this.clicked = true;
-        }
-        else {
+        } else {
             this.cardBackground.setStrokeWidth(0);
             this.clicked = false;
         }
@@ -138,6 +125,7 @@ public class CardView extends Pane {
     static public void enableCards() {
         disabled = false;
     }
+
     public void disableThisCard() {
         thiscarddisabled = true;
     }
@@ -149,10 +137,45 @@ public class CardView extends Pane {
         list.addAll(fields);
         return super.getChildren();
     }
+
     public void selectNotSelected() {
-        this.cardBackground.setFill(((Color)this.cardBackground.getFill()).darker());
-        for(Shape field : fields) {
-            field.setFill(((Color)field.getFill()).darker());
+        this.cardBackground.setFill(((Color) this.cardBackground.getFill()).darker());
+        for (Shape field : fields) {
+            field.setFill(((Color) field.getFill()).darker());
+        }
+    }
+
+    public void updateScale(double sq) {
+        this.width = 120 * sq;
+        this.height = 180 * sq;
+        this.cardBackground.setWidth(width);
+        this.cardBackground.setHeight(height);
+        this.cardBackground.setArcHeight(35 * sq);
+        this.cardBackground.setArcWidth(35 * sq);
+
+        for (int i = 0; i < fields.size(); i++) {
+            Shape shape = fields.get(i);
+            if (i == 0) {
+                shape.setLayoutX(this.width / 120 * 34);
+                shape.setLayoutY(this.height / 180 * 36);
+            } else if (i == 1) {
+                shape.setLayoutX(this.width / 120 * 86);
+                shape.setLayoutY(this.height / 180 * 36);
+            } else if (i == 2) {
+                shape.setLayoutX(this.width / 120 * 34);
+                shape.setLayoutY(this.height / 180 * 90);
+            } else if (i == 3) {
+                shape.setLayoutX(this.width / 120 * 86);
+                shape.setLayoutY(this.height / 180 * 90);
+            } else if (i == 4) {
+                shape.setLayoutX(this.width / 120 * 34);
+                shape.setLayoutY(this.height / 180 * 144);
+            } else if (i == 5) {
+                shape.setLayoutX(this.width / 120 * 86);
+                shape.setLayoutY(this.height / 180 * 144);
+            }
+            shape.setScaleX(sq/2.2);
+            shape.setScaleY(sq/2.2);
         }
     }
 }

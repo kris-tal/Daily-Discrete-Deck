@@ -17,13 +17,13 @@ import javafx.scene.text.Font;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Collections.min;
 import static javafx.scene.paint.Color.THISTLE;
 
 public class CartView extends BorderPane {
     private BuyCardsViewModel buyCardsViewModel;
     private Scenes scenes;
     private VBox cardDesignBox;
+    private CardView currentCardView;
 
     public CartView(BuyCardsViewModel viewModel) {
         this.buyCardsViewModel = viewModel;
@@ -74,6 +74,9 @@ public class CartView extends BorderPane {
         vbox.prefWidthProperty().bind(widthProperty().multiply(0.6));
         cardDesignBox.prefHeightProperty().bind(heightProperty());
         cardDesignBox.prefWidthProperty().bind(widthProperty().multiply(0.4));
+
+        cardDesignBox.widthProperty().addListener((obs, oldVal, newVal) -> updateCardScale());
+        cardDesignBox.heightProperty().addListener((obs, oldVal, newVal) -> updateCardScale());
     }
 
     private void finalisePurchase() {
@@ -104,12 +107,16 @@ public class CartView extends BorderPane {
             existingFields.add(Dots.C1);
             existingFields.add(Dots.C2);
             double sq = Math.min(cardDesignBox.getWidth(), cardDesignBox.getHeight()) / 180;
-            CardView cardView = new CardView(existingFields, design, 0, 0, sq);
-            cardView.disableThisCard();
-            cardDesignBox.getChildren().add(cardView);
+            currentCardView = new CardView(existingFields, design, 0, 0, sq);
+            currentCardView.disableThisCard();
+            cardDesignBox.getChildren().add(currentCardView);
+        }
+    }
 
-            cardView.prefHeightProperty().bind(cardDesignBox.heightProperty());
-            cardView.prefWidthProperty().bind(cardDesignBox.widthProperty());
+    private void updateCardScale() {
+        if (currentCardView != null) {
+            double sq = Math.min(cardDesignBox.getWidth(), cardDesignBox.getHeight()) / 180;
+            currentCardView.updateScale(sq);
         }
     }
 

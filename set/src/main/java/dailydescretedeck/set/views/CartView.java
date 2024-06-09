@@ -8,10 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import static javafx.scene.paint.Color.THISTLE;
@@ -36,6 +34,7 @@ public class CartView extends Pane {
 
         ListView<Product> cartListView = new ListView<>(buyCardsViewModel.getCartItems());
         cartListView.setCellFactory(parameter -> new ProductCell(buyCardsViewModel));
+        cartListView.setStyle("-fx-background-color: THISTLE;");
 
         Button backButton = new MyButton("Back");
         backButton.setOnAction(event -> scenes.showBuyCardsView());

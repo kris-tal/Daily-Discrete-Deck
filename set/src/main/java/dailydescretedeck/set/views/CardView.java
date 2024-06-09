@@ -3,6 +3,7 @@ package dailydescretedeck.set.views;
 import dailydescretedeck.set.models.Card;
 import dailydescretedeck.set.models.Dots;
 import dailydescretedeck.set.viewmodels.CardDesign;
+import dailydescretedeck.set.viewmodels.CardViewModel;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardView extends Pane {
-    private final Card card;
+    private final CardViewModel cardViewModel;
     private Group group;
     private double width;
     private double height;
@@ -26,21 +27,21 @@ public class CardView extends Pane {
     public Rectangle cardBackground;
     private ArrayList<Shape> fields;
 
-    public CardView(Card card, double X, double Y, double sq) {
-        this.card = card;
+    public CardView(CardViewModel cardViewModel, double X, double Y, double sq) {
+        this.cardViewModel = cardViewModel;
         thiscarddisabled = false;
         buildCard(X, Y, sq);
     }
 
     public CardView(CardDesign design, double X, double Y, double sq) {
         List<Dots> dots = design.getDotPositions();
-        this.card = new Card(dots, design);
+        this.cardViewModel = new CardViewModel(dots, design);
         thiscarddisabled = false;
         buildCard(X, Y, sq);
     }
 
     public CardView(List<Dots> existingFields, CardDesign design, double X, double Y, double sq) {
-        this.card = new Card(existingFields, design);
+        this.cardViewModel = new CardViewModel(existingFields, design);
         thiscarddisabled = false;
         buildCard(X, Y, sq);
     }
@@ -51,7 +52,7 @@ public class CardView extends Pane {
         this.height = 180 * sq;
         this.clicked = false;
         this.cardBackground = new Rectangle(width, height);
-        this.cardBackground.setFill(card.getDesign().getBackgroundColor());
+        this.cardBackground.setFill(cardViewModel.getDesign().getBackgroundColor());
         this.cardBackground.setArcHeight(35 * sq);
         this.cardBackground.setArcWidth(35 * sq);
         this.cardBackground.setX(X);

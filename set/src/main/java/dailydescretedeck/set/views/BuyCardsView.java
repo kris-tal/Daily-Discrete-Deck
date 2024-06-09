@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -25,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 
 import static java.lang.Double.min;
+import static javafx.scene.paint.Color.THISTLE;
+import static javafx.scene.paint.Color.WHITE;
 
 public class BuyCardsView extends Pane {
     private BuyCardsViewModel buyCardsViewModel;
@@ -38,6 +41,7 @@ public class BuyCardsView extends Pane {
     public BuyCardsView(BuyCardsViewModel viewModel) {
         this.buyCardsViewModel = viewModel;
         this.scenes = new Scenes();
+        setBackground(Background.fill(THISTLE));
         setPrefSize(1000, 800);
         redrawView();
 
@@ -63,7 +67,7 @@ public class BuyCardsView extends Pane {
         double bigRectY = (paneHeight - bigRectHeight) / 2;
 
         Rectangle bigRect = new Rectangle(bigRectX, bigRectY, bigRectWidth, bigRectHeight);
-        bigRect.setFill(Color.THISTLE);
+        bigRect.setFill(WHITE);
         getChildren().add(bigRect);
 
         gap = square / 5;

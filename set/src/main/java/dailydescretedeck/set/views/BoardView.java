@@ -169,8 +169,8 @@ public class BoardView extends Pane {
         Button confirmButton = new MyButton("Confirm");
         Button cancelButton = new MyButton("Cancel");
         Button xorButton = new MyButton("XOR");
-        Button backButton = new MyButton("Back to Menu");
-        Button shuffleButton = new MyButton("Shuffle Cards");
+        Button backButton = new MyButton("Exit");
+        Button shuffleButton = new MyButton("Shuffle");
         Button showButton = new MyButton("Show SET");
 
         Pane buttonsPane = new Pane();
@@ -186,25 +186,24 @@ public class BoardView extends Pane {
         surrenderButton.setLayoutY(0);
         surrenderButton.setPrefWidth(buttonWidth);
         surrenderButton.setPrefHeight(buttonHeight);
-        surrenderButton.setFont(Font.font("System", gap * 1.8));
 
         confirmButton.setLayoutX(20 + buttonWidth);
         confirmButton.setLayoutY(0);
         confirmButton.setPrefWidth(buttonWidth);
         confirmButton.setPrefHeight(buttonHeight);
-        confirmButton.setFont(Font.font("System", gap * 1.8));
+
 
         cancelButton.setLayoutX(30 + 2 * buttonWidth);
         cancelButton.setLayoutY(0);
         cancelButton.setPrefWidth(buttonWidth);
         cancelButton.setPrefHeight(buttonHeight);
-        cancelButton.setFont(Font.font("System", gap * 1.8));
+
 
         shuffleButton.setLayoutX(40 + 3 * buttonWidth);
         shuffleButton.setLayoutY(0);
         shuffleButton.setPrefWidth(buttonWidth);
         shuffleButton.setPrefHeight(buttonHeight);
-        shuffleButton.setFont(Font.font("System", gap * 1.8));
+
         shuffleButton.setOnAction(event ->{
             boardViewModel.shuffleCards();
             BoardView newBoardView = new BoardView(boardViewModel);
@@ -216,7 +215,7 @@ public class BoardView extends Pane {
         showButton.setLayoutY(0);
         showButton.setPrefWidth(buttonWidth);
         showButton.setPrefHeight(buttonHeight);
-        showButton.setFont(Font.font("System", gap * 1.8));
+
         showButton.setOnAction(event ->{
             System.out.println(boardViewModel.getBoard().getNumberSets());
             selectedCards.clear();
@@ -231,18 +230,16 @@ public class BoardView extends Pane {
 
         } );
 
-        xorButton.setLayoutX(paneWidth - buttonWidth / 2 - gap);
+        xorButton.setLayoutX(paneWidth - buttonWidth / 1.5 - gap);
         xorButton.setLayoutY(gap);
-        xorButton.setPrefWidth(buttonWidth / 2);
+        xorButton.setPrefWidth(buttonWidth / 1.5);
         xorButton.setPrefHeight(buttonHeight);
-        xorButton.setFont(Font.font("System", gap * 1.6));
 
 
         backButton.setLayoutX(paneWidth - buttonWidth - gap); 
         backButton.setLayoutY(paneHeight - buttonHeight - gap); 
         backButton.setPrefWidth(buttonWidth);
         backButton.setPrefHeight(buttonHeight);
-        backButton.setFont(Font.font("System", gap * 1.8));
         backButton.setOnAction(event ->{
             if (timeline != null) {
                 timeline.stop();

@@ -28,7 +28,6 @@ public class Set extends Application {
             scenes.showUsernameAlert();
         }
         this.player = new Player(playerName.getName());
-        System.out.println("Player: " + playerName.getName());
         try {
             Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/icon.png")));
             stage.getIcons().add(icon);

@@ -27,7 +27,6 @@ public class UsernameAlert extends VBox {
     }
 
     public void display() {
-        System.out.println("UsernameAlert");
         setStyle("-fx-background-color: thistle;");
         setAlignment(Pos.CENTER);
         setSpacing(20);

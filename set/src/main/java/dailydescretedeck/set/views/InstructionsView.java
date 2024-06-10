@@ -3,6 +3,7 @@ package dailydescretedeck.set.views;
 import dailydescretedeck.set.models.Card;
 import dailydescretedeck.set.models.Dots;
 import dailydescretedeck.set.viewmodels.CardDesign;
+import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
@@ -63,7 +64,9 @@ public class InstructionsView extends HBox {
         instructions.setPrefSize(screenBounds.getWidth(), screenBounds.getHeight());
         leftPane.getChildren().add(instructions);
         List<CardView> cards = new ArrayList<>();
-        List<Dots> list = Arrays.asList(Dots.A1, Dots.A2, Dots.B1, Dots.B2, Dots.C1, Dots.C2);
+        List<Dots> list1 = Arrays.asList(Dots.A1, Dots.A2, Dots.B1, Dots.B2, Dots.C1, Dots.C2);
+        List<Dots> list2 = Arrays.asList(Dots.A2, Dots.B2, Dots.C1, Dots.C2);
+        List<Dots> list3 = Arrays.asList(Dots.A1, Dots.A2, Dots.B1, Dots.C1, Dots.C2);
 
         double cardWidth = 120;
         double cardSize = 1;
@@ -72,6 +75,15 @@ public class InstructionsView extends HBox {
         cardContainer.setSpacing(10);
         cardContainer.setPadding(new javafx.geometry.Insets(20));
         cardContainer.setAlignment(Pos.BASELINE_CENTER);
+
+        CardDesign cd = new DefaultCardDesign();
+
+
+        cards.add(new CardView(list1, cd, 0, 0, 1));
+        cards.add(new CardView(list2, cd, 0, 0, 1));
+        cards.add(new CardView(list3, cd, 0, 0, 1));
+        cardContainer.getChildren().addAll(cards);
+        rightPane.getChildren().add(cardContainer);
 
         /*
         cards.add(new CardView((CardDesign) new ArrayList<>(Arrays.asList(Dots.A1, Dots.B2, Dots.B1)), 0, 0, 1));

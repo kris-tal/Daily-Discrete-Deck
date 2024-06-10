@@ -3,6 +3,8 @@ package dailydescretedeck.set.models;
 import java.util.*;
 
 import dailydescretedeck.set.services.Feature;
+import dailydescretedeck.set.viewmodels.CardViewModel;
+import javafx.collections.ObservableList;
 
 public class CardManager {
     private Board board;
@@ -46,10 +48,10 @@ public class CardManager {
         return true;
     }
 
-    public List<Card> getSet() {
-        List<List<Card>> combinations = new ArrayList<>();
+    public List<CardViewModel> getSet() {
+        List<List<CardViewModel>> combinations = new ArrayList<>();
         Feature.fill(combinations, new ArrayList<>(), board.getCards(), 0);
-        for (List<Card> combination : combinations) {
+        for (List<CardViewModel> combination : combinations) {
             if (isSetOk(combination, false) && combination.size() >= 3) {
                 return combination;
             }
@@ -57,16 +59,16 @@ public class CardManager {
         return null;
     }
 
-    public List<Card> getNotSet() {
-        List<Card> set = getSet();
-        List<Card> notSet = new ArrayList<>(board.getCards());
+    public List<CardViewModel> getNotSet() {
+        List<CardViewModel> set = getSet();
+        List<CardViewModel> notSet = new ArrayList<>(board.getCards());
         if (set != null) {
             notSet.removeAll(set);
         }
         return notSet;
     }
 
-    public boolean removeCards(List<Card> selectedCards) {
+    public boolean removeCards(ObservableList<CardViewModel> selectedCards) {
         for (Card c : selectedCards) {
             int index = board.getCards().indexOf(c);
             if (index != -1) {

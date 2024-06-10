@@ -6,6 +6,7 @@ import dailydescretedeck.set.models.CardManager;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +15,7 @@ public class BoardViewModel {
     private Board board;
     private CardManager cardManager;
     private ListProperty<Card> cards;
+    private ListProperty<CardViewModel> cardViewModels;
 
     public BoardViewModel(Board board) {
         this.board = board;
@@ -43,7 +45,7 @@ public class BoardViewModel {
         return cardManager.isSetOk(selectedCards, set);
     }
 
-    public boolean removeCards(List<Card> selectedCards) {
+    public boolean removeCards(ObservableList<CardViewModel> selectedCards) {
         boolean ok = cardManager.removeCards(selectedCards);
         cards.set(FXCollections.observableArrayList(board.getCards()));
         return ok;
@@ -60,7 +62,7 @@ public class BoardViewModel {
         cards.set(FXCollections.observableArrayList(board.getCards()));
     }
 
-    public List<Card> getNotSet() {
+    public List<CardViewModel> getNotSet() {
         return cardManager.getNotSet();
     }
 
@@ -72,11 +74,19 @@ public class BoardViewModel {
         return board;
     }
 
+    public ListProperty<Card> getcards() {
+        return cards;
+    }
+
     public void shuffleCards() {
         Collections.shuffle(cards);
     }
 
-    public List<Card> getSet() {
+    public List<CardViewModel> getSet() {
         return cardManager.getSet();
+    }
+
+    public ListProperty<CardViewModel> cardsVMProperty() {
+        return cardViewModels;
     }
 }

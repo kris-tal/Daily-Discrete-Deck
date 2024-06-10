@@ -8,6 +8,8 @@ import dailydescretedeck.set.services.SavingService;
 import dailydescretedeck.set.services.SetCollector;
 import dailydescretedeck.set.services.TheBestTime;
 import dailydescretedeck.set.viewmodels.BoardViewModel;
+import dailydescretedeck.set.viewmodels.CardDesign;
+import dailydescretedeck.set.viewmodels.CardViewModel;
 import dailydescretedeck.set.viewmodels.Scenes;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -36,8 +38,8 @@ import javafx.util.Duration;
 public class BoardView extends Pane {
     private BoardViewModel boardViewModel;
     private double gap;
-    private ObservableList<Card> selectedCards = FXCollections.observableArrayList();
-    private Map<Card, CardView> cardViews = new HashMap<>();
+    private ObservableList<CardViewModel> selectedCards = FXCollections.observableArrayList();
+    private Map<CardViewModel, CardView> cardViews = new HashMap<>();
     private static  long startTime = System.currentTimeMillis();
     private static Timeline timeline;
     private static boolean bylo = false;
@@ -144,15 +146,17 @@ public class BoardView extends Pane {
                     break;
                 }
 
-                Card card = boardViewModel.cardsProperty().get(cardIndex++);
+                //Card card = boardViewModel.cardsProperty().get(cardIndex++);
+                CardViewModel cardVM = boardViewModel.cardsVMProperty().get(cardIndex++);
+                CardDesign design = cardVM.getDesign();
 
-                CardView cardView = new CardView(card, 0, 0, square / 60);
-                cardViews.put(card, cardView);
+                CardView cardView = new CardView(design, 0, 0, square / 60);
+                cardViews.put(cardVM, cardView);
                 cardView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    if (selectedCards.contains(card)) {
-                        selectedCards.remove(card);
+                    if (selectedCards.contains(cardVM)) {
+                        selectedCards.remove(cardVM);
                     } else {
-                        selectedCards.add(card);
+                        selectedCards.add(cardVM);
                     }
                 });
                 StackPane cardPane = new StackPane();
@@ -222,7 +226,7 @@ public class BoardView extends Pane {
             selectedCards.addAll(boardViewModel.getSet());
             System.out.println(boardViewModel.getBoard().getNumberSets());
             showSet = true;
-            for (Card card : selectedCards) {
+            for (CardViewModel card : selectedCards) {
                 CardView cardView = cardViews.get(card);
                 cardView.clicked();
                 cardView.selectNotSelected();
@@ -258,7 +262,7 @@ public class BoardView extends Pane {
             System.out.println(selectedCards.size());
             selectedCards.addAll(boardViewModel.getNotSet());
 
-            for (Card card : selectedCards) {
+            for (CardViewModel card : selectedCards) {
                 CardView cardView = cardViews.get(card);
                 cardView.selectNotSelected();
             }

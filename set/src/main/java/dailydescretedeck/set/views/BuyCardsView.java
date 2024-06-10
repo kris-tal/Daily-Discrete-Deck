@@ -194,7 +194,7 @@ public class BuyCardsView extends Pane {
         });
 
         Button nextButton = new Button("Next");
-        nextButton.setLayoutX(bigRectX + bigRectWidth - gap - 100);
+        nextButton.setLayoutX(bigRectX + bigRectWidth - 100);
         nextButton.setLayoutY(bigRectY + bigRectHeight + gap);
         nextButton.setPrefWidth(100);
         nextButton.setPrefHeight(40);

@@ -321,16 +321,10 @@ public class BoardView extends Pane {
                     if(t == 0 || t > timeNow) {
                         theBestTime.newTime(timeNow);
                         SavingService.saveNumberToFile("saves/theBestTime.txt", timeNow);
-                        Map<LocalDate, Long> timeMap = SavingService.loadMapFromFile("saves/timeMap.txt");
-                        timeMap.put(LocalDate.now(), timeNow);
-                        SavingService.saveMapToFile("saves/timeMap.txt", timeMap);
                         money.addMoney(10);
                     }
                     end.addEnds(1);
-                    Map<LocalDate, Long> endsMap = SavingService.loadMapFromFile("saves/endsMap.txt");
-                    endsMap.put(LocalDate.now(), end.getEnds());
-                    SavingService.saveMapToFile("saves/endsMap.txt", endsMap);
-
+                    money.addMoney(end.getEnds());
                     
                     confirmButton.setDisable(true);
                     showButton.setDisable(true);

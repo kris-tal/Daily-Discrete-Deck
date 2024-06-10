@@ -38,15 +38,7 @@ public class Set extends Application {
         scenes.setPlayer(player);
         scenes.showMenuView();
 
-       /*primaryStage.setOnCloseRequest(event -> {
-            event.consume(); 
-            handleClosing(primaryStage, event);
-        });*/
     }
-
-    /*private void handleClosing(Stage stage, WindowEvent event) {
-        
-    }*/
 
     public static void main(String[] args) {
         launch();

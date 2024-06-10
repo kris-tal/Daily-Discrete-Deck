@@ -25,7 +25,7 @@ public class DayPane extends StackPane {
         return Color.rgb(43, 61, 15);
     }
 
-    public DayPane(int dayOfMonth, long sets, long ends) {
+    public DayPane(int dayOfMonth, long sets) {
 
         Label dateLabel = new Label(Integer.toString(dayOfMonth));
         dateLabel.setFont(Font.font("System Bold", FontWeight.BOLD, 15));

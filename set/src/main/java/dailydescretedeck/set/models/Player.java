@@ -12,8 +12,7 @@ import java.util.List;
 public class Player {
     private final String username;
     private static int OOPoints;
-    //private static Money money;
-    private static int money;
+    private static Money money;
     private static CardDesign cardDesignInUse;
     private List<CardDesign> ownedDesigns;
 
@@ -21,8 +20,7 @@ public class Player {
         this.username = username;
         this.cardDesignInUse = new DefaultCardDesign();
         //this.cardDesignInUse = new FantasyCardDesign();
-        //this.money = new Money();
-        this.money = 1000;
+        this.money = new Money();
         this.ownedDesigns = new ArrayList<>();
         this.ownedDesigns.add(cardDesignInUse);
     }
@@ -30,8 +28,7 @@ public class Player {
     public Player(int points, String username, String pwd) {
         this.OOPoints = points;
         this.username = username;
-        this.money = 1000;
-        //this.money = new Money();
+        this.money = new Money();
     }
 
     public String getUsername() {
@@ -51,17 +48,17 @@ public class Player {
     }
 
     public long getMoney() {
-        return money;
+        return money.getMoney();
     }
 
 
     public void addMoney(int amount) {
-        this.money = amount;
+        this.money.addMoney(amount);;
     }
 
     public boolean spendMoney(int amount) {
-        if (money >= amount) {
-            this.money -= amount;
+        if (money.getMoney() >= amount) {
+            this.money.spendMoney(amount); 
             return true;
         }
         return false;

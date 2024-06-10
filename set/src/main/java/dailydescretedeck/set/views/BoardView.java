@@ -94,7 +94,7 @@ public class BoardView extends Pane {
         double startY = bigRectY + gap / 2;
 
         int numberCards = boardViewModel.leftCards();
-        Font font = new Font("Comic Sans MS", gap * 2);
+        Font font = new Font("System", gap * 2);
 
         Label timeLabel = new Label();
         timeLabel.setFont(font);

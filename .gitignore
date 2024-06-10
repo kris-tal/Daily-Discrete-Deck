@@ -1,5 +1,6 @@
-# Ignorowanie katalogu saves
-/saves/
+# Ignorowanie wszystkich plików w katalogu saves, ale nie samego katalogu
+saves/*
+!saves/.gitkeep
 
 # Ignorowanie katalogu set/target/
 set/target/
@@ -55,4 +56,3 @@ build/
 .vscode/
 
 # Ignorowanie katalogu saves
-/saves/

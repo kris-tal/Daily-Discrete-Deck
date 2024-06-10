@@ -44,6 +44,7 @@ public class InstructionsView extends HBox {
         Label instructions = new Label();
         instructions.setFont(new javafx.scene.text.Font("System", 16));
         instructions.setWrapText(true);
+        instructions.setLineSpacing(0.8);
         instructions.setText(
                 "Setup:\n" +
                 "- There are 63 unique cards\n" +
@@ -94,7 +95,5 @@ public class InstructionsView extends HBox {
 
          */
         getChildren().add(gridPane);
-
-
     }
 }

@@ -23,7 +23,6 @@ public class MenuView extends VBox {
 
 
     private void initializeComponents() {
-        System.out.println("MenuView");
 
         VBox buttonsLayout = new VBox();
         Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/dailydescretedeck/set/images/logo.png")));

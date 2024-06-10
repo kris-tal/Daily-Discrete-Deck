@@ -1,13 +1,25 @@
+# Ignorowanie wszystkich plików w katalogu saves, ale nie samego katalogu
+saves/*
+!saves/.gitkeep
+
+# Ignorowanie katalogu set/target/
 set/target/
+
+# Dozwolone specyficzne pliki w ignorowanych katalogach
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# Ignorowanie plików systemowych Mac OS
 .DS_Store
-set/.idea/workspace.xml
-.idea/
 .DS_Store/
-set/.idea
+
+# Ignorowanie specyficznych plików i katalogów w set/.idea
+set/.idea/workspace.xml
+set/.idea/
+
+# Ignorowanie katalogu .idea i jego zawartości
+.idea/
 
 ### IntelliJ IDEA ###
 .idea
@@ -34,6 +46,8 @@ set/.idea
 /dist/
 /nbdist/
 /.nb-gradle/
+
+# Ignorowanie katalogu build, z wyjątkiem specyficznych lokalizacji
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
@@ -41,6 +55,4 @@ build/
 ### VS Code ###
 .vscode/
 
-### Mac OS ###
-.DS_Store
-/saves/
+# Ignorowanie katalogu saves

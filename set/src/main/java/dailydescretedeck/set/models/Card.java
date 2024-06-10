@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Card {
-    private ArrayList<Dots> fields;
+    private List<Dots> fields;
     private CardDesign design;
 
     public Card(List<Dots> existingFields) {
@@ -20,7 +20,7 @@ public class Card {
     }
 
     public Card(List<Dots> existingFields, CardDesign design) {
-        this.fields = (ArrayList<Dots>) existingFields;
+        this.fields = existingFields;
         this.design = design;
     }
 

@@ -5,7 +5,9 @@ public class Money {
     long money;
 
     public Money() {
-        money = SavingService.loadNumberFromFile("saves/money.txt");
+
+        //money = SavingService.loadNumberFromFile("saves/money.txt");
+        money = 1000;
     }
 
     public void addMoney(long money) {

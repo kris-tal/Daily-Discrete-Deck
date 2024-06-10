@@ -80,7 +80,7 @@ public class Scenes {
     }
 
     public void showOwnedCardsView() {
-        OwnedCardsViewModel ownedCardsViewModel = new OwnedCardsViewModel();
+        OwnedCardsViewModel ownedCardsViewModel = new OwnedCardsViewModel(player);
         OwnedCardsView ownedCardsView = new OwnedCardsView(ownedCardsViewModel);
         Scene scene = new Scene(ownedCardsView, 1000, 800);
         primaryStage.setScene(scene);

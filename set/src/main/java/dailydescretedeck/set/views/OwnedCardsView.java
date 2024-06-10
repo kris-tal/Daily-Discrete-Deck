@@ -1,117 +1,99 @@
 package dailydescretedeck.set.views;
 
-import dailydescretedeck.set.models.Card;
+import dailydescretedeck.set.viewmodels.CardDesign;
 import dailydescretedeck.set.viewmodels.OwnedCardsViewModel;
 import dailydescretedeck.set.viewmodels.Scenes;
-import javafx.beans.Observable;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import dailydescretedeck.set.viewmodels.BuyCardsViewModel;
-import dailydescretedeck.set.viewmodels.Scenes;
-import dailydescretedeck.set.viewmodels.StoreViewModel;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
-public class OwnedCardsView extends Pane {
+import java.util.List;
+
+import static javafx.scene.paint.Color.THISTLE;
+
+public class OwnedCardsView extends VBox {
     private Scenes scenes;
     private OwnedCardsViewModel ownedCardsViewModel;
     private int currentDesign = 0;
+    private HBox cardsHBox;
+    private List<CardDesign> products;
+    private Button nextButton;
+    private Button previousButton;
+    private Button backButton;
+    private Button selectButton;
 
     public OwnedCardsView(OwnedCardsViewModel ownedCardsViewModel) {
         this.ownedCardsViewModel = ownedCardsViewModel;
         this.scenes = new Scenes();
-        display();
+        this.products = ownedCardsViewModel.getProducts();
+        setBackground(new Background(new BackgroundFill(THISTLE, CornerRadii.EMPTY, Insets.EMPTY)));
+        initialize();
     }
 
-    public void display() {
-        /*HBox cardsHBox = new HBox();
+    private void initialize() {
+        setSpacing(20);
+        setAlignment(Pos.CENTER);
+        setPadding(new javafx.geometry.Insets(20));
+
+        Label titleLabel = new Label("Owned Cards");
+        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+
+        cardsHBox = new HBox();
         cardsHBox.setSpacing(60);
         cardsHBox.setAlignment(Pos.CENTER);
 
-
-        double sideCardSize = 1.5;
-        double mainCardSize = 2.5;
-        double sideCardOffset = 180 * (mainCardSize / 2 - sideCardSize / 2);
-
         Font font = new Font("System", 2);
 
-        Label titleLabel = new Label("Store");
-        titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
-        cardsHBox.setPadding(new javafx.geometry.Insets(20));
-        titleLabel.setPadding(new javafx.geometry.Insets(20));
+        nextButton = new Button(">");
+        previousButton = new Button("<");
 
-        Button nextButton = new Button(">");
+        styleButton(previousButton);
+        styleButton(nextButton);
 
-        Button previousButton = new Button("<");
-        previousButton.setPrefWidth(100);
-        previousButton.setPrefHeight(40);
-        previousButton.setFont(Font.font(18));
-        previousButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        previousButton.setOnAction(event -> {
-            if (currentDesign == 0) currentDesign = ownedCardsViewModel.getDesignsSize() - 1;          //powtorzenie trzeba zmienic
-            else currentDesign--;
-            System.out.println("Previous");
-            cardsHBox.getChildren().clear();
-            cardsHBox.getChildren().add(previousButton);
-            if (currentDesign == 0) {
-                cardsHBox.getChildren().add(new CardView(new Card(products.get(ownedCardsViewModel.getDesignsSize() - 1)), 0, sideCardOffset, sideCardSize));
-            } else {
-                cardsHBox.getChildren().add(new CardView(new Card(products.get(currentDesign - 1)), 0, sideCardOffset, sideCardSize));
-            }
-            cardsHBox.getChildren().add(new CardView(new Card(ownedCardsViewModel.getFullDots()), 0, 0, mainCardSize));
-            if (currentDesign == ownedCardsViewModel.getDesignsSize() - 1) {
-                cardsHBox.getChildren().add(new CardView(new Card(products.get(0)), 0, sideCardOffset, sideCardSize));
-            } else {
-                cardsHBox.getChildren().add(new CardView(new Card(products.get(currentDesign + 1)), 0, sideCardOffset, sideCardSize));
-            }
-            cardsHBox.getChildren().add(nextButton);
-        });
+        previousButton.setOnAction(event -> navigateCards(-1));
+        nextButton.setOnAction(event -> navigateCards(1));
 
+        cardsHBox.getChildren().addAll(previousButton, createCardView(currentDesign - 1, 1.5), createCardView(currentDesign, 2.5), createCardView(currentDesign + 1, 1.5), nextButton);
 
-        nextButton.setPrefWidth(100);
-        nextButton.setPrefHeight(40);
-        nextButton.setFont(Font.font( 18));
-        nextButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        nextButton.setOnAction(event -> {
-            System.out.println("Next");
-            cardsHBox.getChildren().clear();
-            cardsHBox.getChildren().add(previousButton);
-            if (currentDesign == ownedCardsViewModel.getDesignsSize() - 1) currentDesign = 0;
-            else currentDesign++;                                       //powtorzenie trzeba zmienic
-            if (currentDesign == 0) {
-                cardsHBox.getChildren().add(new CardView(new Card(products.get(ownedCardsViewModel.getDesignsSize() - 1)), 0, sideCardOffset, sideCardSize));
-            } else {
-                cardsHBox.getChildren().add(new CardView(new Card(products.get(currentDesign - 1)), 0, sideCardOffset, sideCardSize));
-            }
-            cardsHBox.getChildren().add(new CardView(new Card(products.get(currentDesign)), 0, 0, mainCardSize));
-            if (currentDesign == ownedCardsViewModel.getDesignsSize() - 1) {
-                cardsHBox.getChildren().add(new CardView(new Card(products.get(0)), 0, sideCardOffset, sideCardSize));
-            } else {
-                cardsHBox.getChildren().add(new CardView(new Card(products.get(currentDesign + 1)), 0, sideCardOffset, sideCardSize));
-            }
-            cardsHBox.getChildren().add(nextButton);
-        });
+        backButton = new Button("Back");
+        selectButton = new Button("Select");
 
-        cardsHBox.getChildren().addAll(previousButton, new CardView(new Card(products.get(ownedCardsViewModel.getDesignsSize() - 1)), 0, sideCardOffset, sideCardSize),
-                new CardView(new Card(products.get(0)), 0, 0, mainCardSize),
-                new CardView(new Card(products.get(1)), 0, sideCardOffset, sideCardSize),
-                nextButton);
+        styleButton(backButton);
+        styleButton(selectButton);
 
-        getChildren().addAll(titleLabel, cardsHBox);
-        Scene scene = new Scene(this, getWidth(), getHeight());
-        scene.getRoot().setStyle("-fx-background-color: thistle;");*/
+        backButton.setOnAction(event -> scenes.showStoreView());
+        selectButton.setOnAction(event -> selectCurrentDesign());
+
+        HBox buttonBox = new HBox(10, backButton, selectButton);
+        buttonBox.setAlignment(Pos.CENTER);
+
+        getChildren().addAll(titleLabel, cardsHBox, buttonBox);
+    }
+
+    private void styleButton(Button button) {
+        button.setPrefWidth(100);
+        button.setPrefHeight(40);
+        button.setFont(Font.font(18));
+        button.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+    }
+
+    private CardView createCardView(int index, double size) {
+        int actualIndex = (index + products.size()) % products.size();
+        CardDesign cardDes = products.get(actualIndex);
+        return new CardView(cardDes, 0, 0, size);
+    }
+
+    private void navigateCards(int direction) {
+        currentDesign = (currentDesign + direction + products.size()) % products.size();
+        cardsHBox.getChildren().setAll(previousButton, createCardView(currentDesign - 1, 1.5), createCardView(currentDesign, 2.5), createCardView(currentDesign + 1, 1.5), nextButton);
+    }
+
+    private void selectCurrentDesign() {
+        CardDesign selectedDesign = products.get(currentDesign);
+        ownedCardsViewModel.setCurrentDesign(selectedDesign);
+        AestheticAlert.showAlert("Design Selected", "You have selected a new card design.");
     }
 }

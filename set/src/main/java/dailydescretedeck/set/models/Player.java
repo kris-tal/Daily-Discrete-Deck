@@ -3,7 +3,7 @@ package dailydescretedeck.set.models;
 import dailydescretedeck.set.services.Money;
 import dailydescretedeck.set.viewmodels.CardDesign;
 import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
-import dailydescretedeck.set.views.carddesignes.*;
+import dailydescretedeck.set.views.carddesignes.FantasyCardDesign;
 import javafx.beans.property.ListProperty;
 
 import java.util.ArrayList;
@@ -12,14 +12,17 @@ import java.util.List;
 public class Player {
     private final String username;
     private static int OOPoints;
-    private static Money money;
+    //private static Money money;
+    private static int money;
     private static CardDesign cardDesignInUse;
     private List<CardDesign> ownedDesigns;
 
     public Player(String username) {
         this.username = username;
         this.cardDesignInUse = new DefaultCardDesign();
-        this.money = new Money(); 
+        //this.cardDesignInUse = new FantasyCardDesign();
+        //this.money = new Money();
+        this.money = 1000;
         this.ownedDesigns = new ArrayList<>();
         this.ownedDesigns.add(cardDesignInUse);
     }
@@ -27,7 +30,8 @@ public class Player {
     public Player(int points, String username, String pwd) {
         this.OOPoints = points;
         this.username = username;
-        this.money = new Money(); 
+        this.money = 1000;
+        //this.money = new Money();
     }
 
     public String getUsername() {
@@ -47,16 +51,17 @@ public class Player {
     }
 
     public long getMoney() {
-        return money.getMoney();
+        return money;
     }
 
+
     public void addMoney(int amount) {
-        this.money.addMoney(amount); 
+        this.money = amount;
     }
 
     public boolean spendMoney(int amount) {
-        if (money.getMoney() >= amount) {
-            this.money.spendMoney(amount); 
+        if (money >= amount) {
+            this.money -= amount;
             return true;
         }
         return false;
@@ -66,5 +71,13 @@ public class Player {
         for (Product p : cartItems) {
             ownedDesigns.add(p.getDesign());
         }
+    }
+
+    public List<CardDesign> getOwnedDesigns() {
+        return ownedDesigns;
+    }
+
+    public void setDesign(CardDesign selectedDesign) {
+        this.cardDesignInUse = selectedDesign;
     }
 }

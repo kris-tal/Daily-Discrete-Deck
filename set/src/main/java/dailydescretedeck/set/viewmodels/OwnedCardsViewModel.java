@@ -1,41 +1,29 @@
 package dailydescretedeck.set.viewmodels;
 
-import dailydescretedeck.set.models.Dots;
 import dailydescretedeck.set.models.Player;
-import dailydescretedeck.set.views.carddesignes.BlueCardDesign;
-import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
-import dailydescretedeck.set.views.carddesignes.JHCardDesign;
-import dailydescretedeck.set.views.carddesignes.RedCardDesign;
-import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.List;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class OwnedCardsViewModel {
-    private ArrayList<CardDesign> ownedCardDesignes;
+    private Player player;
+    private ListProperty<CardDesign> ownedDesigns;
 
-    public OwnedCardsViewModel() {
-        ownedCardDesignes = new ArrayList<>(List.of(new DefaultCardDesign(),
-                new JHCardDesign(),
-                new RedCardDesign(),
-                new BlueCardDesign()));
-        //wczytaj je z pliku
+    public OwnedCardsViewModel(Player player) {
+        this.player = player;
+        this.ownedDesigns = new SimpleListProperty<>(FXCollections.observableArrayList(player.getOwnedDesigns()));
     }
 
-    public CardDesign getDesign(int index) {
-        return ownedCardDesignes.get(index);
+    public ObservableList<CardDesign> getProducts() {
+        return ownedDesigns.get();
     }
 
     public int getDesignsSize() {
-        return ownedCardDesignes.size();
+        return ownedDesigns.size();
     }
 
-    public ArrayList<CardDesign> getOwnedCardDesigns() {
-        return ownedCardDesignes;
+    public void setCurrentDesign(CardDesign selectedDesign) {
+        player.setDesign(selectedDesign);
     }
-
-    public ArrayList<Dots> getFullDots() {
-        return new ArrayList<>(List.of(Dots.A1, Dots.A2, Dots.B1, Dots.B2, Dots.C1, Dots.C2));
-    }
-
 }

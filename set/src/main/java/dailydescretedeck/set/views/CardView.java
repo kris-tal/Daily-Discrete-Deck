@@ -3,6 +3,7 @@ package dailydescretedeck.set.views;
 import dailydescretedeck.set.models.Card;
 import dailydescretedeck.set.models.Dots;
 import dailydescretedeck.set.viewmodels.CardDesign;
+import dailydescretedeck.set.viewmodels.CardViewModel;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -16,6 +17,7 @@ import java.util.List;
 
 public class CardView extends Pane {
     private final Card card;
+    //private final CardViewModel cardViewModel;
     private Group group;
     private double width;
     private double height;
@@ -28,6 +30,7 @@ public class CardView extends Pane {
 
     public CardView(Card card, double X, double Y, double sq) {
         this.card = card;
+        //this.cardViewModel = cardViewModel(card);
         thiscarddisabled = false;
         buildCard(X, Y, sq);
     }

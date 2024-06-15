@@ -45,8 +45,9 @@ public class BuyCardsView extends VBox {
 
         Font font = new Font("Comic Sans MS", 20);
 
-        VBox labelsBox = new VBox(gap);
-        labelsBox.setAlignment(Pos.TOP_LEFT);
+        HBox labelsBox = new HBox(gap);
+        labelsBox.setAlignment(Pos.TOP_CENTER);
+        labelsBox.setPadding(new Insets(20));
 
         Label totalCostLabel = new Label();
         totalCostLabel.textProperty().bind(buyCardsViewModel.getTotalCost().asString("Total Cost: %d"));

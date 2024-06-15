@@ -56,3 +56,6 @@ build/
 .vscode/
 
 # Ignorowanie katalogu saves
+.DS_Store
+set/saves/Date.txt
+/set/saves

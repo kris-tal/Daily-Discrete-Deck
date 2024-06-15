@@ -1,71 +1,72 @@
 package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.Product;
-import javafx.scene.layout.Pane;
+import dailydescretedeck.set.viewmodels.CardDesign;
+import javafx.geometry.Pos;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.StrokeType;
 
-public class ProductView extends Pane {
+public class ProductView extends HBox {
     private Product product;
-    private Circle circle;
+    private Circle[] circles;
+    private Color[] originalColors;
     private boolean selected = false;
 
-    public ProductView(Product product, double radius) {
+    public ProductView(Product product) {
         this.product = product;
-        circle = new Circle(radius);
-        circle.setFill(getProductColor(product.getName()));
-        circle.setStroke(Color.BLACK);
-        circle.setStrokeWidth(2);
-        circle.setStrokeType(StrokeType.OUTSIDE);
+        this.circles = new Circle[6];
+        this.originalColors = new Color[6];
 
-        getChildren().add(circle);
+        CardDesign design = product.getDesign();
 
-        setOnMouseEntered(event -> circle.setFill(darkenColor((Color) circle.getFill(), 0.1)));
+        setAlignment(Pos.CENTER);
+        setSpacing(5);
+
+        for (int i = 0; i < circles.length; i++) {
+            circles[i] = new Circle();
+            originalColors[i] = design.getColor(i + 1);
+            circles[i].setFill(originalColors[i]);
+            circles[i].setStroke(Color.BLACK);
+            circles[i].setStrokeWidth(1);
+            circles[i].setStrokeType(StrokeType.OUTSIDE);
+
+            circles[i].radiusProperty().bind(widthProperty().multiply(0.04));
+
+            getChildren().add(circles[i]);
+        }
+
+        setOnMouseEntered(event -> setCirclesColor(0.1));
         setOnMouseExited(event -> {
             if (!selected) {
-                circle.setFill(getProductColor(product.getName()));
+                resetCirclesColor();
             }
         });
 
         setOnMouseClicked(event -> select());
     }
 
-    private Color getProductColor(String name) {
-        switch (name) {
-            case "Red Dots":
-                return Color.RED;
-            case "Blue Dots":
-                return Color.BLUE;
-            case "Green Dots":
-                return Color.GREEN;
-            case "Gold Dots":
-                return Color.GOLD;
-            case "Yellow Dots":
-                return Color.YELLOW;
-            case "Orange Dots":
-                return Color.ORANGE;
-            case "Gray Dots":
-                return Color.OLIVE;
-            case "Brown Dots":
-                return Color.BROWN;
-            default:
-                return Color.GRAY;
+    public void select() {
+        if (!selected) {
+            setCirclesColor(0.5);
+            selected = true;
+        }
+        else {
+            resetCirclesColor();
+            selected = false;
         }
     }
 
-    public void select() {
-        if (!selected) {
-            circle.setFill(darkenColor((Color) circle.getFill(), 0.5));
-            selected = true;
-            new Thread(() -> {
-                try {
-                    Thread.sleep(100); // Wait for 100 milliseconds
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                circle.setFill(getProductColor(product.getName()));
-            }).start();
+    private void setCirclesColor(double factor) {
+        for (Circle circle : circles) {
+            circle.setFill(darkenColor((Color) circle.getFill(), factor));
+        }
+    }
+
+    private void resetCirclesColor() {
+        for (int i = 0; i < circles.length; i++) {
+            circles[i].setFill(originalColors[i]);
         }
     }
 

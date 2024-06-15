@@ -31,16 +31,16 @@ public class BuyCardsViewModel {
         this.purchasedProducts = new ArrayList<>();
 
         // example products
-        products.add(new Product("Blue", 10, new BlueCardDesign()));
+        products.add(new Product("Blue", 80, new BlueCardDesign()));
         products.add(new Product("Emo", 20, new EmoCardDesign()));
-        products.add(new Product("JH", 35, new JHCardDesign()));
+        products.add(new Product("JH", 100, new JHCardDesign()));
         products.add(new Product("Red", 15, new RedCardDesign()));
-        products.add(new Product("Galaxy", 15, new GalaxyCardDesign()));
-        products.add(new Product("Adventure", 500, new AdventureCardDesign()));
-        products.add(new Product("Fantasy", 100, new FantasyCardDesign()));
+        products.add(new Product("Galaxy", 40, new GalaxyCardDesign()));
+        products.add(new Product("Adventure", 60, new AdventureCardDesign()));
+        products.add(new Product("Fantasy", 70, new FantasyCardDesign()));
         products.add(new Product("The Witcher", 100, new WitcherCardDesign()));
         products.add(new Product("Orange", 30, new OrangeCardDesign()));
-        products.add(new Product("Beach", 99, new BeachCardDesign()));
+        products.add(new Product("Beach", 50, new BeachCardDesign()));
     }
 
     public ListProperty<Product> getProducts() {
@@ -95,7 +95,8 @@ public class BuyCardsViewModel {
             totalCost.set(0);
             selectedProductsCount.set(0);
             return 2;
-        } else {
+        }
+        else {
             return 1;
         }
     }

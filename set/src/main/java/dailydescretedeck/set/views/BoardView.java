@@ -19,6 +19,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.input.MouseEvent;
@@ -33,12 +35,12 @@ import static java.lang.Double.min;
 import java.time.LocalDate;
 import javafx.util.Duration;
 
-public class BoardView extends Pane {
+public class BoardView extends VBox {
     private BoardViewModel boardViewModel;
     private double gap;
     private ObservableList<Card> selectedCards = FXCollections.observableArrayList();
     private Map<Card, CardView> cardViews = new HashMap<>();
-    private static  long startTime = System.currentTimeMillis();
+    private static long startTime = System.currentTimeMillis();
     private static Timeline timeline;
     private static boolean bylo = false;
     private Scenes scenes;
@@ -61,8 +63,7 @@ public class BoardView extends Pane {
 
         setStyle("-fx-background-color: thistle;");
 
-        if(bylo)
-        {
+        if (bylo) {
             startTime = System.currentTimeMillis();
             bylo = false;
         }
@@ -78,92 +79,77 @@ public class BoardView extends Pane {
         double bigRectWidth = square * 9;
         double bigRectHeight = square * 7;
 
-        double bigRectX = (paneWidth - bigRectWidth) / 2;
-        double bigRectY = (paneHeight - bigRectHeight) / 2;
-
-        Rectangle bigRect = new Rectangle(bigRectX, bigRectY, bigRectWidth, bigRectHeight);
-        bigRect.setFill(Color.THISTLE);
-        getChildren().add(bigRect);
-
         gap = square / 5;
 
         double cardWidth = square * 2;
         double cardHeight = square * 3;
 
-        double startX = bigRectX + gap;
-        double startY = bigRectY + gap / 2;
-
-        int numberCards = boardViewModel.leftCards();
-        Font font = new Font("System", gap * 2);
+        VBox boardContainer = new VBox();
+        boardContainer.setSpacing(gap);
+        boardContainer.setPrefWidth(paneWidth);
+        boardContainer.setPrefHeight(bigRectHeight);
+        boardContainer.setStyle("-fx-background-color: thistle;");
+        boardContainer.setAlignment(javafx.geometry.Pos.CENTER);
 
         Label timeLabel = new Label();
-        timeLabel.setFont(font);
-        timeLabel.setLayoutX(gap);
-        timeLabel.setLayoutY(gap * 7); 
-        getChildren().add(timeLabel);
+        timeLabel.setFont(new Font("System", gap * 2));
 
         Runnable updateTime = () -> {
             long time = System.currentTimeMillis() - startTime;
-            String timeString = String.format("%02d:%02d", 
-                TimeUnit.MILLISECONDS.toMinutes(time),
-                TimeUnit.MILLISECONDS.toSeconds(time) % 60);
+            String timeString = String.format("%02d:%02d",
+                    TimeUnit.MILLISECONDS.toMinutes(time),
+                    TimeUnit.MILLISECONDS.toSeconds(time) % 60);
             timeLabel.setText("time: " + timeString);
         };
-        
+
         updateTime.run();
-        
+
         Platform.runLater(() -> {
-            timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateTime.run())); 
+            timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateTime.run()));
             timeline.setCycleCount(Timeline.INDEFINITE);
             timeline.play();
         });
 
-        Label label1 = new Label("Cards left: " + numberCards + "/63");
+        Label label1 = new Label("Cards left: " + boardViewModel.leftCards() + "/63");
         label1.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
-        label1.setFont(font);
-        label1.setLayoutX(gap);
-        label1.setLayoutY(gap);
-        getChildren().add(label1);
-
+        label1.setFont(new Font("System", gap * 2));
 
         Label label2 = new Label("Collected SETs: " + boardViewModel.getBoard().getNumberSets());
         label2.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
-        label2.setFont(font);
-        label2.setLayoutX(gap);
-        label2.setLayoutY(gap * 4);
-        getChildren().add(label2);
+        label2.setFont(new Font("System", gap * 2));
+
+        HBox labelsBox = new HBox(gap);
+        labelsBox.getChildren().addAll(label1, label2, timeLabel);
+        labelsBox.setAlignment(javafx.geometry.Pos.CENTER);
+
+        VBox cardsBox = new VBox(gap);
+        cardsBox.setAlignment(javafx.geometry.Pos.CENTER);
 
         int cardIndex = 0;
-
         for (int row = 0; row < 2; row++) {
-            double rowY = startY + row * (cardHeight + gap);
-            startX += row * square;
-
+            HBox rowBox = new HBox(gap);
+            rowBox.setAlignment(javafx.geometry.Pos.CENTER);
             for (int col = 0; col < 4; col++) {
                 if (cardIndex >= boardViewModel.cardsProperty().size()) {
                     break;
                 }
-
                 Card card = boardViewModel.cardsProperty().get(cardIndex++);
-
                 CardView cardView = new CardView(card, 0, 0, square / 60);
                 cardViews.put(card, cardView);
                 cardView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                     if (selectedCards.contains(card)) {
                         selectedCards.remove(card);
-                    } else {
+                    }
+                    else {
                         selectedCards.add(card);
                     }
                 });
-                StackPane cardPane = new StackPane();
-                cardPane.getChildren().add(cardView);
-
-                cardPane.setLayoutX(startX + col * (cardWidth + gap));
-                cardPane.setLayoutY(rowY);
-
-                getChildren().add(cardPane);
+                rowBox.getChildren().add(cardView);
             }
+            cardsBox.getChildren().add(rowBox);
         }
+
+        boardContainer.getChildren().addAll(labelsBox, cardsBox);
 
         Button surrenderButton = new MyButton("Surrender");
         Button confirmButton = new MyButton("Confirm");
@@ -173,81 +159,42 @@ public class BoardView extends Pane {
         Button shuffleButton = new MyButton("Shuffle");
         Button showButton = new MyButton("Show SET");
 
-        Pane buttonsPane = new Pane();
-        buttonsPane.getChildren().addAll(surrenderButton, confirmButton, cancelButton, shuffleButton, showButton, xorButton, backButton);
-        buttonsPane.setPrefWidth(bigRectWidth);
-        buttonsPane.setLayoutX(bigRectX);
-        buttonsPane.setLayoutY(bigRectY + bigRectHeight + gap);
+        HBox buttonsBox = new HBox(gap);
+        buttonsBox.setAlignment(javafx.geometry.Pos.CENTER);
+        buttonsBox.getChildren().addAll(surrenderButton, confirmButton, cancelButton, shuffleButton, showButton, xorButton, backButton);
 
-        double buttonWidth = (bigRectWidth - 50) / 5;
-        double buttonHeight = bigRectHeight / 10;
+        VBox mainContainer = new VBox(gap);
+        mainContainer.setAlignment(javafx.geometry.Pos.CENTER);
+        mainContainer.getChildren().addAll(boardContainer, buttonsBox);
 
-        surrenderButton.setLayoutX(10);
-        surrenderButton.setLayoutY(0);
-        surrenderButton.setPrefWidth(buttonWidth);
-        surrenderButton.setPrefHeight(buttonHeight);
+        getChildren().add(mainContainer);
 
-        confirmButton.setLayoutX(20 + buttonWidth);
-        confirmButton.setLayoutY(0);
-        confirmButton.setPrefWidth(buttonWidth);
-        confirmButton.setPrefHeight(buttonHeight);
-
-
-        cancelButton.setLayoutX(30 + 2 * buttonWidth);
-        cancelButton.setLayoutY(0);
-        cancelButton.setPrefWidth(buttonWidth);
-        cancelButton.setPrefHeight(buttonHeight);
-
-
-        shuffleButton.setLayoutX(40 + 3 * buttonWidth);
-        shuffleButton.setLayoutY(0);
-        shuffleButton.setPrefWidth(buttonWidth);
-        shuffleButton.setPrefHeight(buttonHeight);
-
-        shuffleButton.setOnAction(event ->{
+        shuffleButton.setOnAction(event -> {
             boardViewModel.shuffleCards();
             BoardView newBoardView = new BoardView(boardViewModel);
             StackPane parent = (StackPane) getParent();
             parent.getChildren().add(newBoardView);
-        } );
+        });
 
-        showButton.setLayoutX(50 + 4 * buttonWidth);
-        showButton.setLayoutY(0);
-        showButton.setPrefWidth(buttonWidth);
-        showButton.setPrefHeight(buttonHeight);
-
-        showButton.setOnAction(event ->{
-            System.out.println(boardViewModel.getBoard().getNumberSets());
+        showButton.setOnAction(event -> {
             selectedCards.clear();
             selectedCards.addAll(boardViewModel.getSet());
-            System.out.println(boardViewModel.getBoard().getNumberSets());
             showSet = true;
             for (Card card : selectedCards) {
                 CardView cardView = cardViews.get(card);
                 cardView.clicked();
                 cardView.selectNotSelected();
             }
+        });
 
-        } );
-
-        xorButton.setLayoutX(paneWidth - buttonWidth / 1.5 - gap);
-        xorButton.setLayoutY(gap);
-        xorButton.setPrefWidth(buttonWidth / 1.5);
-        xorButton.setPrefHeight(buttonHeight);
-
-
-        backButton.setLayoutX(paneWidth - buttonWidth - gap); 
-        backButton.setLayoutY(paneHeight - buttonHeight - gap); 
-        backButton.setPrefWidth(buttonWidth);
-        backButton.setPrefHeight(buttonHeight);
-        backButton.setOnAction(event ->{
+        backButton.setOnAction(event -> {
             if (timeline != null) {
                 timeline.stop();
             }
             CardView.enableCards();
             bylo = true;
             scenes.showMenuView();
-        } );
+        });
 
         surrenderButton.setOnAction(event -> {
             if (timeline != null) {
@@ -255,7 +202,6 @@ public class BoardView extends Pane {
             }
 
             selectedCards.clear();
-            System.out.println(selectedCards.size());
             selectedCards.addAll(boardViewModel.getNotSet());
 
             for (Card card : selectedCards) {
@@ -274,20 +220,17 @@ public class BoardView extends Pane {
         });
 
         confirmButton.setOnAction(event -> {
-            System.out.println(LocalDate.now());
-            if (boardViewModel.isSetOk(selectedCards,true)) {
+            if (boardViewModel.isSetOk(selectedCards, true)) {
                 SetCollector setCollector = SetCollector.getInstance();
                 End end = End.getInstance();
                 TheBestTime theBestTime = TheBestTime.getInstance();
-                if(SavingService.loadDateFromFile("saves/Date.txt") == null) {
+                if (SavingService.loadDateFromFile("saves/Date.txt") == null) {
                     SavingService.saveDateToFile("saves/Date.txt", LocalDate.now());
                     setCollector.resetsSets();
                     end.resetEnds();
                     theBestTime.resetTime();
                 }
-                else if(!SavingService.loadDateFromFile("saves/Date.txt").equals(LocalDate.now()))
-                {
-                    System.out.println(SavingService.loadDateFromFile("saves/Date.txt"));
+                else if (!SavingService.loadDateFromFile("saves/Date.txt").equals(LocalDate.now())) {
                     SavingService.saveDateToFile("saves/Date.txt", LocalDate.now());
                     setCollector.resetsSets();
                     end.resetEnds();
@@ -296,33 +239,32 @@ public class BoardView extends Pane {
                 }
 
                 boolean ok = boardViewModel.removeCards(selectedCards);
-                if(!showSet)
-                {
+                if (!showSet) {
                     money.addMoney(1);
                     setCollector.addSets(1);
-                } 
-                else showSet = false;
-                System.out.println("Zapisano ilość zebranych SETów: " + setCollector.getSets());
+                }
+                else {
+                    showSet = false;
+                }
 
                 Map<LocalDate, Long> setsMap = SavingService.loadMapFromFile("saves/setsMap.txt");
-                setsMap.put(LocalDate.now() , setCollector.getSets());
+                setsMap.put(LocalDate.now(), setCollector.getSets());
                 SavingService.saveMapToFile("saves/setsMap.txt", setsMap);
-        
-                System.out.println("Znaleziono SET");
-                if(!ok){
+
+                if (!ok) {
                     if (timeline != null) {
                         timeline.stop();
                     }
                     long t = SavingService.loadNumberFromFile("saves/theBestTime.txt");
                     long timeNow = System.currentTimeMillis() - startTime;
-                    if(t == 0 || t > timeNow) {
+                    if (t == 0 || t > timeNow) {
                         theBestTime.newTime(timeNow);
                         SavingService.saveNumberToFile("saves/theBestTime.txt", timeNow);
                         money.addMoney(10);
                     }
                     end.addEnds(1);
                     money.addMoney(end.getEnds());
-                    
+
                     confirmButton.setDisable(true);
                     showButton.setDisable(true);
                     surrenderButton.setDisable(true);
@@ -340,9 +282,9 @@ public class BoardView extends Pane {
                 parent.getChildren().add(newBoardView);
                 CardView.enableCards();
                 selectedCards.clear();
-            } else {
-                System.out.println("Nie znaleziono SET");
-                for(Card card : boardViewModel.cardsProperty()) {
+            }
+            else {
+                for (Card card : boardViewModel.cardsProperty()) {
                     CardView cardView = cardViews.get(card);
                     cardView.unclick();
                 }
@@ -362,17 +304,13 @@ public class BoardView extends Pane {
 
         xorButton.setOnAction(event -> {
             Card card = boardViewModel.getXor(selectedCards);
-            CardView cardView = new CardView(card, 0, 0, square/(2 * 60));
+            CardView cardView = new CardView(card, 0, 0, square / (2 * 60));
             cardView.disableThisCard();
             StackPane cardPane = new StackPane();
             cardPane.getChildren().add(cardView);
-            cardPane.setLayoutX(paneWidth - buttonWidth / 2 - gap);
-            cardPane.setLayoutY(gap + buttonHeight + gap);
+            cardPane.setLayoutX(paneWidth - square / 2 - gap);
+            cardPane.setLayoutY(gap + square / 2 + gap);
             getChildren().add(cardPane);
         });
-
-        getChildren().add(buttonsPane);
-        getChildren().add(xorButton);
-        getChildren().add(backButton);
     }
 }

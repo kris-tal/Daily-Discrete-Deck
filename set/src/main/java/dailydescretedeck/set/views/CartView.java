@@ -75,8 +75,8 @@ public class CartView extends BorderPane {
         cardDesignBox.prefHeightProperty().bind(heightProperty());
         cardDesignBox.prefWidthProperty().bind(widthProperty().multiply(0.4));
 
-        cardDesignBox.widthProperty().addListener((obs, oldVal, newVal) -> updateCardScale());
-        cardDesignBox.heightProperty().addListener((obs, oldVal, newVal) -> updateCardScale());
+        //cardDesignBox.widthProperty().addListener((obs, oldVal, newVal) -> updateCardScale());
+        //cardDesignBox.heightProperty().addListener((obs, oldVal, newVal) -> updateCardScale());
     }
 
     private void finalisePurchase() {

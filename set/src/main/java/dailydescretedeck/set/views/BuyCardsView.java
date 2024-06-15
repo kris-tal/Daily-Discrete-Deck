@@ -2,24 +2,15 @@ package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.Product;
 import dailydescretedeck.set.viewmodels.BuyCardsViewModel;
-import dailydescretedeck.set.viewmodels.CardDesign;
 import dailydescretedeck.set.viewmodels.Scenes;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
 import java.util.HashMap;
@@ -27,11 +18,9 @@ import java.util.List;
 import java.util.Map;
 
 import static dailydescretedeck.set.viewmodels.Scenes.player;
-import static java.lang.Double.min;
 import static javafx.scene.paint.Color.THISTLE;
-import static javafx.scene.paint.Color.WHITE;
 
-public class BuyCardsView extends Pane {
+public class BuyCardsView extends VBox {
     private BuyCardsViewModel buyCardsViewModel;
     private Scenes scenes;
     private double gap;
@@ -43,80 +32,89 @@ public class BuyCardsView extends Pane {
     public BuyCardsView(BuyCardsViewModel viewModel) {
         this.buyCardsViewModel = viewModel;
         this.scenes = new Scenes();
-        setBackground(Background.fill(THISTLE));
+        setBackground(new Background(new BackgroundFill(THISTLE, CornerRadii.EMPTY, Insets.EMPTY)));
         setPrefSize(1000, 800);
-        redrawView();
-
-        widthProperty().addListener((observable, oldValue, newValue) -> redrawView());
-        heightProperty().addListener((observable, oldValue, newValue) -> redrawView());
+        setPadding(new Insets(10));
+        setSpacing(20);
+        setAlignment(Pos.CENTER);
+        initializeComponents();
     }
 
-    private void redrawView() {
-        getChildren().clear();
+    private void initializeComponents() {
+        gap = 20;
 
-        double paneWidth = getWidth();
-        double paneHeight = getHeight();
+        Font font = new Font("Comic Sans MS", 20);
 
-        if (paneWidth == 0 || paneHeight == 0) {
-            return;
-        }
-
-        double square = min(paneWidth, paneHeight) * 0.09;
-        double bigRectWidth = square * 9;
-        double bigRectHeight = square * 7;
-
-        double bigRectX = (paneWidth - bigRectWidth) / 2;
-        double bigRectY = (paneHeight - bigRectHeight) / 2;
-
-        Rectangle bigRect = new Rectangle(bigRectX, bigRectY, bigRectWidth, bigRectHeight);
-        bigRect.setFill(THISTLE);
-        getChildren().add(bigRect);
-
-        gap = square / 5;
-
-        double startX = bigRectX + gap;
-        double startY = bigRectY + gap / 2;
-
-        Font font = new Font("Comic Sans MS", gap * 2);
+        VBox labelsBox = new VBox(gap);
+        labelsBox.setAlignment(Pos.TOP_LEFT);
 
         Label totalCostLabel = new Label();
         totalCostLabel.textProperty().bind(buyCardsViewModel.getTotalCost().asString("Total Cost: %d"));
         totalCostLabel.setFont(font);
-        totalCostLabel.setLayoutX(gap);
-        totalCostLabel.setLayoutY(gap);
-        getChildren().add(totalCostLabel);
-
-        /*
-        Label playerMoneyLabel = new Label();
-        playerMoneyLabel.textProperty().bind(buyCardsViewModel.getPlayerMoney().asString("Money: %d"));
-        playerMoneyLabel.setFont(font);
-        playerMoneyLabel.setLayoutX(gap);
-        playerMoneyLabel.setLayoutY(gap * 3.5);
-        getChildren().add(playerMoneyLabel);
-
-         */
+        labelsBox.getChildren().add(totalCostLabel);
 
         Label playerMoneyLabel = new Label();
         playerMoneyLabel.setText("Money: " + player.getMoney());
         playerMoneyLabel.setFont(font);
-        playerMoneyLabel.setLayoutX(gap);
-        playerMoneyLabel.setLayoutY(gap * 3.5);
-        getChildren().add(playerMoneyLabel);
+        labelsBox.getChildren().add(playerMoneyLabel);
 
         Label selectedProductsLabel = new Label();
         selectedProductsLabel.textProperty().bind(buyCardsViewModel.getSelectedProductsCount().asString("Selected Products: %d"));
         selectedProductsLabel.setFont(font);
-        selectedProductsLabel.setLayoutX(gap);
-        selectedProductsLabel.setLayoutY(gap * 6);
-        getChildren().add(selectedProductsLabel);
+        labelsBox.getChildren().add(selectedProductsLabel);
+
+        VBox productsContainer = new VBox(gap);
+        productsContainer.setAlignment(Pos.CENTER);
+
+        updateProducts(productsContainer, font);
+
+        HBox navigationButtonsBox = new HBox(gap);
+        navigationButtonsBox.setAlignment(Pos.BOTTOM_CENTER);
+
+        Button backButton = createButton("Back to Store", font);
+        backButton.setOnAction(event -> {
+            if (buyCardsViewModel.hasItemsInCart()) {
+                AestheticAlert.showAlert("Error", "Please finalize your purchase or empty your cart before leaving.");
+            }
+            else {
+                scenes.showStoreView();
+            }
+        });
+
+        Button cartButton = createButton("View Cart", font);
+        cartButton.setOnAction(event -> scenes.showCartView());
+
+        Button previousButton = createButton("Previous", font);
+        previousButton.setOnAction(event -> {
+            if (currentPage > 0) {
+                currentPage--;
+                updateProducts(productsContainer, font);
+            }
+        });
+
+        Button nextButton = createButton("Next", font);
+        nextButton.setOnAction(event -> {
+            if ((currentPage + 1) * itemsPerPage < buyCardsViewModel.getProducts().size()) {
+                currentPage++;
+                updateProducts(productsContainer, font);
+            }
+        });
+
+        navigationButtonsBox.getChildren().addAll(backButton, cartButton, previousButton, nextButton);
+
+        getChildren().addAll(labelsBox, productsContainer, navigationButtonsBox);
+    }
+
+    private void updateProducts(VBox productsContainer, Font font) {
+        productsContainer.getChildren().clear();
 
         List<Product> products = buyCardsViewModel.getProducts().subList(currentPage * itemsPerPage,
                 Math.min((currentPage + 1) * itemsPerPage, buyCardsViewModel.getProducts().size()));
 
         int productIndex = 0;
-
-        for (int row = 0; row < 3; row++) {
-            double rowY = startY + row * (square * 2.4 + gap);
+        for (int row = 0; row < (itemsPerPage / 2); row++) {
+            HBox rowBox = new HBox(gap);
+            rowBox.setAlignment(Pos.CENTER);
 
             for (int col = 0; col < 2; col++) {
                 if (productIndex >= products.size()) {
@@ -124,157 +122,50 @@ public class BuyCardsView extends Pane {
                 }
 
                 Product product = products.get(productIndex++);
-                ProductView productView = new ProductView(product, buyCardsViewModel, square / 8.5);
+                ProductView productView = new ProductView(product);
                 productViews.put(product, productView);
                 productView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                     if (!selectedProducts.contains(product)) {
                         selectedProducts.add(product);
                         productView.select();
+                        buyCardsViewModel.addToCart(product);
                     }
                 });
 
-                StackPane productPane = new StackPane();
-                productPane.getChildren().add(productView);
+                VBox productContainer = new VBox(gap / 2);
+                productContainer.setAlignment(Pos.CENTER);
+                productContainer.prefWidthProperty().bind(rowBox.widthProperty().multiply(0.5).subtract(gap / 2));
+                productContainer.prefHeightProperty().bind(rowBox.heightProperty());
 
-                productPane.setLayoutX(startX + col * (square * 4.5 + gap));
-                productPane.setLayoutY(rowY);
+                productView.prefWidthProperty().bind(productContainer.widthProperty());
+                productView.prefHeightProperty().bind(productContainer.heightProperty().multiply(0.7));
+                productView.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 
-                getChildren().add(productPane);
+                productContainer.getChildren().addAll(
+                        productView,
+                        createLabel(String.valueOf(product.getName()), font),
+                        createLabel(String.valueOf(product.getPrice()), font)
+                );
 
-                Label priceLabel = new Label(String.valueOf(product.getPrice()));
-                priceLabel.setFont(Font.font("Comic Sans MS", gap * 2.0));
-                priceLabel.setLayoutX(startX + col * (square * 4.5 + gap));
-                priceLabel.setLayoutY(rowY + square + gap / 2);
-                getChildren().add(priceLabel);
-
-                Label nameLabel = new Label(String.valueOf(product.getName()));
-                nameLabel.setFont(Font.font("Comic Sans MS", gap * 2.0));
-                nameLabel.setLayoutX(startX + col * (square * 4.5 + gap));
-                nameLabel.setLayoutY(rowY + 0.5 * square + gap / 2);
-                getChildren().add(nameLabel);
-            }
-        }
-
-        Button backButton = new Button("Back to Store");
-        backButton.setLayoutX(gap);
-        backButton.setLayoutY(bigRectY + bigRectHeight + gap);
-        backButton.setPrefWidth(bigRectWidth / 3 - gap);
-        backButton.setPrefHeight(40);
-        backButton.setFont(Font.font("System", 18));
-        backButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        backButton.setOnAction(event -> {
-            if (buyCardsViewModel.hasItemsInCart()) {
-                AestheticAlert.showAlert("Error", "Please finalize your purchase or empty your cart before leaving.");
-            } else {
-                scenes.showStoreView();
-            }
-        });
-
-        Button cartButton = new Button("View Cart");
-        cartButton.setLayoutX(gap + bigRectWidth / 3 + gap);
-        cartButton.setLayoutY(bigRectY + bigRectHeight + gap);
-        cartButton.setPrefWidth(bigRectWidth / 3 - gap);
-        cartButton.setPrefHeight(40);
-        cartButton.setFont(Font.font("System", 18));
-        cartButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        cartButton.setOnAction(event -> scenes.showCartView());
-
-        Button previousButton = new Button("Previous");
-        previousButton.setLayoutX(bigRectX + bigRectWidth - gap - 200);
-        previousButton.setLayoutY(bigRectY + bigRectHeight + gap);
-        previousButton.setPrefWidth(100);
-        previousButton.setPrefHeight(40);
-        previousButton.setFont(Font.font("System", 18));
-        previousButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        previousButton.setOnAction(event -> {
-            if (currentPage > 0) {
-                currentPage--;
-                redrawView();
-            }
-        });
-
-        Button nextButton = new Button("Next");
-        nextButton.setLayoutX(bigRectX + bigRectWidth - 100);
-        nextButton.setLayoutY(bigRectY + bigRectHeight + gap);
-        nextButton.setPrefWidth(100);
-        nextButton.setPrefHeight(40);
-        nextButton.setFont(Font.font("System", 18));
-        nextButton.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        nextButton.setOnAction(event -> {
-            if ((currentPage + 1) * itemsPerPage < buyCardsViewModel.getProducts().size()) {
-                currentPage++;
-                redrawView();
-            }
-        });
-
-        getChildren().addAll(backButton, cartButton, previousButton, nextButton);
-    }
-
-
-    private static class ProductView extends StackPane {
-        private Circle[] circles;
-        private Color[] originalColors;
-        private boolean isSelected = false;
-
-        public ProductView(Product product, BuyCardsViewModel bcvm, double scale) {
-            circles = new Circle[6];
-            originalColors = new Color[6];
-            CardDesign design = product.getDesign();
-            HBox hbox = new HBox(5); // spacing between circles
-
-            for (int i = 0; i < circles.length; i++) {
-                circles[i] = new Circle(2.5 * scale);
-                originalColors[i] = design.getColor(i + 1);
-                circles[i].setFill(originalColors[i]);
-                hbox.getChildren().add(circles[i]);
+                rowBox.getChildren().add(productContainer);
             }
 
-            getChildren().add(hbox);
-
-            setOnMouseEntered(event -> setCirclesColor(0.1));
-            setOnMouseExited(event -> {
-                if (!isSelected) {
-                    resetCirclesColor();
-                }
-            });
-
-            setOnMouseClicked(event -> {
-                if (isSelected) {
-                    bcvm.addToCart(product);
-                    selectPermanently();
-                } else {
-                    bcvm.addToCart(product);
-                    select();
-                }
-            });
-        }
-
-        private void setCirclesColor(double factor) {
-            for (int i = 0; i < circles.length; i++) {
-                circles[i].setFill(darkenColor(originalColors[i], factor));
-            }
-        }
-
-        private void resetCirclesColor() {
-            for (int i = 0; i < circles.length; i++) {
-                circles[i].setFill(originalColors[i]);
-            }
-        }
-
-        private void select() {
-            if (!isSelected) {
-                setCirclesColor(0.3);
-                isSelected = true;
-            }
-        }
-
-        private void selectPermanently() {
-            setCirclesColor(0.3);
-        }
-
-        private Color darkenColor(Color color, double factor) {
-            return color.deriveColor(0, 1, 1 - factor, 1);
+            productsContainer.getChildren().add(rowBox);
         }
     }
 
+    private Label createLabel(String text, Font font) {
+        Label label = new Label(text);
+        label.setFont(font);
+        return label;
+    }
+
+    private Button createButton(String text, Font font) {
+        Button button = new Button(text);
+        button.setFont(font);
+        button.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
+        button.prefWidthProperty().bind(widthProperty().multiply(0.2));
+        button.prefHeightProperty().bind(heightProperty().multiply(0.05));
+        return button;
+    }
 }

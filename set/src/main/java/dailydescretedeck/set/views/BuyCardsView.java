@@ -43,7 +43,7 @@ public class BuyCardsView extends VBox {
     private void initializeComponents() {
         gap = 20;
 
-        Font font = new Font("Comic Sans MS", 20);
+        Font font = new Font("Comic Sans MS", 30);
 
         HBox labelsBox = new HBox(gap);
         labelsBox.setAlignment(Pos.TOP_CENTER);
@@ -72,7 +72,7 @@ public class BuyCardsView extends VBox {
         HBox navigationButtonsBox = new HBox(gap);
         navigationButtonsBox.setAlignment(Pos.BOTTOM_CENTER);
 
-        Button backButton = createButton("Back to Store", font);
+        Button backButton = new MyButton("Back to Store");
         backButton.setOnAction(event -> {
             if (buyCardsViewModel.hasItemsInCart()) {
                 AestheticAlert.showAlert("Error", "Please finalize your purchase or empty your cart before leaving.");
@@ -82,10 +82,10 @@ public class BuyCardsView extends VBox {
             }
         });
 
-        Button cartButton = createButton("View Cart", font);
+        Button cartButton = new MyButton("View Cart");
         cartButton.setOnAction(event -> scenes.showCartView());
 
-        Button previousButton = createButton("Previous", font);
+        Button previousButton = new MyButton("Previous");
         previousButton.setOnAction(event -> {
             if (currentPage > 0) {
                 currentPage--;
@@ -93,7 +93,7 @@ public class BuyCardsView extends VBox {
             }
         });
 
-        Button nextButton = createButton("Next", font);
+        Button nextButton = new MyButton("Next");
         nextButton.setOnAction(event -> {
             if ((currentPage + 1) * itemsPerPage < buyCardsViewModel.getProducts().size()) {
                 currentPage++;

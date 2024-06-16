@@ -61,6 +61,8 @@ public class BoardView extends VBox {
     private void display() {
         getChildren().clear();
 
+        setAlignment(javafx.geometry.Pos.CENTER);
+
         setStyle("-fx-background-color: thistle;");
 
         if (bylo) {

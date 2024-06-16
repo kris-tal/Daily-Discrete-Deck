@@ -19,11 +19,11 @@ import java.util.List;
 
 public class CardView extends Pane {
     private final Card card;
-    //private final CardViewModel cardViewModel;
     private Group group;
     private double width;
     private double height;
     private boolean clicked;
+    private boolean isDarkened;
     static private boolean disabled = false;
     private boolean thiscarddisabled;
     private CardDesign design;
@@ -35,6 +35,7 @@ public class CardView extends Pane {
         this.card = card;
         this.design = CardDesignMap.getInstance(card.getDesign());
         thiscarddisabled = false;
+        this.isDarkened = false;
         buildCard(X, Y, sq);
     }
 
@@ -43,12 +44,14 @@ public class CardView extends Pane {
         this.card = new Card(dots, CardDesignMap.getReverseInstance(design));
         this.design = design;
         thiscarddisabled = false;
+        this.isDarkened = false;
         buildCard(X, Y, sq);
     }
 
     public CardView(List<Dots> existingFields, CardDesign design, double X, double Y, double sq) {
         this.card = new Card(existingFields, CardDesignMap.getReverseInstance(design));
         thiscarddisabled = false;
+        this.isDarkened = false;
         this.design = design;
         buildCard(X, Y, sq);
     }
@@ -147,9 +150,12 @@ public class CardView extends Pane {
     }
 
     public void selectNotSelected() {
-        this.cardBackground.setFill(((Color) this.cardBackground.getFill()).darker());
-        for (Shape field : fields) {
-            field.setFill(((Color) field.getFill()).darker());
+        if (!isDarkened) {
+            this.cardBackground.setFill(((Color) this.cardBackground.getFill()).darker());
+            for (Shape field : fields) {
+                field.setFill(((Color) field.getFill()).darker());
+            }
+            isDarkened = true;
         }
     }
 
@@ -182,8 +188,8 @@ public class CardView extends Pane {
                 shape.setLayoutX(this.width / 120 * 86);
                 shape.setLayoutY(this.height / 180 * 144);
             }
-            shape.setScaleX(sq/2.2);
-            shape.setScaleY(sq/2.2);
+            shape.setScaleX(sq / 2.2);
+            shape.setScaleY(sq / 2.2);
         }
     }
 }

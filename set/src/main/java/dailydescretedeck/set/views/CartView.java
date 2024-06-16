@@ -75,8 +75,9 @@ public class CartView extends BorderPane {
         cardDesignBox.prefHeightProperty().bind(heightProperty());
         cardDesignBox.prefWidthProperty().bind(widthProperty().multiply(0.4));
 
-        //cardDesignBox.widthProperty().addListener((obs, oldVal, newVal) -> updateCardScale());
-        //cardDesignBox.heightProperty().addListener((obs, oldVal, newVal) -> updateCardScale());
+        // resize kart
+        cardDesignBox.widthProperty().addListener((obs, oldVal, newVal) -> updateCardScale());
+        cardDesignBox.heightProperty().addListener((obs, oldVal, newVal) -> updateCardScale());
     }
 
     private void finalisePurchase() {
@@ -144,7 +145,6 @@ public class CartView extends BorderPane {
 
             setOnMouseClicked(event -> {
                 if (!isEmpty()) {
-                    System.out.println("Clicked on: " + getItem().getName());
                     parentView.displayCardDesign(getItem());
                 }
             });

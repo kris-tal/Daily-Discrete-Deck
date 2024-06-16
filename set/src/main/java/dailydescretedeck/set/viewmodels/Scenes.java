@@ -34,7 +34,6 @@ public class Scenes {
     }
 
     public void showProfileView() {
-        System.out.println("Profile");
         ProfileViewModel profileViewModel = new ProfileViewModel();
         ProfileView profileView = new ProfileView(profileViewModel);
         Scene scene = new Scene(profileView, 1000, 800);

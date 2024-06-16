@@ -28,7 +28,6 @@ public class MenuViewModel {
                 scenes.showStoreView();
                 break;
             case INSTRUCTIONS:
-                System.out.println("Instructions");
                 scenes.showInstructionsView();
                 break;
         }

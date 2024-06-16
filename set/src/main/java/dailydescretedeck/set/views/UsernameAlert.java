@@ -57,6 +57,20 @@ public class UsernameAlert extends VBox {
             }
         });
 
+        usernameField.setOnAction(event -> {
+            if(usernameField.getText().isEmpty()) {
+                return;
+            }
+            else {
+                String result = usernameField.getText();
+                playerName.setName(result);
+                File folder = new File("saves");
+                if (!folder.exists()) folder.mkdir();
+                SavingService.saveNameToFile("saves/name.txt", result);
+                ((Stage)usernameField.getScene().getWindow()).close();
+            }
+        });
+
         getChildren().addAll(usernameField, submitButton);
     }
 }

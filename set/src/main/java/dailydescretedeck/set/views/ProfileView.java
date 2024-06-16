@@ -41,13 +41,15 @@ public class ProfileView extends StackPane {
         VBox calendarContainer = new VBox(calendarView);
         calendarContainer.setSpacing(10);
         calendarContainer.setAlignment(Pos.TOP_CENTER);
+        Button changeNameButton = new MyButton("Change Username");
+        changeNameButton.setOnAction(event -> scenes.showUsernameAlert());
 
         Button backButton = new MyButton("Back to Menu");
         backButton.setOnAction(event -> scenes.showMenuView());
 
         ToolBar toolBar = createNavigationBar(calendarView);
 
-        VBox layout = new VBox(headerLabel, toolBar, calendarContainer, backButton);
+        VBox layout = new VBox(headerLabel, toolBar, calendarContainer, changeNameButton, backButton);
         layout.setSpacing(20);
         layout.setAlignment(Pos.TOP_CENTER);
         layout.setPadding(new Insets(30));
@@ -55,14 +57,14 @@ public class ProfileView extends StackPane {
     }
 
     private ToolBar createNavigationBar(CalendarView calendarView) {
-        Button previousMonthButton = new Button("<");
+        Button previousMonthButton = new MyButton("<");
         previousMonthButton.setOnAction(e -> {
             currentYearMonth = currentYearMonth.minusMonths(1);
             calendarView.updateCalendar(currentYearMonth);
             monthYearLabel.setText(currentYearMonth.getMonth().getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.ENGLISH) + " " + currentYearMonth.getYear());
         });
 
-        Button nextMonthButton = new Button(">");
+        Button nextMonthButton = new MyButton(">");
         nextMonthButton.setOnAction(e -> {
             currentYearMonth = currentYearMonth.plusMonths(1);
             calendarView.updateCalendar(currentYearMonth);

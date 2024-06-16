@@ -1,13 +1,14 @@
 package dailydescretedeck.set.models;
 
 import dailydescretedeck.set.viewmodels.CardDesign;
+import dailydescretedeck.set.viewmodels.CardDesignMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Card {
     private List<Dots> fields;
-    private CardDesign design;
+    private CardDesigns design;
 
     public Card(List<Dots> existingFields) {
         this.fields = (ArrayList<Dots>) existingFields;
@@ -19,7 +20,7 @@ public class Card {
         this.design = Player.getCardDesignInUse();
     }
 
-    public Card(List<Dots> existingFields, CardDesign design) {
+    public Card(List<Dots> existingFields, CardDesigns design) {
         this.fields = existingFields;
         this.design = design;
     }
@@ -27,7 +28,7 @@ public class Card {
     public List<Dots> getFields() {
         return this.fields;
     }
-    public CardDesign getDesign() {
+    public CardDesigns getDesign() {
         return this.design;
     }
 }

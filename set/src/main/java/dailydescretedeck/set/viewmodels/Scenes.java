@@ -43,7 +43,7 @@ public class Scenes {
 
     public void showInstructionsView() {
         InstructionsView instructionsView = new InstructionsView();
-        Scene scene = new Scene(instructionsView, 530, 900);
+        Scene scene = new Scene(instructionsView, 520, 720);
         Stage newWindow = new Stage();
         newWindow.setScene(scene);
         newWindow.setResizable(false);

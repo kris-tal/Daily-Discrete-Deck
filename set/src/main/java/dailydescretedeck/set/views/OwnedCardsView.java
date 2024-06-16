@@ -1,6 +1,7 @@
 package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.viewmodels.CardDesign;
+import dailydescretedeck.set.viewmodels.CardDesignMap;
 import dailydescretedeck.set.viewmodels.OwnedCardsViewModel;
 import dailydescretedeck.set.viewmodels.Scenes;
 import javafx.geometry.Insets;
@@ -93,7 +94,7 @@ public class OwnedCardsView extends VBox {
 
     private void selectCurrentDesign() {
         CardDesign selectedDesign = products.get(currentDesign);
-        ownedCardsViewModel.setCurrentDesign(selectedDesign);
+        ownedCardsViewModel.setCurrentDesign(CardDesignMap.getReverseInstance(selectedDesign));
         AestheticAlert.showAlert("Design Selected", "You have selected a new card design.");
     }
 }

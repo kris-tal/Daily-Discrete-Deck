@@ -13,6 +13,8 @@ import javafx.collections.FXCollections;
 import java.util.ArrayList;
 import java.util.List;
 
+import static dailydescretedeck.set.models.CardDesigns.*;
+
 public class BuyCardsViewModel {
     private Player player;
     private ListProperty<Product> products;
@@ -31,16 +33,16 @@ public class BuyCardsViewModel {
         this.purchasedProducts = new ArrayList<>();
 
         // example products
-        products.add(new Product("Blue", 80, new BlueCardDesign()));
-        products.add(new Product("Emo", 20, new EmoCardDesign()));
-        products.add(new Product("JH", 100, new JHCardDesign()));
-        products.add(new Product("Red", 15, new RedCardDesign()));
-        products.add(new Product("Galaxy", 40, new GalaxyCardDesign()));
-        products.add(new Product("Adventure", 60, new AdventureCardDesign()));
-        products.add(new Product("Fantasy", 70, new FantasyCardDesign()));
-        products.add(new Product("The Witcher", 100, new WitcherCardDesign()));
-        products.add(new Product("Orange", 30, new OrangeCardDesign()));
-        products.add(new Product("Beach", 50, new BeachCardDesign()));
+        products.add(new Product("Blue", 80, BLUE));
+        products.add(new Product("Emo", 20, EMO));
+        products.add(new Product("JH", 100, JH));
+        products.add(new Product("Red", 15, RED));
+        products.add(new Product("Galaxy", 40, GALAXY));
+        products.add(new Product("Adventure", 60,ADVENTURE));
+        products.add(new Product("Fantasy", 70, FANTASY));
+        products.add(new Product("The Witcher", 100, WITCHER));
+        products.add(new Product("Orange", 30, ORANGE));
+        products.add(new Product("Beach", 50, BEACH));
     }
 
     public ListProperty<Product> getProducts() {

@@ -13,12 +13,12 @@ public class Player {
     private final String username;
     private static int OOPoints;
     private static Money money;
-    private static CardDesign cardDesignInUse;
-    private List<CardDesign> ownedDesigns;
+    private static CardDesigns cardDesignInUse;
+    private List<CardDesigns> ownedDesigns;
 
     public Player(String username) {
         this.username = username;
-        this.cardDesignInUse = new DefaultCardDesign();
+        this.cardDesignInUse = CardDesigns.DEFAULT;
         //this.cardDesignInUse = new FantasyCardDesign();
         this.money = new Money();
         this.ownedDesigns = new ArrayList<>();
@@ -39,7 +39,7 @@ public class Player {
         return OOPoints;
     }
 
-    public static CardDesign getCardDesignInUse() {
+    public static CardDesigns getCardDesignInUse() {
         return cardDesignInUse;
     }
 
@@ -70,11 +70,11 @@ public class Player {
         }
     }
 
-    public List<CardDesign> getOwnedDesigns() {
+    public List<CardDesigns> getOwnedDesigns() {
         return ownedDesigns;
     }
 
-    public void setDesign(CardDesign selectedDesign) {
+    public void setDesign(CardDesigns selectedDesign) {
         this.cardDesignInUse = selectedDesign;
     }
 }

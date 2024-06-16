@@ -2,6 +2,7 @@ package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.Product;
 import dailydescretedeck.set.viewmodels.CardDesign;
+import dailydescretedeck.set.viewmodels.CardDesignMap;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -19,7 +20,7 @@ public class ProductView extends HBox {
         this.circles = new Circle[6];
         this.originalColors = new Color[6];
 
-        CardDesign design = product.getDesign();
+        CardDesign design = CardDesignMap.getInstance(product.getDesign());
 
         setAlignment(Pos.CENTER);
         setSpacing(5);

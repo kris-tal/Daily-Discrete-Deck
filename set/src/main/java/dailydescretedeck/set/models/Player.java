@@ -2,10 +2,6 @@ package dailydescretedeck.set.models;
 
 import dailydescretedeck.set.FileManagement.CollectedCards;
 import dailydescretedeck.set.FileManagement.Money;
-import dailydescretedeck.set.FileManagement.SavingService;
-import dailydescretedeck.set.viewmodels.CardDesign;
-import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
-import dailydescretedeck.set.views.carddesignes.FantasyCardDesign;
 import javafx.beans.property.ListProperty;
 
 import java.util.ArrayList;

@@ -109,7 +109,7 @@ public class BoardView extends StackPane {
         label2.setFont(new Font("System", gap));
 
         HBox labelsBox = new HBox(gap);
-        labelsBox.getChildren().addAll(label1, label2, timeLabel);
+        labelsBox.getChildren().addAll(label1, timeLabel, label2);
         labelsBox.setAlignment(javafx.geometry.Pos.CENTER);
 
         Button surrenderButton = new MyButton("Surrender");
@@ -150,8 +150,8 @@ public class BoardView extends StackPane {
     }
 
     private void display() {
-        label1.setText("Cards left: " + boardViewModel.leftCards() + "/63");
-        label2.setText("Collected SETs: " + boardViewModel.getBoard().getNumberSets());
+        label1.setText("cards left: " + boardViewModel.leftCards() + "/63");
+        label2.setText("collected SETs: " + boardViewModel.getBoard().getNumberSets());
 
         boardContainer.getChildren().clear();
         boardContainer.setSpacing(gap);

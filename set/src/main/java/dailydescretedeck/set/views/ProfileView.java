@@ -41,13 +41,15 @@ public class ProfileView extends StackPane {
         VBox calendarContainer = new VBox(calendarView);
         calendarContainer.setSpacing(10);
         calendarContainer.setAlignment(Pos.TOP_CENTER);
+        Button changeNameButton = new MyButton("Change Username");
+        changeNameButton.setOnAction(event -> scenes.showUsernameAlert());
 
         Button backButton = new MyButton("Back to Menu");
         backButton.setOnAction(event -> scenes.showMenuView());
 
         ToolBar toolBar = createNavigationBar(calendarView);
 
-        VBox layout = new VBox(headerLabel, toolBar, calendarContainer, backButton);
+        VBox layout = new VBox(headerLabel, toolBar, calendarContainer, changeNameButton, backButton);
         layout.setSpacing(20);
         layout.setAlignment(Pos.TOP_CENTER);
         layout.setPadding(new Insets(30));

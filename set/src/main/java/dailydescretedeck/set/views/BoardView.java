@@ -14,6 +14,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -47,23 +48,25 @@ public class BoardView extends VBox {
     private Money money;
     private boolean showSet;
     private HBox xorCardBox;
+    private Label timeLabel;
+    private Label label1;
+    private Label label2;
+    private HBox buttonsBox;
 
     public BoardView(BoardViewModel boardViewModel) {
         this.boardViewModel = boardViewModel;
         this.scenes = new Scenes();
         this.money = new Money();
         this.showSet = false;
+
+        initializeComponents();
         display();
 
         widthProperty().addListener((observable, oldValue, newValue) -> display());
         heightProperty().addListener((observable, oldValue, newValue) -> display());
     }
 
-    private void display() {
-        getChildren().clear();
-
-        setAlignment(javafx.geometry.Pos.CENTER);
-
+    private void initializeComponents() {
         setStyle("-fx-background-color: thistle;");
 
         if (bylo) {
@@ -71,30 +74,9 @@ public class BoardView extends VBox {
             bylo = false;
         }
 
-        double paneWidth = getWidth();
-        double paneHeight = getHeight();
+        gap = 20;
 
-        if (paneWidth == 0 || paneHeight == 0) {
-            return;
-        }
-
-        double square = min(paneWidth, paneHeight) * 0.09;
-        double bigRectWidth = square * 9;
-        double bigRectHeight = square * 7;
-
-        gap = square / 5;
-
-        double cardWidth = square * 2;
-        double cardHeight = square * 3;
-
-        VBox boardContainer = new VBox();
-        boardContainer.setSpacing(gap);
-        boardContainer.setPrefWidth(paneWidth);
-        boardContainer.setPrefHeight(bigRectHeight);
-        boardContainer.setStyle("-fx-background-color: thistle;");
-        boardContainer.setAlignment(javafx.geometry.Pos.CENTER);
-
-        Label timeLabel = new Label();
+        timeLabel = new Label();
         timeLabel.setFont(new Font("System", gap * 2));
 
         Runnable updateTime = () -> {
@@ -113,17 +95,68 @@ public class BoardView extends VBox {
             timeline.play();
         });
 
-        Label label1 = new Label("Cards left: " + boardViewModel.leftCards() + "/63");
+        label1 = new Label();
         label1.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
         label1.setFont(new Font("System", gap * 2));
 
-        Label label2 = new Label("Collected SETs: " + boardViewModel.getBoard().getNumberSets());
+        label2 = new Label();
         label2.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
         label2.setFont(new Font("System", gap * 2));
 
         HBox labelsBox = new HBox(gap);
         labelsBox.getChildren().addAll(label1, label2, timeLabel);
         labelsBox.setAlignment(javafx.geometry.Pos.CENTER);
+
+        Button surrenderButton = new MyButton("Surrender");
+        Button confirmButton = new MyButton("Confirm");
+        Button cancelButton = new MyButton("Cancel");
+        Button xorButton = new MyButton("XOR");
+        Button backButton = new MyButton("Exit");
+        Button shuffleButton = new MyButton("Shuffle");
+        Button showButton = new MyButton("Show SET");
+
+        buttonsBox = new HBox(gap);
+        buttonsBox.setAlignment(javafx.geometry.Pos.CENTER);
+        buttonsBox.getChildren().addAll(surrenderButton, confirmButton, cancelButton, shuffleButton, showButton, xorButton, backButton);
+
+        VBox mainContainer = new VBox(gap);
+        mainContainer.setAlignment(javafx.geometry.Pos.CENTER);
+
+        xorCardBox = new HBox();
+        xorCardBox.setPrefSize(0, 0);
+        xorCardBox.setStyle("-fx-border-color: THISTLE; -fx-border-width: 2; -fx-background-color: THISTLE;");
+        xorCardBox.setAlignment(javafx.geometry.Pos.CENTER);
+
+        mainContainer.getChildren().addAll(labelsBox, buttonsBox, xorCardBox);
+        getChildren().add(mainContainer);
+
+        surrenderButton.setOnAction(event -> handleSurrender());
+        confirmButton.setOnAction(event -> handleConfirm());
+        cancelButton.setOnAction(event -> handleCancel());
+        xorButton.setOnAction(event -> handleXor());
+        backButton.setOnAction(event -> handleBack());
+        shuffleButton.setOnAction(event -> handleShuffle());
+        showButton.setOnAction(event -> handleShow());
+    }
+
+    private void display() {
+        label1.setText("Cards left: " + boardViewModel.leftCards() + "/63");
+        label2.setText("Collected SETs: " + boardViewModel.getBoard().getNumberSets());
+
+        VBox boardContainer = new VBox();
+        boardContainer.setSpacing(gap);
+        boardContainer.setAlignment(javafx.geometry.Pos.CENTER);
+
+        double paneWidth = getWidth();
+        double paneHeight = getHeight();
+
+        if (paneWidth == 0 || paneHeight == 0) {
+            return;
+        }
+
+        double square = min(paneWidth, paneHeight) * 0.09;
+        double cardWidth = square * 2;
+        double cardHeight = square * 3;
 
         VBox cardsBox = new VBox(gap);
         cardsBox.setAlignment(javafx.geometry.Pos.CENTER);
@@ -139,180 +172,159 @@ public class BoardView extends VBox {
                 Card card = boardViewModel.cardsProperty().get(cardIndex++);
                 CardView cardView = new CardView(card, 0, 0, square / 60);
                 cardViews.put(card, cardView);
-                cardView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    if (selectedCards.contains(card)) {
-                        selectedCards.remove(card);
-                    } else {
-                        selectedCards.add(card);
-                    }
-                });
+                cardView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> handleCardClick(card));
                 rowBox.getChildren().add(cardView);
             }
             cardsBox.getChildren().add(rowBox);
         }
 
-        boardContainer.getChildren().addAll(labelsBox, cardsBox);
+        boardContainer.getChildren().add(cardsBox);
 
-        Button surrenderButton = new MyButton("Surrender");
-        Button confirmButton = new MyButton("Confirm");
-        Button cancelButton = new MyButton("Cancel");
-        Button xorButton = new MyButton("XOR");
-        Button backButton = new MyButton("Exit");
-        Button shuffleButton = new MyButton("Shuffle");
-        Button showButton = new MyButton("Show SET");
+        if (getChildren().size() > 1) {
+            getChildren().remove(1);
+        }
+        getChildren().add(1, boardContainer);
+    }
 
-        HBox buttonsBox = new HBox(gap);
-        buttonsBox.setAlignment(javafx.geometry.Pos.CENTER);
-        buttonsBox.getChildren().addAll(surrenderButton, confirmButton, cancelButton, shuffleButton, showButton, xorButton, backButton);
+    private void handleCardClick(Card card) {
+        if (selectedCards.contains(card)) {
+            selectedCards.remove(card);
+        } else {
+            selectedCards.add(card);
+        }
+    }
 
-        VBox mainContainer = new VBox(gap);
-        mainContainer.setAlignment(javafx.geometry.Pos.CENTER);
-        mainContainer.getChildren().addAll(boardContainer, buttonsBox);
+    private void handleShuffle() {
+        boardViewModel.shuffleCards();
+        display();
+    }
 
-        xorCardBox = new HBox();
-        xorCardBox.setPrefSize(cardWidth, cardHeight);
-        xorCardBox.setStyle("-fx-border-color: THISTLE; -fx-border-width: 2; -fx-background-color: THISTLE;");
-        xorCardBox.setAlignment(javafx.geometry.Pos.CENTER);
-        mainContainer.getChildren().add(xorCardBox);
+    private void handleShow() {
+        selectedCards.clear();
+        selectedCards.addAll(boardViewModel.getSet());
+        showSet = true;
+        for (Card card : selectedCards) {
+            CardView cardView = cardViews.get(card);
+            cardView.clicked();
+            cardView.selectNotSelected();
+        }
+    }
 
-        getChildren().add(mainContainer);
+    private void handleBack() {
+        if (timeline != null) {
+            timeline.stop();
+        }
+        CardView.enableCards();
+        bylo = true;
+        scenes.showMenuView();
+    }
 
-        shuffleButton.setOnAction(event -> {
-            boardViewModel.shuffleCards();
+    private void handleSurrender() {
+        if (timeline != null) {
+            timeline.stop();
+        }
+
+        selectedCards.clear();
+        selectedCards.addAll(boardViewModel.getNotSet());
+
+        for (Card card : selectedCards) {
+            CardView cardView = cardViews.get(card);
+            cardView.selectNotSelected();
+        }
+        CardView.disableCards();
+        disableButtons(true);
+
+        AestheticAlert.showAlert("Game Over", "You lost!");
+    }
+
+    private void handleConfirm() {
+        if (boardViewModel.isSetOk(selectedCards, true)) {
+            SetCollector setCollector = SetCollector.getInstance();
+            End end = End.getInstance();
+            TheBestTime theBestTime = TheBestTime.getInstance();
+            if (SavingService.loadDateFromFile("saves/Date.txt") == null) {
+                SavingService.saveDateToFile("saves/Date.txt", LocalDate.now());
+                setCollector.resetsSets();
+                end.resetEnds();
+                theBestTime.resetTime();
+            } else if (!SavingService.loadDateFromFile("saves/Date.txt").equals(LocalDate.now())) {
+                SavingService.saveDateToFile("saves/Date.txt", LocalDate.now());
+                setCollector.resetsSets();
+                end.resetEnds();
+                theBestTime.resetTime();
+                money.addMoney(5);
+            }
+
+            boolean ok = boardViewModel.removeCards(selectedCards);
+            if (!showSet) {
+                money.addMoney(1);
+                setCollector.addSets(1);
+            } else {
+                showSet = false;
+            }
+
+            Map<LocalDate, Long> setsMap = SavingService.loadMapFromFile("saves/setsMap.txt");
+            setsMap.put(LocalDate.now(), setCollector.getSets());
+            SavingService.saveMapToFile("saves/setsMap.txt", setsMap);
+
+            if (!ok) {
+                if (timeline != null) {
+                    timeline.stop();
+                }
+                long t = SavingService.loadNumberFromFile("saves/theBestTime.txt");
+                long timeNow = System.currentTimeMillis() - startTime;
+                if (t == 0 || t > timeNow) {
+                    theBestTime.newTime(timeNow);
+                    SavingService.saveNumberToFile("saves/theBestTime.txt", timeNow);
+                    money.addMoney(10);
+                }
+                end.addEnds(1);
+                money.addMoney(end.getEnds());
+
+                disableButtons(true);
+
+                AestheticAlert.showAlert("Game over", "You won!");
+                return;
+            }
+
             BoardView newBoardView = new BoardView(boardViewModel);
             StackPane parent = (StackPane) getParent();
+            parent.getChildren().remove(this);
             parent.getChildren().add(newBoardView);
-        });
-
-        showButton.setOnAction(event -> {
-            selectedCards.clear();
-            selectedCards.addAll(boardViewModel.getSet());
-            showSet = true;
-            for (Card card : selectedCards) {
-                CardView cardView = cardViews.get(card);
-                cardView.clicked();
-                cardView.selectNotSelected();
-            }
-        });
-
-        backButton.setOnAction(event -> {
-            if (timeline != null) {
-                timeline.stop();
-            }
             CardView.enableCards();
-            bylo = true;
-            scenes.showMenuView();
-        });
-
-        surrenderButton.setOnAction(event -> {
-            if (timeline != null) {
-                timeline.stop();
-            }
-
             selectedCards.clear();
-            selectedCards.addAll(boardViewModel.getNotSet());
-
-            for (Card card : selectedCards) {
-                CardView cardView = cardViews.get(card);
-                cardView.selectNotSelected();
-            }
-            CardView.disableCards();
-            confirmButton.setDisable(true);
-            showButton.setDisable(true);
-            surrenderButton.setDisable(true);
-            cancelButton.setDisable(true);
-            xorButton.setDisable(true);
-            shuffleButton.setDisable(true);
-
-            AestheticAlert.showAlert("Game Over", "You lost!");
-        });
-
-        confirmButton.setOnAction(event -> {
-            if (boardViewModel.isSetOk(selectedCards, true)) {
-                SetCollector setCollector = SetCollector.getInstance();
-                End end = End.getInstance();
-                TheBestTime theBestTime = TheBestTime.getInstance();
-                if (SavingService.loadDateFromFile("saves/Date.txt") == null) {
-                    SavingService.saveDateToFile("saves/Date.txt", LocalDate.now());
-                    setCollector.resetsSets();
-                    end.resetEnds();
-                    theBestTime.resetTime();
-                } else if (!SavingService.loadDateFromFile("saves/Date.txt").equals(LocalDate.now())) {
-                    SavingService.saveDateToFile("saves/Date.txt", LocalDate.now());
-                    setCollector.resetsSets();
-                    end.resetEnds();
-                    theBestTime.resetTime();
-                    money.addMoney(5);
-                }
-
-                boolean ok = boardViewModel.removeCards(selectedCards);
-                if (!showSet) {
-                    money.addMoney(1);
-                    setCollector.addSets(1);
-                } else {
-                    showSet = false;
-                }
-
-                Map<LocalDate, Long> setsMap = SavingService.loadMapFromFile("saves/setsMap.txt");
-                setsMap.put(LocalDate.now(), setCollector.getSets());
-                SavingService.saveMapToFile("saves/setsMap.txt", setsMap);
-
-                if (!ok) {
-                    if (timeline != null) {
-                        timeline.stop();
-                    }
-                    long t = SavingService.loadNumberFromFile("saves/theBestTime.txt");
-                    long timeNow = System.currentTimeMillis() - startTime;
-                    if (t == 0 || t > timeNow) {
-                        theBestTime.newTime(timeNow);
-                        SavingService.saveNumberToFile("saves/theBestTime.txt", timeNow);
-                        money.addMoney(10);
-                    }
-                    end.addEnds(1);
-                    money.addMoney(end.getEnds());
-
-                    confirmButton.setDisable(true);
-                    showButton.setDisable(true);
-                    surrenderButton.setDisable(true);
-                    cancelButton.setDisable(true);
-                    xorButton.setDisable(true);
-                    shuffleButton.setDisable(true);
-
-                    AestheticAlert.showAlert("Game over", "You won!");
-                    return;
-                }
-
-                BoardView newBoardView = new BoardView(boardViewModel);
-                StackPane parent = (StackPane) getParent();
-                parent.getChildren().remove(this);
-                parent.getChildren().add(newBoardView);
-                CardView.enableCards();
-                selectedCards.clear();
-            } else {
-                for (Card card : boardViewModel.cardsProperty()) {
-                    CardView cardView = cardViews.get(card);
-                    cardView.unclick();
-                }
-                CardView.enableCards();
-                selectedCards.clear();
-            }
-        });
-
-        cancelButton.setOnAction(event -> {
+        } else {
             for (Card card : boardViewModel.cardsProperty()) {
                 CardView cardView = cardViews.get(card);
                 cardView.unclick();
             }
             CardView.enableCards();
             selectedCards.clear();
-        });
+        }
+    }
 
-        xorButton.setOnAction(event -> {
-            xorCardBox.getChildren().clear();
-            Card card = boardViewModel.getXor(selectedCards);
-            CardView cardView = new CardView(card, 0, 0, square / (2 * 60));
-            cardView.disableThisCard();
-            xorCardBox.getChildren().add(cardView);
-        });
+    private void handleCancel() {
+        for (Card card : boardViewModel.cardsProperty()) {
+            CardView cardView = cardViews.get(card);
+            cardView.unclick();
+        }
+        CardView.enableCards();
+        selectedCards.clear();
+    }
+
+    private void handleXor() {
+        xorCardBox.getChildren().clear();
+        Card card = boardViewModel.getXor(selectedCards);
+        CardView cardView = new CardView(card, 0, 0, 0.5);
+        cardView.disableThisCard();
+        xorCardBox.getChildren().add(cardView);
+    }
+
+    private void disableButtons(boolean disable) {
+        for (Node node : buttonsBox.getChildren()) {
+            if (node instanceof Button && !"Exit".equals(((Button) node).getText())) {
+                ((Button) node).setDisable(disable);
+            }
+        }
     }
 }

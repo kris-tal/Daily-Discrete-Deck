@@ -29,9 +29,6 @@ public class ProductView extends HBox {
             circles[i] = new Circle();
             originalColors[i] = design.getColor(i + 1);
             circles[i].setFill(originalColors[i]);
-            circles[i].setStroke(Color.BLACK);
-            circles[i].setStrokeWidth(1);
-            circles[i].setStrokeType(StrokeType.OUTSIDE);
 
             circles[i].radiusProperty().bind(widthProperty().multiply(0.04));
 

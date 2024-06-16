@@ -1,7 +1,5 @@
 package dailydescretedeck.set.models;
 
-import dailydescretedeck.set.viewmodels.CardDesign;
-import dailydescretedeck.set.viewmodels.CardDesignMap;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package dailydescretedeck.set.models;
 
-import dailydescretedeck.set.services.Money;
+import dailydescretedeck.set.FileManagement.Money;
 import dailydescretedeck.set.viewmodels.CardDesign;
 import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
 import dailydescretedeck.set.views.carddesignes.FantasyCardDesign;

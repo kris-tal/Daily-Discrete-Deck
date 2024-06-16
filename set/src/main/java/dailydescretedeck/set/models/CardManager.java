@@ -2,8 +2,6 @@ package dailydescretedeck.set.models;
 
 import java.util.*;
 
-import dailydescretedeck.set.services.Feature;
-
 public class CardManager {
     private Board board;
 

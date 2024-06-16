@@ -1,4 +1,4 @@
-package dailydescretedeck.set.services;
+package dailydescretedeck.set.FileManagement;
 
 public class SetCollector {
     private static SetCollector instance = null;

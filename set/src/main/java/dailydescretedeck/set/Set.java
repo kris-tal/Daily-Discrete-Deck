@@ -3,9 +3,9 @@ package dailydescretedeck.set;
 import java.util.Objects;
 import java.util.Optional;
 
+import dailydescretedeck.set.FileManagement.PlayerName;
+import dailydescretedeck.set.FileManagement.SavingService;
 import dailydescretedeck.set.models.Player;
-import dailydescretedeck.set.services.PlayerName;
-import dailydescretedeck.set.services.SavingService;
 import dailydescretedeck.set.viewmodels.Scenes;
 import javafx.application.Application;
 import javafx.scene.Scene;

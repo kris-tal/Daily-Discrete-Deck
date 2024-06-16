@@ -6,8 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import dailydescretedeck.set.services.Feature;
-
 public class Deck {
     private List<Card> cards;
 

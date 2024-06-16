@@ -14,6 +14,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -36,7 +37,7 @@ import static java.lang.Double.min;
 import java.time.LocalDate;
 import javafx.util.Duration;
 
-public class BoardView extends VBox {
+public class BoardView extends StackPane {
     private BoardViewModel boardViewModel;
     private double gap;
     private ObservableList<Card> selectedCards = FXCollections.observableArrayList();
@@ -47,11 +48,14 @@ public class BoardView extends VBox {
     private Scenes scenes;
     private Money money;
     private boolean showSet;
-    private HBox xorCardBox;
+    private VBox xorCardBox;
     private Label timeLabel;
     private Label label1;
     private Label label2;
     private HBox buttonsBox;
+    private VBox boardContainer;
+    private VBox mainContainer;
+    private boolean showXor;
 
     public BoardView(BoardViewModel boardViewModel) {
         this.boardViewModel = boardViewModel;
@@ -68,6 +72,7 @@ public class BoardView extends VBox {
 
     private void initializeComponents() {
         setStyle("-fx-background-color: thistle;");
+        this.showXor = false;
 
         if (bylo) {
             startTime = System.currentTimeMillis();
@@ -77,7 +82,7 @@ public class BoardView extends VBox {
         gap = 20;
 
         timeLabel = new Label();
-        timeLabel.setFont(new Font("System", gap * 2));
+        timeLabel.setFont(new Font("System", gap));
 
         Runnable updateTime = () -> {
             long time = System.currentTimeMillis() - startTime;
@@ -97,11 +102,11 @@ public class BoardView extends VBox {
 
         label1 = new Label();
         label1.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
-        label1.setFont(new Font("System", gap * 2));
+        label1.setFont(new Font("System", gap));
 
         label2 = new Label();
         label2.setStyle("-fx-strikethrough: true; -fx-text-fill: #746174;");
-        label2.setFont(new Font("System", gap * 2));
+        label2.setFont(new Font("System", gap));
 
         HBox labelsBox = new HBox(gap);
         labelsBox.getChildren().addAll(label1, label2, timeLabel);
@@ -119,16 +124,21 @@ public class BoardView extends VBox {
         buttonsBox.setAlignment(javafx.geometry.Pos.CENTER);
         buttonsBox.getChildren().addAll(surrenderButton, confirmButton, cancelButton, shuffleButton, showButton, xorButton, backButton);
 
-        VBox mainContainer = new VBox(gap);
+        setAlignment(javafx.geometry.Pos.CENTER);
+        mainContainer = new VBox(gap);
+        mainContainer.setSpacing(gap);
         mainContainer.setAlignment(javafx.geometry.Pos.CENTER);
 
-        xorCardBox = new HBox();
+        xorCardBox = new VBox();
         xorCardBox.setPrefSize(0, 0);
         xorCardBox.setStyle("-fx-border-color: THISTLE; -fx-border-width: 2; -fx-background-color: THISTLE;");
-        xorCardBox.setAlignment(javafx.geometry.Pos.CENTER);
+        xorCardBox.setAlignment(Pos.TOP_LEFT);
+        xorCardBox.setPadding(new javafx.geometry.Insets(gap * 2));
 
-        mainContainer.getChildren().addAll(labelsBox, buttonsBox, xorCardBox);
-        getChildren().add(mainContainer);
+        boardContainer = new VBox();
+
+        mainContainer.getChildren().addAll(labelsBox, boardContainer, buttonsBox);
+        getChildren().addAll(xorCardBox, mainContainer);
 
         surrenderButton.setOnAction(event -> handleSurrender());
         confirmButton.setOnAction(event -> handleConfirm());
@@ -143,7 +153,7 @@ public class BoardView extends VBox {
         label1.setText("Cards left: " + boardViewModel.leftCards() + "/63");
         label2.setText("Collected SETs: " + boardViewModel.getBoard().getNumberSets());
 
-        VBox boardContainer = new VBox();
+        boardContainer.getChildren().clear();
         boardContainer.setSpacing(gap);
         boardContainer.setAlignment(javafx.geometry.Pos.CENTER);
 
@@ -180,10 +190,10 @@ public class BoardView extends VBox {
 
         boardContainer.getChildren().add(cardsBox);
 
-        if (getChildren().size() > 1) {
-            getChildren().remove(1);
-        }
-        getChildren().add(1, boardContainer);
+//        if (getChildren().size() > 1) {
+//            getChildren().remove(1);
+//        }
+//        getChildren().add(boardContainer);
     }
 
     private void handleCardClick(Card card) {
@@ -192,7 +202,11 @@ public class BoardView extends VBox {
         } else {
             selectedCards.add(card);
         }
+        if(showXor) {
+            displayXor();
+        }
     }
+
 
     private void handleShuffle() {
         boardViewModel.shuffleCards();
@@ -313,6 +327,17 @@ public class BoardView extends VBox {
     }
 
     private void handleXor() {
+        xorCardBox.getChildren().clear();
+        if(showXor) {
+            System.out.println("dont showXor");
+            showXor = false;
+            return;
+        }
+        showXor = true;
+        displayXor();
+    }
+
+    private void displayXor() {
         xorCardBox.getChildren().clear();
         Card card = boardViewModel.getXor(selectedCards);
         CardView cardView = new CardView(card, 0, 0, 0.5);

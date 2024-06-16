@@ -33,7 +33,6 @@ public class CardView extends Pane {
 
     public CardView(Card card, double X, double Y, double sq) {
         this.card = card;
-        //this.cardViewModel = cardViewModel(card);
         this.design = CardDesignMap.getInstance(card.getDesign());
         thiscarddisabled = false;
         buildCard(X, Y, sq);

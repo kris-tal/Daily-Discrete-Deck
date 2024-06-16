@@ -1,12 +1,12 @@
 package dailydescretedeck.set.views;
 
+import dailydescretedeck.set.FileManagement.End;
+import dailydescretedeck.set.FileManagement.Money;
+import dailydescretedeck.set.FileManagement.SavingService;
+import dailydescretedeck.set.FileManagement.SetCollector;
+import dailydescretedeck.set.FileManagement.TheBestTime;
 import dailydescretedeck.set.models.Calendar;
 import dailydescretedeck.set.models.Card;
-import dailydescretedeck.set.services.End;
-import dailydescretedeck.set.services.Money;
-import dailydescretedeck.set.services.SavingService;
-import dailydescretedeck.set.services.SetCollector;
-import dailydescretedeck.set.services.TheBestTime;
 import dailydescretedeck.set.viewmodels.BoardViewModel;
 import dailydescretedeck.set.viewmodels.Scenes;
 import javafx.animation.KeyFrame;
@@ -46,6 +46,7 @@ public class BoardView extends VBox {
     private Scenes scenes;
     private Money money;
     private boolean showSet;
+    private HBox xorCardBox;
 
     public BoardView(BoardViewModel boardViewModel) {
         this.boardViewModel = boardViewModel;
@@ -141,8 +142,7 @@ public class BoardView extends VBox {
                 cardView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                     if (selectedCards.contains(card)) {
                         selectedCards.remove(card);
-                    }
-                    else {
+                    } else {
                         selectedCards.add(card);
                     }
                 });
@@ -168,6 +168,12 @@ public class BoardView extends VBox {
         VBox mainContainer = new VBox(gap);
         mainContainer.setAlignment(javafx.geometry.Pos.CENTER);
         mainContainer.getChildren().addAll(boardContainer, buttonsBox);
+
+        xorCardBox = new HBox();
+        xorCardBox.setPrefSize(cardWidth, cardHeight);
+        xorCardBox.setStyle("-fx-border-color: THISTLE; -fx-border-width: 2; -fx-background-color: THISTLE;");
+        xorCardBox.setAlignment(javafx.geometry.Pos.CENTER);
+        mainContainer.getChildren().add(xorCardBox);
 
         getChildren().add(mainContainer);
 
@@ -231,8 +237,7 @@ public class BoardView extends VBox {
                     setCollector.resetsSets();
                     end.resetEnds();
                     theBestTime.resetTime();
-                }
-                else if (!SavingService.loadDateFromFile("saves/Date.txt").equals(LocalDate.now())) {
+                } else if (!SavingService.loadDateFromFile("saves/Date.txt").equals(LocalDate.now())) {
                     SavingService.saveDateToFile("saves/Date.txt", LocalDate.now());
                     setCollector.resetsSets();
                     end.resetEnds();
@@ -244,8 +249,7 @@ public class BoardView extends VBox {
                 if (!showSet) {
                     money.addMoney(1);
                     setCollector.addSets(1);
-                }
-                else {
+                } else {
                     showSet = false;
                 }
 
@@ -284,8 +288,7 @@ public class BoardView extends VBox {
                 parent.getChildren().add(newBoardView);
                 CardView.enableCards();
                 selectedCards.clear();
-            }
-            else {
+            } else {
                 for (Card card : boardViewModel.cardsProperty()) {
                     CardView cardView = cardViews.get(card);
                     cardView.unclick();
@@ -305,14 +308,11 @@ public class BoardView extends VBox {
         });
 
         xorButton.setOnAction(event -> {
+            xorCardBox.getChildren().clear();
             Card card = boardViewModel.getXor(selectedCards);
             CardView cardView = new CardView(card, 0, 0, square / (2 * 60));
             cardView.disableThisCard();
-            StackPane cardPane = new StackPane();
-            cardPane.getChildren().add(cardView);
-            cardPane.setLayoutX(paneWidth - square / 2 - gap);
-            cardPane.setLayoutY(gap + square / 2 + gap);
-            getChildren().add(cardPane);
+            xorCardBox.getChildren().add(cardView);
         });
     }
 }

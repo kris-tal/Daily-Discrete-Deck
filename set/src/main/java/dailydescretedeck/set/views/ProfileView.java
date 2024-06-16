@@ -1,6 +1,6 @@
 package dailydescretedeck.set.views;
 
-import dailydescretedeck.set.services.PlayerName;
+import dailydescretedeck.set.FileManagement.PlayerName;
 import dailydescretedeck.set.viewmodels.ProfileViewModel;
 import dailydescretedeck.set.viewmodels.Scenes;
 import javafx.geometry.Insets;

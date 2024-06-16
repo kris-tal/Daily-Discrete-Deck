@@ -1,9 +1,9 @@
 package dailydescretedeck.set.views;
 
+import dailydescretedeck.set.FileManagement.PlayerName;
+import dailydescretedeck.set.FileManagement.SavingService;
 import dailydescretedeck.set.models.Dots;
 import dailydescretedeck.set.models.Player;
-import dailydescretedeck.set.services.PlayerName;
-import dailydescretedeck.set.services.SavingService;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.io.File;
 
 public class UsernameAlert extends VBox {
     public UsernameAlert() {
@@ -49,6 +50,8 @@ public class UsernameAlert extends VBox {
             else {
                 String result = usernameField.getText();
                 playerName.setName(result);
+                File folder = new File("saves");
+                if (!folder.exists()) folder.mkdir();
                 SavingService.saveNameToFile("saves/name.txt", result);
                 ((Stage)submitButton.getScene().getWindow()).close();
             }

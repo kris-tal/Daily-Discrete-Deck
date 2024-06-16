@@ -1,4 +1,4 @@
-package dailydescretedeck.set.services;
+package dailydescretedeck.set.models;
 
 import java.util.ArrayList;
 import java.util.List;

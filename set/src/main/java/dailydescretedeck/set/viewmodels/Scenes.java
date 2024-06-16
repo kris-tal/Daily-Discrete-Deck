@@ -1,9 +1,9 @@
 package dailydescretedeck.set.viewmodels;
 
+import dailydescretedeck.set.FileManagement.PlayerName;
+import dailydescretedeck.set.FileManagement.SavingService;
 import dailydescretedeck.set.models.Player;
 import dailydescretedeck.set.models.SimpleBoardState;
-import dailydescretedeck.set.services.PlayerName;
-import dailydescretedeck.set.services.SavingService;
 import dailydescretedeck.set.views.*;
 import javafx.scene.Scene;
 import javafx.scene.control.TextInputDialog;

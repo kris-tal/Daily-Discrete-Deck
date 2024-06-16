@@ -76,8 +76,7 @@ public class BuyCardsView extends VBox {
         backButton.setOnAction(event -> {
             if (buyCardsViewModel.hasItemsInCart()) {
                 AestheticAlert.showAlert("Error", "Please finalize your purchase or empty your cart before leaving.");
-            }
-            else {
+            } else {
                 scenes.showStoreView();
             }
         });
@@ -103,7 +102,20 @@ public class BuyCardsView extends VBox {
 
         navigationButtonsBox.getChildren().addAll(backButton, cartButton, previousButton, nextButton);
 
-        getChildren().addAll(labelsBox, productsContainer, navigationButtonsBox);
+        VBox contentBox = new VBox();
+        contentBox.setSpacing(gap);
+        contentBox.setAlignment(Pos.CENTER);
+        contentBox.getChildren().addAll(labelsBox, productsContainer);
+
+        VBox.setVgrow(productsContainer, Priority.ALWAYS);
+        VBox.setVgrow(contentBox, Priority.ALWAYS);
+
+        getChildren().addAll(contentBox, navigationButtonsBox);
+        setVgrow(navigationButtonsBox, Priority.NEVER);
+        setVgrow(contentBox, Priority.ALWAYS);
+
+        StackPane.setAlignment(navigationButtonsBox, Pos.BOTTOM_CENTER);
+        StackPane.setMargin(navigationButtonsBox, new Insets(10));
     }
 
     private void updateProducts(VBox productsContainer, Font font) {
@@ -159,14 +171,5 @@ public class BuyCardsView extends VBox {
         Label label = new Label(text);
         label.setFont(font);
         return label;
-    }
-
-    private Button createButton(String text, Font font) {
-        Button button = new Button(text);
-        button.setFont(font);
-        button.setStyle("-fx-background-color: #E6D4E6; -fx-text-fill: #746174; -fx-background-radius: 40;");
-        button.prefWidthProperty().bind(widthProperty().multiply(0.2));
-        button.prefHeightProperty().bind(heightProperty().multiply(0.05));
-        return button;
     }
 }

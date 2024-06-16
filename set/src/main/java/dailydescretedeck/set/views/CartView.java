@@ -4,6 +4,7 @@ import dailydescretedeck.set.models.Dots;
 import dailydescretedeck.set.models.Product;
 import dailydescretedeck.set.viewmodels.BuyCardsViewModel;
 import dailydescretedeck.set.viewmodels.CardDesign;
+import dailydescretedeck.set.viewmodels.CardDesignMap;
 import dailydescretedeck.set.viewmodels.Scenes;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -98,7 +99,7 @@ public class CartView extends BorderPane {
         cardDesignBox.getChildren().clear();
 
         if (product != null) {
-            CardDesign design = product.getDesign();
+            CardDesign design = CardDesignMap.getInstance(product.getDesign());
             List<Dots> existingFields = new ArrayList<>();
             existingFields.add(Dots.A1);
             existingFields.add(Dots.A2);

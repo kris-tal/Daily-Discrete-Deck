@@ -7,9 +7,9 @@ import java.util.List;
 public class Product {
     private String name;
     private int price;
-    private CardDesign design;
+    private CardDesigns design;
 
-    public Product(String name, int price, CardDesign design) {
+    public Product(String name, int price, CardDesigns design) {
         this.name = name;
         this.price = price;
         this.design = design;
@@ -23,7 +23,7 @@ public class Product {
         return price;
     }
 
-    public CardDesign getDesign() {
+    public CardDesigns getDesign() {
         return design;
     }
 }

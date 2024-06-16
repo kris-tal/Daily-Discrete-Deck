@@ -1,8 +1,10 @@
 package dailydescretedeck.set.views;
 
 import dailydescretedeck.set.models.Card;
+import dailydescretedeck.set.models.CardDesigns;
 import dailydescretedeck.set.models.Dots;
 import dailydescretedeck.set.viewmodels.CardDesign;
+import dailydescretedeck.set.viewmodels.CardDesignMap;
 import dailydescretedeck.set.viewmodels.CardViewModel;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -24,6 +26,7 @@ public class CardView extends Pane {
     private boolean clicked;
     static private boolean disabled = false;
     private boolean thiscarddisabled;
+    private CardDesign design;
 
     public Rectangle cardBackground;
     private ArrayList<Shape> fields;
@@ -31,20 +34,23 @@ public class CardView extends Pane {
     public CardView(Card card, double X, double Y, double sq) {
         this.card = card;
         //this.cardViewModel = cardViewModel(card);
+        this.design = CardDesignMap.getInstance(card.getDesign());
         thiscarddisabled = false;
         buildCard(X, Y, sq);
     }
 
     public CardView(CardDesign design, double X, double Y, double sq) {
         List<Dots> dots = design.getDotPositions();
-        this.card = new Card(dots, design);
+        this.card = new Card(dots, CardDesignMap.getReverseInstance(design));
+        this.design = design;
         thiscarddisabled = false;
         buildCard(X, Y, sq);
     }
 
     public CardView(List<Dots> existingFields, CardDesign design, double X, double Y, double sq) {
-        this.card = new Card(existingFields, design);
+        this.card = new Card(existingFields, CardDesignMap.getReverseInstance(design));
         thiscarddisabled = false;
+        this.design = design;
         buildCard(X, Y, sq);
     }
 
@@ -54,7 +60,7 @@ public class CardView extends Pane {
         this.height = 180 * sq;
         this.clicked = false;
         this.cardBackground = new Rectangle(width, height);
-        this.cardBackground.setFill(card.getDesign().getBackgroundColor());
+        this.cardBackground.setFill(design.getBackgroundColor());
         this.cardBackground.setArcHeight(35 * sq);
         this.cardBackground.setArcWidth(35 * sq);
         this.cardBackground.setX(X);
@@ -64,36 +70,36 @@ public class CardView extends Pane {
         this.group.getChildren().add(cardBackground);
         this.fields = new ArrayList<>();
         for (Dots field : card.getFields()) {
-            Shape shape = card.getDesign().getShape(sq);
+            Shape shape = design.getShape(sq);
             if (field == Dots.A1) {
                 shape.setLayoutX(X + this.width / 120 * 34);
                 shape.setLayoutY(Y + this.height / 180 * 36);
-                shape.setFill(card.getDesign().getColor(1));
+                shape.setFill(design.getColor(1));
                 this.fields.add(shape);
             } else if (field == Dots.A2) {
                 shape.setLayoutX(X + this.width / 120 * 86);
                 shape.setLayoutY(Y + this.height / 180 * 36);
-                shape.setFill(card.getDesign().getColor(2));
+                shape.setFill(design.getColor(2));
                 this.fields.add(shape);
             } else if (field == Dots.B1) {
                 shape.setLayoutX(X + this.width / 120 * 34);
                 shape.setLayoutY(Y + this.height / 180 * 90);
-                shape.setFill(card.getDesign().getColor(3));
+                shape.setFill(design.getColor(3));
                 this.fields.add(shape);
             } else if (field == Dots.B2) {
                 shape.setLayoutX(X + this.width / 120 * 86);
                 shape.setLayoutY(Y + this.height / 180 * 90);
-                shape.setFill(card.getDesign().getColor(4));
+                shape.setFill(design.getColor(4));
                 this.fields.add(shape);
             } else if (field == Dots.C1) {
                 shape.setLayoutX(X + this.width / 120 * 34);
                 shape.setLayoutY(Y + this.height / 180 * 144);
-                shape.setFill(card.getDesign().getColor(5));
+                shape.setFill(design.getColor(5));
                 this.fields.add(shape);
             } else if (field == Dots.C2) {
                 shape.setLayoutX(X + this.width / 120 * 86);
                 shape.setLayoutY(Y + this.height / 180 * 144);
-                shape.setFill(card.getDesign().getColor(6));
+                shape.setFill(design.getColor(6));
                 this.fields.add(shape);
             }
         }

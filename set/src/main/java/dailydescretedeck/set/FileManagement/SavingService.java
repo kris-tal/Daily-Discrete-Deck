@@ -9,14 +9,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import dailydescretedeck.set.models.CardDesigns;
 
 public class SavingService {
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -132,33 +136,36 @@ public class SavingService {
         return null;
     }
 
-    public static void saveClassesToFile(String fileName, List<Class<?>> classes) {
-    Path path = Paths.get(fileName);
-    List<String> classNames = classes.stream().map(Class::getName).collect(Collectors.toList());
-    try {
-        Files.write(path, classNames, StandardCharsets.UTF_8);
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
+    public static void saveClassesToFile(String fileName, ArrayList<CardDesigns> classes) {
+        if (classes == null) {
+            classes = new ArrayList<>(); 
+        }
+        Path path = Paths.get(fileName);
+        List<String> classNames = classes.stream().map(Enum::name).collect(Collectors.toList());
+        try {
+            Files.write(path, classNames, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static List<Class<?>> loadClassesFromFile(String fileName) {
-        Path path = Paths.get(fileName);
-        if (Files.exists(path)) {
-            try {
-                List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
-                return lines.stream().map(line -> {
-                    try {
-                        return Class.forName(line);
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
+public static ArrayList<CardDesigns> loadClassesFromFile(String fileName) {
+    Path path = Paths.get(fileName);
+    if (Files.exists(path)) {
+        try {
+            List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+            return lines.stream().map(line -> {
+                try {
+                    return CardDesigns.valueOf(line);
+                } catch (IllegalArgumentException e) {
                     return null;
-                }).collect(Collectors.toList());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                }
+            }).filter(Objects::nonNull).collect(Collectors.toCollection(ArrayList::new));
+        } catch (IOException e) {
         }
-        return null;
-    }
+    } 
+    ArrayList<CardDesigns> defaultList = new ArrayList<>();
+    defaultList.add(CardDesigns.DEFAULT);
+    return defaultList;
+}
 }

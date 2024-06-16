@@ -38,7 +38,7 @@ public class CardDesignMap {
     }
 
     public static CardDesigns getReverseInstance(CardDesign design) {
-        return reverseDesignMap.get(design);
+        return reverseDesignMap.get(design.getClass());
     }
 
     public static CardDesign getInstance(CardDesigns design) {

@@ -1,6 +1,8 @@
 package dailydescretedeck.set.models;
 
+import dailydescretedeck.set.FileManagement.CollectedCards;
 import dailydescretedeck.set.FileManagement.Money;
+import dailydescretedeck.set.FileManagement.SavingService;
 import dailydescretedeck.set.viewmodels.CardDesign;
 import dailydescretedeck.set.views.carddesignes.DefaultCardDesign;
 import dailydescretedeck.set.views.carddesignes.FantasyCardDesign;
@@ -14,15 +16,17 @@ public class Player {
     private static int OOPoints;
     private static Money money;
     private static CardDesigns cardDesignInUse;
-    private List<CardDesigns> ownedDesigns;
+    private ArrayList<CardDesigns> ownedDesigns;
+    private CollectedCards collectedCards;
 
     public Player(String username) {
         this.username = username;
-        this.cardDesignInUse = CardDesigns.DEFAULT;
+        collectedCards = new CollectedCards();
+        this.cardDesignInUse = collectedCards.getMyCard();
         //this.cardDesignInUse = new FantasyCardDesign();
         this.money = new Money();
         this.ownedDesigns = new ArrayList<>();
-        this.ownedDesigns.add(cardDesignInUse);
+        this.ownedDesigns = new ArrayList<>(collectedCards.getCollectedCards());
     }
 
     public Player(int points, String username, String pwd) {
@@ -68,13 +72,16 @@ public class Player {
         for (Product p : cartItems) {
             ownedDesigns.add(p.getDesign());
         }
+        collectedCards.addCards(new ArrayList<>(ownedDesigns));
     }
 
     public List<CardDesigns> getOwnedDesigns() {
+        ownedDesigns = new ArrayList<>(collectedCards.getCollectedCards());
         return ownedDesigns;
     }
 
     public void setDesign(CardDesigns selectedDesign) {
         this.cardDesignInUse = selectedDesign;
+        collectedCards.setMyCard(selectedDesign);
     }
 }

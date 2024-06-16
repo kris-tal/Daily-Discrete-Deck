@@ -1,38 +1,43 @@
 package dailydescretedeck.set.FileManagement;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import dailydescretedeck.set.models.CardDesigns;
 
 public class CollectedCards {
 
-    List<Class<?>> collectedCards;
-    Class<?> myCard;
+    ArrayList<CardDesigns> collectedCards;
+    CardDesigns myCard;
     
     public CollectedCards() {
         collectedCards = SavingService.loadClassesFromFile("saves/collectedCards.txt");
         myCard = SavingService.loadClassesFromFile("saves/myCard.txt").get(0);
     }
 
-    public void addCard(Class<?> card) {
+    public void addCards(List<CardDesigns> card) {
         collectedCards = SavingService.loadClassesFromFile("saves/collectedCards.txt");
-        if (!collectedCards.contains(card)) {
-            collectedCards.add(card);
-            SavingService.saveClassesToFile("saves/collectedCards.txt", collectedCards);
+        for (CardDesigns c : card) {
+            if (!collectedCards.contains(c)) {
+                collectedCards.add(c);
+            }
         }
+        SavingService.saveClassesToFile("saves/collectedCards.txt", collectedCards);
     }
 
-    public void setMyCard(Class<?> card) {
+    public void setMyCard(CardDesigns card) {
         myCard = SavingService.loadClassesFromFile("saves/myCard.txt").get(0);
         myCard = card;
-        SavingService.saveClassesToFile("saves/myCard.txt", List.of(myCard));
+        SavingService.saveClassesToFile("saves/myCard.txt", new ArrayList<>(Collections.singletonList(myCard)));
     }
 
-    public List<Class<?>> getCollectedCards() {
+    public ArrayList<CardDesigns> getCollectedCards() {
         collectedCards = SavingService.loadClassesFromFile("saves/collectedCards.txt");
         return collectedCards;
     }
 
-    public Class<?> getMyCard() {
+    public CardDesigns getMyCard() {
         myCard = SavingService.loadClassesFromFile("saves/myCard.txt").get(0);
         return myCard;
     }

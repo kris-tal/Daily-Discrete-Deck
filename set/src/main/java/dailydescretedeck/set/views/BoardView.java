@@ -214,9 +214,6 @@ public class BoardView extends StackPane {
     }
 
     private void handleShow() {
-        Button showButton = (Button) buttonsBox.getChildren().filtered(node -> ((Button) node).getText().equals("Show SET")).get(0);
-        showButton.setDisable(true);
-
         selectedCards.clear();
         selectedCards.addAll(boardViewModel.getSet());
         showSet = true;
@@ -333,7 +330,6 @@ public class BoardView extends StackPane {
     private void handleXor() {
         xorCardBox.getChildren().clear();
         if(showXor) {
-            System.out.println("dont showXor");
             showXor = false;
             return;
         }

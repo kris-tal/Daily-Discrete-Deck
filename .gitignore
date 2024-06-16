@@ -1,6 +1,5 @@
-# Ignorowanie wszystkich plików w katalogu saves, ale nie samego katalogu
-saves/*
-!saves/.gitkeep
+# Ignorowanie katalogu saves
+saves/
 
 # Ignorowanie katalogu set/target/
 set/target/
@@ -20,9 +19,6 @@ set/.idea/
 
 # Ignorowanie katalogu .idea i jego zawartości
 .idea/
-
-### IntelliJ IDEA ###
-.idea
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
@@ -30,6 +26,9 @@ set/.idea/
 *.iws
 *.iml
 *.ipr
+
+# Ignorowanie plików i katalogów IntelliJ IDEA
+.idea
 
 ### Eclipse ###
 .apt_generated
@@ -54,8 +53,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-# Ignorowanie katalogu saves
-.DS_Store
-set/saves/Date.txt
-/set/saves

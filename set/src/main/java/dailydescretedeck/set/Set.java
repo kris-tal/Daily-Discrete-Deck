@@ -31,7 +31,7 @@ public class Set extends Application {
         try {
             Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/icon.png")));
             stage.getIcons().add(icon);
-        } catch(RuntimeException image) { System.out.println("Image not found"); }
+        } catch(RuntimeException image) {  }
         Scenes.setPrimaryStage(primaryStage);
 
         scenes.setPlayer(player);
